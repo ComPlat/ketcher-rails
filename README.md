@@ -4,6 +4,8 @@
 
 This gem provides the possibility to use Ketcher editor with Rails and contains
 server actions implementations.
+Ketcher editor has been originally built by GGA Software
+http://lifescience.opensource.epam.com/ketcher/
 
 ### Usage
 
