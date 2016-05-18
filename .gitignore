@@ -1,0 +1,8 @@
+.bundle/
+log/*.log
+pkg/
+test/dummy/db/*.*
+test/dummy/db/*.*
+test/dummy/log/*.log
+test/dummy/tmp/
+test/dummy/.sass-cache
