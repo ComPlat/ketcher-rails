@@ -200,7 +200,7 @@ ui.onClick_DropdownButton = function ()
 };
 
 ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
-    dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src').replace('-dropdown.','-sidebar.'));
+    dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
     dropdown.title = selected.title;
 }
 
