@@ -200,7 +200,10 @@ ui.onClick_DropdownButton = function ()
 };
 
 ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
-    dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
+    if(dropdown.getAttribute('id') == 'customtemplate')
+      dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src').replace('-dropdown.','-sidebar.'));
+    else
+      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
     dropdown.title = selected.title;
 }
 
