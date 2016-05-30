@@ -200,7 +200,10 @@ ui.onClick_DropdownButton = function ()
 };
 
 ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
-    dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
+    if(dropdown.getAttribute('id') == 'customtemplate')
+      dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src').replace('-dropdown.','-sidebar.'));
+    else
+      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
     dropdown.title = selected.title;
 }
 
@@ -514,9 +517,9 @@ ui.toggleDropdownList = function (name)
 ui.onResize_Ketcher = function ()
 {
     if (Prototype.Browser.IE)
-        ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) + 6).toString() + 'px';
+        ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
 
-    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) + 6).toString() + 'px';
+    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';
 };
 
 //
