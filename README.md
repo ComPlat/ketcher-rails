@@ -11,7 +11,7 @@ http://lifescience.opensource.epam.com/ketcher/
 
 Add it to Gemfile
 ```ruby
-gem 'ketcherails', '0.0.1'
+gem 'ketcherails', '0.1.0'
 ```
 This is a self-mountable Rails engine. Routes are mounted to /ketcherails
 and API routes to /api/<version>/ketcher.
