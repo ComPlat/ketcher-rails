@@ -33,6 +33,7 @@
 //= require ketcherails/rnd/restruct.js
 //= require ketcherails/rnd/restruct_rendering.js
 //= require ketcherails/rnd/render.js
+//= require ketcherails/rnd/periodic_table.js
 //= require ketcherails/rnd/templates.js
 //= require ketcherails/rnd/editor.js
 //= require ketcherails/rnd/elem_table.js

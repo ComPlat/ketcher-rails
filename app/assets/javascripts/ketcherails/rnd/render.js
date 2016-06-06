@@ -78,6 +78,7 @@ rnd.Render = function (clientArea, scale, opt, viewSz)
 	this.rxnArrow = null;
 	this.rxnMode = false;
 	this.zoom = 1.0;
+	this.mwTextNode = false;
 
 	var render = this;
 	var valueT = 0, valueL = 0;
@@ -864,6 +865,14 @@ rnd.Render.prototype.testPolygon = function (rr) {
 rnd.Render.prototype.update = function (force)
 {
 	rnd.logMethod("update");
+	var mw = rnd.calculateMW();
+	var textNode;
+	if(this.mwTextNode) {
+		this.mwTextNode.remove();
+	}
+	this.mwTextNode = this.paper.text(100, 20, 'Molecular weight: ' + mw.toString())
+	this.mwTextNode.attr({ "font-size": 14});
+
 
 	if (!this.settings || this.dirty) {
 		if (this.opt.autoScale)
