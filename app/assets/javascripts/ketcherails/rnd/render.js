@@ -16,6 +16,8 @@ if (!window.rnd || !rnd.ReStruct)
 	throw new Error("rnd.MolData should be defined prior to loading this file");
 
 rnd.DEBUG = false;
+rnd.MWTEXT_ANCHOR_X = 100;
+rnd.MWTEXT_ANCHOR_Y = 20;
 
 rnd.logcnt = 0;
 rnd.logmouse = false;
@@ -865,14 +867,6 @@ rnd.Render.prototype.testPolygon = function (rr) {
 rnd.Render.prototype.update = function (force)
 {
 	rnd.logMethod("update");
-	var mw = rnd.calculateMW();
-	var textNode;
-	if(this.mwTextNode) {
-		this.mwTextNode.remove();
-	}
-	this.mwTextNode = this.paper.text(100, 20, 'Molecular weight: ' + mw.toString())
-	this.mwTextNode.attr({ "font-size": 14});
-
 
 	if (!this.settings || this.dirty) {
 		if (this.opt.autoScale)
@@ -887,6 +881,7 @@ rnd.Render.prototype.update = function (force)
 		this.initStyles();
 		this.dirty = false;
 		force = true;
+
 	}
 
 	var start = (new Date).getTime();
@@ -931,6 +926,26 @@ rnd.Render.prototype.update = function (force)
             this.paper.setViewBox(bb.pos().x-marg*rescale-(csz.x*rescale-sz2.x)/2, bb.pos().y-marg*rescale-(csz.y*rescale-sz2.y)/2, csz.x*rescale, csz.y*rescale);
 		}
 	}
+
+	var mw = rnd.calculateMW();
+	var textNode;
+	if(this.mwTextNode) {
+		this.mwTextNode.remove();
+	}
+	var x = rnd.MWTEXT_ANCHOR_X;
+	var y = rnd.MWTEXT_ANCHOR_Y;
+	this.mwTextNode = this.paper.text(x, y, 'Molecular weight: ' + mw.toString())
+	this.mwTextNode.attr({ "font-size": 14});
+};
+
+rnd.Render.prototype.alignMWtextNode = function(scrollLeft, scrollTop) {
+	var diffX = this.mwTextNode.getBBox().x - scrollLeft;
+	var diffY = this.mwTextNode.getBBox().y - scrollLeft;
+	this.mwTextNode.attr(
+		{
+			x: scrollLeft + rnd.MWTEXT_ANCHOR_X,
+			y: scrollTop + rnd.MWTEXT_ANCHOR_Y
+		});
 };
 
 rnd.Render.prototype.checkBondExists = function (begin, end) {

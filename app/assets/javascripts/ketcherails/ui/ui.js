@@ -1428,6 +1428,7 @@ ui.onScroll_ClientArea = function(event)
 
     ui.scrollLeft = ui.client_area.scrollLeft;
     ui.scrollTop = ui.client_area.scrollTop;
+    ui.render.alignMWtextNode(ui.scrollLeft, ui.scrollTop)
 
     util.stopEventPropagation(event);
 };

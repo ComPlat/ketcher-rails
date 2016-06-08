@@ -36,6 +36,11 @@ module Ketcherails
         end
       end
       @svg.search('desc').each(&:remove)
+      @svg.search('text').each do |text|
+        if text.content.include?('Molecular weight')
+          text.remove
+        end
+      end
 
     end
 

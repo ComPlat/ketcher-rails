@@ -124,7 +124,8 @@ rnd.elements = {
   "Uup":288.19,
   "Lv":293.0,
   "Uus":294.0,
-  "Uuo":294.0
+  "Uuo":294.0,
+	"R#": 0.0 // for residues
 }
 
 rnd.calculateMW = function()
