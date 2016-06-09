@@ -932,15 +932,13 @@ rnd.Render.prototype.update = function (force)
 	if(this.mwTextNode) {
 		this.mwTextNode.remove();
 	}
-	var x = rnd.MWTEXT_ANCHOR_X;
-	var y = rnd.MWTEXT_ANCHOR_Y;
+	var x = ui.client_area.scrollLeft + rnd.MWTEXT_ANCHOR_X;
+	var y = ui.client_area.scrollTop + rnd.MWTEXT_ANCHOR_Y;
 	this.mwTextNode = this.paper.text(x, y, 'Molecular weight: ' + mw.toString())
 	this.mwTextNode.attr({ "font-size": 14});
 };
 
 rnd.Render.prototype.alignMWtextNode = function(scrollLeft, scrollTop) {
-	var diffX = this.mwTextNode.getBBox().x - scrollLeft;
-	var diffY = this.mwTextNode.getBBox().y - scrollLeft;
 	this.mwTextNode.attr(
 		{
 			x: scrollLeft + rnd.MWTEXT_ANCHOR_X,
