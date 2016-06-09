@@ -3,8 +3,6 @@ if (!window.Prototype)
 if (!window.rnd)
 	throw new Error("rnd should be defined prior to loading this file");
 
-rnd.NUM_PRECISION = 5; //show 5 numbers after comma
-
 // IUPAC recommended atomic weights
 rnd.elements = {
   "H":1.00794,
@@ -128,15 +126,19 @@ rnd.elements = {
 	"R#": 0.0 // for residues
 }
 
+rnd.getAtomicWeight = function(atom) {
+	var result = rnd.elements[atom.label];
+	if(atom.implicitH > 0)
+		result += rnd.elements['H'] * atom.implicitH;
+	return result;
+}
+
 rnd.calculateMW = function()
 {
 	var sum = 0;
 	ui.ctab.atoms.each(function (aid, atom)
 	{
-		sum += rnd.elements[atom.label];
-		if(atom.implicitH > 0)
-			sum += rnd.elements['H'] * atom.implicitH;
+		sum += rnd.getAtomicWeight(atom);
 	});
-	sum = sum.toFixed(rnd.NUM_PRECISION);
 	return sum;
 };

@@ -16,8 +16,12 @@ if (!window.rnd || !rnd.ReStruct)
 	throw new Error("rnd.MolData should be defined prior to loading this file");
 
 rnd.DEBUG = false;
-rnd.MWTEXT_ANCHOR_X = 100;
-rnd.MWTEXT_ANCHOR_Y = 20;
+
+rnd.NUM_PRECISION = 5; //show 5 numbers after comma
+rnd.MWTEXT_ALL_ANCHOR_X = 100;
+rnd.MWTEXT_ALL_ANCHOR_Y = 20;
+rnd.MWTEXT_SEL_ANCHOR_X = 130;
+rnd.MWTEXT_SEL_ANCHOR_Y = rnd.MWTEXT_ALL_ANCHOR_Y + 20;
 
 rnd.logcnt = 0;
 rnd.logmouse = false;
@@ -81,6 +85,8 @@ rnd.Render = function (clientArea, scale, opt, viewSz)
 	this.rxnMode = false;
 	this.zoom = 1.0;
 	this.mwTextNode = false;
+	this.mwSelectedTextNode = false;
+	this.totalMW = 0;
 
 	var render = this;
 	var valueT = 0, valueL = 0;
@@ -511,6 +517,7 @@ rnd.Render.prototype.bondGetAttr = function (bid, name)
 rnd.Render.prototype.setSelection = function (selection)
 {
 	rnd.logMethod("setSelection");
+	var selMWSum = 0;
 	for (var map in rnd.ReStruct.maps) {
         if (!rnd.ReStruct.maps[map].isSelectable())
             continue;
@@ -518,9 +525,14 @@ rnd.Render.prototype.setSelection = function (selection)
 		this.ctab[map].each(function(id, item){
             var selected = set ? set[id] === id : item.selected;
 			item.selected = selected;
+			if(selected && item instanceof rnd.ReAtom) {
+				selMWSum += rnd.getAtomicWeight(item.a);
+			}
+
 			this.ctab.showItemSelection(id, item, selected);
 		}, this);
 	}
+	this.refreshMWTEXT(selMWSum, true);
 };
 
 rnd.Render.prototype.initStyles = function ()
@@ -927,22 +939,45 @@ rnd.Render.prototype.update = function (force)
 		}
 	}
 
-	var mw = rnd.calculateMW();
-	var textNode;
-	if(this.mwTextNode) {
-		this.mwTextNode.remove();
+	this.totalMW = rnd.calculateMW();
+	this.refreshMWTEXT(this.totalMW, false);
+};
+
+rnd.Render.prototype.refreshMWTEXT = function(value, selectedOnly) {
+	var nodeProp;
+	var text;
+	var offset = 0;
+	if(selectedOnly) {
+		nodeProp = 'mwSelectedTextNode'
+		offset =  this.totalMW.toFixed().length - value.toFixed().length;
+		var s = '';
+		for(i = 0; i < offset; i++) { s = s.concat('\u00A0'); }; //NBSP
+		text = 'Molecular weight (selected): ' +s+ value.toFixed(rnd.NUM_PRECISION);
+	} else {
+		nodeProp = 'mwTextNode'
+		text = 'Molecular weight: ' + value.toFixed(rnd.NUM_PRECISION);
 	}
-	var x = ui.client_area.scrollLeft + rnd.MWTEXT_ANCHOR_X;
-	var y = ui.client_area.scrollTop + rnd.MWTEXT_ANCHOR_Y;
-	this.mwTextNode = this.paper.text(x, y, 'Molecular weight: ' + mw.toString())
-	this.mwTextNode.attr({ "font-size": 14});
+
+	if(this[nodeProp]) {
+		this[nodeProp].remove();
+	}
+	var textType = selectedOnly ? 'SEL' : 'ALL'
+	var x = ui.client_area.scrollLeft + rnd['MWTEXT_' + textType + '_ANCHOR_X'];
+	var y = ui.client_area.scrollTop + rnd['MWTEXT_' + textType + '_ANCHOR_Y'];
+	this[nodeProp] = this.paper.text(x, y, text)
+	this[nodeProp].attr({ "font-size": 14});
 };
 
 rnd.Render.prototype.alignMWtextNode = function(scrollLeft, scrollTop) {
 	this.mwTextNode.attr(
 		{
-			x: scrollLeft + rnd.MWTEXT_ANCHOR_X,
-			y: scrollTop + rnd.MWTEXT_ANCHOR_Y
+			x: scrollLeft + rnd.MWTEXT_ALL_ANCHOR_X,
+			y: scrollTop + rnd.MWTEXT_ALL_ANCHOR_Y
+		});
+	this.mwSelectedTextNode.attr(
+		{
+			x: scrollLeft + rnd.MWTEXT_SEL_ANCHOR_X,
+			y: scrollTop + rnd.MWTEXT_SEL_ANCHOR_Y
 		});
 };
 
