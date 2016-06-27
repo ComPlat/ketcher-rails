@@ -46,6 +46,9 @@ ui.is_osx = false;
 ui.is_touch = false;
 ui.initialized = false;
 
+rnd.usertemplates = [];
+ui.usertemplate_tool_modes = [];
+
 //console.log = function(msg)
 //{
 //    new Ajax.Request(ui.api_path + 'log', {
@@ -91,6 +94,165 @@ ui.initButton = function (el)
         window.status = '';
     });
 };
+
+ui.initDropdownObservers = function() {
+  $$('.dropdownListItem').each(function (el)
+  {
+      el.observe(EventMap['mousedown'], ui.onMouseDown_DropdownListItem);
+      el.observe('mouseover', function ()
+      {
+          this.addClassName('highlightedItem');
+      });
+      el.observe('mouseout', function ()
+      {
+          this.removeClassName('highlightedItem');
+      });
+  });
+
+  $$('.usertemplate-destroy-btn').each(function (el) {
+    el.observe(EventMap['mousedown'], ui.deleteUserTemplate);
+  });
+
+  $$('#usertemplate_search_name').each(function (el) {
+    el.observe(EventMap['input'], ui.userTemplatesSearch)
+  });
+}
+
+ui.userTemplatesSearch = function() {
+  // Load user templates from the server
+  new Ajax.Request(ui.api_path + 'templates_search',
+  {
+      method: 'get',
+      asynchronous : false,
+      parameters: {query: this.value},
+      onComplete: function (res)
+      {
+        try {
+          ui.refreshUserTemplates();
+
+          var idx = 0;
+          res.responseJSON.templates.each(function (tmpl) {
+            ui.addUserTemplate(tmpl, idx);
+            idx++;
+          });
+
+          ui.initDropdownObservers();
+        } catch (er) {
+            if (ui.forwardExceptions)
+                throw er;
+            return;
+        }
+      }
+  });
+}
+
+ui.refreshUserTemplates = function() {
+  var tbody = $('usertemplate_dropdown_list').select('table > tbody')[0];
+  tbody.innerHTML = '';
+  rnd.usertemplates = [];
+};
+
+ui.addUserTemplate = function(tmpl, idx) {
+  var tbody = $('usertemplate_dropdown_list').select('table > tbody')[0];
+  ui.usertemplate_tool_modes.push('usertemplate_' + idx);
+  tbody.insert('<tr class="dropdownListItem" id="usertemplate_' + idx +
+          '" title="' + tmpl.name + ' (Shift+T)"><td><div id="usertemplate_' + idx +
+          '_preview" style="float:right"><img style="align:right" class="dropdownIconUserTemplate" src="/images/templates/' + tmpl.icon_path +
+          '" alt="" /></div></td><td>' + tmpl.name +
+          '<td><a class="usertemplate-destroy-btn" item-id="' + idx +
+          '" record-id="' + tmpl.id + '" record-name="' + tmpl.name +
+          '">Delete</a></td></td></tr>');
+  rnd.usertemplates.push(tmpl);
+
+  if(rnd.usertemplates.length == 0) {
+    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'));
+  }
+};
+
+ui.deleteUserTemplate = function() {
+
+  var element = this;
+  var recordId = element.getAttribute('record-id');
+
+  ui.showDialog('usertemplate_confirm_dialog');
+
+  var onClickCancel = function () {
+      ui.hideDialog('usertemplate_confirm_dialog');
+      resetListeners();
+  };
+
+  var onClickOk = function () {
+    try {
+      // Init user templates
+      new Ajax.Request(ui.api_path + 'template',
+      {
+          method: 'delete',
+          asynchronous : false,
+          parameters: {id: recordId},
+          onComplete: function (res)
+          {
+            try {
+              if(res.status == 200) {
+                element.parentNode.parentNode.remove();
+                resetListeners();
+              } else {
+                alert(res.statusText);
+              }
+            } catch (er) {
+              console.log('error')
+                if (ui.forwardExceptions)
+                    throw er;
+                return;
+            }
+          }
+      });
+      ui.hideDialog('usertemplate_confirm_dialog');
+    } catch (er) {
+        if (ui.forwardExceptions)
+            throw er;
+        alert("Deletion error: " + er.message);
+    }
+  }
+
+  var resetListeners = function () {
+    $('usertemplate_confirm_cancel').stopObserving('click', onClickCancel);
+    $('usertemplate_confirm_ok').stopObserving('click', onClickOk);
+  };
+
+  $('usertemplate_confirm_cancel').observe('click', onClickCancel);
+  $('usertemplate_confirm_ok').observe('click', onClickOk);
+}
+
+ui.initUserTemplates = function ()
+{
+  // Init user templates
+  new Ajax.Request(ui.api_path + 'templates_list',
+  {
+      method: 'get',
+      asynchronous : false,
+      onComplete: function (res)
+      {
+        try {
+
+          var idx = 0;
+          res.responseJSON.templates.each(function (tmpl) {
+            ui.addUserTemplate(tmpl, idx);
+            idx++;
+          });
+        } catch (er) {
+            if (ui.forwardExceptions)
+                throw er;
+            return;
+        }
+
+
+      }
+  });
+
+  if(rnd.usertemplates.length > 0) {
+    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'));
+  }
+}
 
 ui.initTemplates = function ()
 {
@@ -167,12 +329,12 @@ ui.initTemplates = function ()
 
                 rnd.customtemplates.push(tmpl);
                 ui.customtemplate_tool_modes.push('customtemplate_' + idx);
-                var tmlPath = '/assets/ketcherails/icons/png/customtemplate/customtemplate'
+                var tmlPath = '<%= asset_path('ketcherails/sprite.png') %>';
 
                 tbody.insert('<tr class="dropdownListItem" id="customtemplate_' + idx +
                         '" title="' + tmpl.name + ' (Shift+T)">' + '<td><div id="customtemplate_' + idx +
-                        '_preview" style="float:right"><img style="align:right" class="dropdownIconTemplate" src="' + tmlPath +
-                        idx + '-dropdown.png" alt="" /></div></td><td>' + tmpl.name + '</td></tr>');
+                        '_preview" style="float:right"><img style="align:right" src="' + tmlPath +
+                        '" class="icon-png-customtemplate-customtemplate' + idx + '-dropdown" alt="" /></div></td><td>' + tmpl.name + '</td></tr>');
                 idx++;
             });
             ui.DropdownListSetIconAndTitle($('customtemplate'), $('customtemplate_0'));
@@ -201,7 +363,9 @@ ui.onClick_DropdownButton = function ()
 
 ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
     if(dropdown.getAttribute('id') == 'customtemplate')
-      dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src').replace('-dropdown.','-sidebar.'));
+      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown','-sidebar'));
+    else if(dropdown.getAttribute('id') == 'usertemplate')
+      dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
     else
       dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
     dropdown.title = selected.title;
@@ -277,7 +441,8 @@ ui.init = function (parameters, opts)
         {
             mousemove: 'touchmove',
             mousedown: 'touchstart',
-            mouseup  : 'touchend'
+            mouseup  : 'touchend',
+            input    : 'input'
         };
 
         // to enable copy to clipboard on iOS
@@ -309,8 +474,10 @@ ui.init = function (parameters, opts)
         });
     }
 
-    if (!this.standalone)
-    	this.initTemplates();
+    if (!this.standalone) {
+      this.initTemplates();
+      this.initUserTemplates();
+    }
 
     // Document events
     //document.observe('keypress', ui.onKeyPress_Ketcher);
@@ -332,18 +499,7 @@ ui.init = function (parameters, opts)
     {
         el.observe('click', ui.onClick_DropdownButton);
     });
-    $$('.dropdownListItem').each(function (el)
-    {
-        el.observe(EventMap['mousedown'], ui.onMouseDown_DropdownListItem);
-        el.observe('mouseover', function ()
-        {
-            this.addClassName('highlightedItem');
-        });
-        el.observe('mouseout', function ()
-        {
-            this.removeClassName('highlightedItem');
-        });
-    });
+    this.initDropdownObservers()
     $('new').observe('click', ui.onClick_NewFile);
     $('open').observe('click', ui.onClick_OpenFile);
     $('save').observe('click', ui.onClick_SaveFile);
@@ -357,6 +513,7 @@ ui.init = function (parameters, opts)
     $('clean_up').observe('click', ui.onClick_CleanUp);
     $('aromatize').observe('click', ui.onClick_Aromatize);
     $('dearomatize').observe('click', ui.onClick_Dearomatize);
+    $('save_template').observe('click', ui.onClick_SaveTemplate);
     $('atom_table').observe('click', ui.onClick_ElemTableButton);
     $('elem_table_list').observe('click', ui.onSelect_ElemTableNotList);
     $('elem_table_notlist').observe('click', ui.onSelect_ElemTableNotList);
@@ -511,6 +668,12 @@ ui.toggleDropdownList = function (name)
         $(list_id).hide();
     else
         $(list_id).show();
+
+    // hide usertemplates explicitly cause we don't do it automatically
+    // for that list. reason is search and deletion buttons
+    var ut_list_id = 'usertemplate_dropdown_list';
+    if(list_id != ut_list_id && $(ut_list_id).visible())
+      $(ut_list_id).hide();
 };
 
 
@@ -918,6 +1081,7 @@ ui.keyboardActions = {
     rotate_tool: function() { ui.selectMode('transform_rotate'); },
     template_tool: function() { ui.onMouseDown_DropdownListItem.call($(util.listNextRotate(ui.template_tool_modes, ui.mode_id))); },
     customtemplate_tool: function() { if (ui.customtemplate_tool_modes.length < 1) return; ui.onMouseDown_DropdownListItem.call($(util.listNextRotate(ui.customtemplate_tool_modes, ui.mode_id))); },
+    usertemplate_tool: function() { if (ui.usertemplate_tool_modes.length < 1) return; ui.onMouseDown_DropdownListItem.call($(util.listNextRotate(ui.usertemplate_tool_modes, ui.mode_id))); },
     escape: function(event) { if (!$('window_cover').visible()) ui.selectMode(ui.defaultSelector); },
     selector: function() { ui.onMouseDown_DropdownListItem.call($(util.listNextRotate(ui.selector_tool_modes, ui.mode_id))); },
 
@@ -1135,6 +1299,31 @@ ui.dearomatizeMolecule = function (mol, aromatize)
         throw new Error('Aromatization and dearomatization are not supported in the standalone mode.');
     }
 };
+
+ui.saveTemplate = function(molfile, svg_file, name) {
+  if (!ui.standalone) {
+    new Ajax.Request(ui.api_path + 'template',
+    {
+        method: 'post',
+        asynchronous : false,
+        parameters: {molfile: molfile, svg_file: svg_file, name: name},
+        onComplete: function (res)
+        {
+          if(res.status == 201) {
+              ui.addUserTemplate(res.responseJSON, rnd.usertemplates.length);
+              ui.initDropdownObservers();
+              $('usertemplate_name').value = '';
+          } else if (res.responseText.startsWith('Error.')) {
+            alert(res.responseText.split('\n')[1]);
+          } else {
+            throw new Error('Something went wrong' + res.responseText);
+          }
+        }
+    });
+  } else {
+    throw new Error('Custom templates are not supported in the standalone mode.');
+  }
+}
 
 // Called from iframe's 'onload'
 ui.loadMoleculeFromFile = function ()
@@ -1396,6 +1585,42 @@ ui.onClick_Dearomatize = function ()
             throw er;
         alert("Molfile: " + er.message);
     }
+};
+
+ui.onClick_SaveTemplate = function ()
+{
+    if (this.hasClassName('buttonDisabled'))
+        return;
+
+    ui.showDialog('usertemplate_properties');
+
+    var onClickCancel = function () {
+        ui.hideDialog('usertemplate_properties');
+        resetListeners();
+    };
+
+    var onClickOk = function () {
+      try {
+        var mol = new chem.MolfileSaver().saveMolecule(ui.ctab);
+        var svg_file = ketcher.getSVG();
+        var name = $('usertemplate_name').value;
+        ui.saveTemplate(mol, svg_file, name);
+        ui.hideDialog('usertemplate_properties');
+        resetListeners();
+      } catch (er) {
+          if (ui.forwardExceptions)
+              throw er;
+          alert("Molfile: " + er.message);
+      }
+    }
+
+    var resetListeners = function () {
+      $('usertemplate_prop_cancel').stopObserving('click', onClickCancel);
+      $('usertemplate_prop_ok').stopObserving('click', onClickOk);
+    };
+
+    $('usertemplate_prop_cancel').observe('click', onClickCancel);
+    $('usertemplate_prop_ok').observe('click', onClickOk);
 };
 
 ui.page2canvas2 = function (pos)
