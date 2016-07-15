@@ -1,4 +1,4 @@
-<% cache('ketcher' + Process.pid.to_s) do %>
+<% cache('ketcher' + Process.pid.to_s + Ketcherails::CustomTemplate.count.to_s) do %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -84,6 +84,9 @@
                     </td>
                     <td class="toolButtonCell toolButton serverRequired buttonDisabled" id="dearomatize">
                       <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-dearom', title: 'Dearomatize', alt: '' %>
+                    </td>
+                    <td class="toolButtonCell toolButton serverRequired" id="save_template">
+                      <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-star', title: 'Save Template', alt: '' %>
                     </td>
                     <td style="width:100%"></td>
                     <td id="toolText" style="width:32px"></td>
@@ -189,13 +192,21 @@
                     </td>
                     <td><div class="sideButton modeButton" id="atom_table" title="Periodic table"></div></td>
                 </tr>
+                <tr align="center" class="sideButtonCell serverRequired">
+                    <td>
+                        <div style="position:relative">
+                          <%= image_tag '', id: 'usertemplate', class: 'sideButton modeButton stateButton', title: '', selid: 'usertemplate_0', alt: '' %>
+                          <%= image_tag asset_path('ketcherails/sprite.png'), id: 'usertemplate_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+                        </div>
+                    </td>
+                    <td><div class="sideButton modeButton" id="atom_table" title="Periodic table"></div></td>
+                </tr>
                 <tr align="center" class="sideButtonCell">
                     <td>
                       <%= image_tag asset_path('ketcherails/sprite.png'), id: 'polymer', class: 'sideButton modeButton icon-png-main-polymer', alt: '', title: 'Polymer' %>
                     </td>
                     <td><div class="sideButton modeButton" id="atom_reagenerics" title="Reaxys Generics"></div></td>
                 </tr>
-                <tr align="center" class="sideButtonCell"></tr>
                 <tr align="center" class="sideButtonCell"></tr>
             </table>
 
@@ -361,6 +372,22 @@
                 </table>
             </div>
 
+            <div class="dropdownList renderFirst" id="usertemplate_dropdown_list" style="display:none">
+              <table>
+                <thead>
+                  <tr class="dataUserTemplate">
+                    <th>
+                      <label>Search:</label>
+                    </th>
+                    <th>
+                      <input id="usertemplate_search_name" type="string" maxlength="15" size="15" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
             <div class="dropdownList" id="reaction_dropdown_list" style="display:none">
                 <table>
                   <% { arrow: 'Arrow', plus: 'Plus', automap: 'Auto-Mapping', map: 'Mapping', unmap: 'Unmappping' }.each do |action, title| %>
@@ -822,6 +849,42 @@
                     <div style="margin-top:0.5em">
                         <input id="sgroup_prop_cancel" type="button" value="Cancel" />
                         <input id="sgroup_prop_ok" type="button" value="OK" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialogWindow userTemplateDialog" id="usertemplate_properties" style="display:none;">
+                <div style="width:100%">
+                    <div>
+                        Create a template
+                    </div>
+                    <div style="height:0.5em"></div>
+                    <table style="text-align:left">
+                        <tr class="dataUserTemplate">
+                          <td>
+                              <label>Name:</label>
+                          </td>
+                          <td>
+                              <input id="usertemplate_name" type="string" maxlength="15" size="15" />
+                          </td>
+                        </tr>
+                    </table>
+                    <div style="margin-top:0.5em">
+                        <input id="usertemplate_prop_cancel" type="button" value="Cancel" />
+                        <input id="usertemplate_prop_ok" type="button" value="OK" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialogWindow confirmDialog" id="usertemplate_confirm_dialog" style="display:none;">
+                <div style="width:100%">
+                    <div>
+                        Delete the template?
+                    </div>
+                    <div style="height:0.5em"></div>
+                    <div style="margin-top:0.5em">
+                        <input id="usertemplate_confirm_cancel" type="button" value="Cancel" />
+                        <input id="usertemplate_confirm_ok" type="button" value="OK" />
                     </div>
                 </div>
             </div>
