@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @template_category.name
+
+= link_to 'Edit', edit_template_category_path(@template_category)
+\|
+= link_to 'Back', template_categories_path

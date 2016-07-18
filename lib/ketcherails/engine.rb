@@ -1,5 +1,7 @@
 module Ketcherails
   class Engine < ::Rails::Engine
+    require 'jquery-ui-rails'
+
     isolate_namespace Ketcherails
 
     config.to_prepare do
@@ -7,7 +9,7 @@ module Ketcherails
     end
 
     config.to_prepare do
-      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+      Dir.glob(Engine.root + "app/decorators/**/*_decorator*.rb").each do |c|
         require_dependency(c)
       end
     end

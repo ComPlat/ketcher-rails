@@ -1,0 +1,51 @@
+/ Modal
+#ketcherModal.modal.fade{"aria-labelledby" => "ketcherModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#ketcherModalLabel.modal-title Structure editor
+      .modal-body
+        %iframe{ id: 'ifKetcher', src: '/ketcher'}
+      .modal-footer
+        %button.btn.btn-default{'data-dismiss': 'modal', type: 'button'}
+          Close
+        %button.btn.btn-primary{type: 'button', onclick: 'saveStructure();'}
+          Save changes
+
+= form_for @common_template do |f|
+  - if @common_template.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@common_template.errors.count, "error")} prohibited this common_template from being saved:"
+      %ul
+        - @common_template.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    %button.btn.btn-primary{'data-target': '#ketcherModal',
+                            'data-toggle': 'modal',
+                            type: 'button',
+                            class: 'pull-right'}
+      Draw a structure
+    = f.label :molfile
+    = f.file_field :file_molfile, onchange: 'updateMolfileFromFileInput(this)'
+    %br
+    = f.text_area :molfile, cols: '80', rows: '20'
+    = hidden_field_tag :svg
+  .field
+    = f.label :notes
+    %br
+    = f.text_area :notes, cols: '30', rows: '5'
+  - if @common_template.persisted?
+    .field
+      = f.label :approved_at
+      = @common_template.approved_at
+    .field
+      = f.label :rejected_at
+      = @common_template.rejected_at
+  .actions
+    = f.submit 'Save', class: 'btn'

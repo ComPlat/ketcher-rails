@@ -1,0 +1,21 @@
+%h1 Listing template_categories
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @template_categories.each do |template_category|
+      %tr
+        %td= template_category.name
+        %td= link_to 'Show', template_category
+        %td= link_to 'Edit', edit_template_category_path(template_category)
+        %td= link_to 'Destroy', template_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Template category', new_template_category_path

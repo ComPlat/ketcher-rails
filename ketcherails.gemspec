@@ -19,8 +19,12 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.0"
   s.add_dependency "nokogiri", "1.6.7.2"
+  s.add_dependency "haml-rails", "0.9.0"
+  s.add_dependency "jquery-ui-rails", "5.0.5"
 
   s.add_development_dependency "pg"
   s.add_development_dependency "grape"
   s.add_development_dependency "byebug"
+  s.add_development_dependency 'bootstrap-generators', '~> 3.3.4'
+  s.add_development_dependency 'bootstrap-sass', '~> 3.3.5'
 end
