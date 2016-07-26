@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @common_template.name
+%p
+  %b Notes:
+  = @common_template.notes
+%p
+  %b Approved at:
+  = @common_template.approved_at
+%p
+  %b Rejected at:
+  = @common_template.rejected_at
+
+= link_to 'Edit', edit_common_template_path(@common_template)
+\|
+= link_to 'Back', common_templates_path

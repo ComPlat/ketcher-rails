@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 end
 
 Ketcherails::Engine.routes.draw do
+  resources :template_categories
+  resources :common_templates
   root to: 'ketcher#index'
 end

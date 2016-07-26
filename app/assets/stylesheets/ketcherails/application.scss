@@ -1,0 +1,36 @@
+@import "ketcherails/scaffold";
+@import "ketcherails/common_templates";
+@import "jquery-ui";
+@import "bootstrap";
+
+body {
+  padding-top: 60px;
+}
+
+.page-header a.btn {
+  float: right;
+}
+
+.page-header a.btn + a.btn {
+  margin-right: 8px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  width: initial;
+  height: initial;
+  margin-top: 7px;
+}
+
+#ketcherModal .modal-content {
+  width: 900px;
+}
+#ketcherModal #ifKetcher {
+  width: 882px;
+  height: 580px;
+}
+
+@media screen and (max-height: 768px) {
+  #ketcherModal #ifKetcher {
+    height: 520px;
+  }
+}

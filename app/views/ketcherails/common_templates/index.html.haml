@@ -1,0 +1,32 @@
+%h1 Listing common templates
+
+%table{class: 'table'}
+  %thead
+    %tr
+      %th Image
+      %th Name
+      %th Status
+      %th Approved at
+      %th Rejected at
+      %th Notes
+      %th
+      %th
+      %th
+
+  %tbody
+    - @common_templates.each do |common_template|
+      %tr
+        %td{class: 'template-icon'}
+          = image_tag common_template.icon_path
+        %td= common_template.name
+        %td= common_template.status
+        %td= common_template.approved_at
+        %td= common_template.rejected_at
+        %td= common_template.notes
+        %td= link_to 'Show', common_template
+        %td= link_to 'Edit', edit_common_template_path(common_template)
+        %td= link_to 'Destroy', common_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Common template', new_common_template_path, class: 'btn btn-primary'
