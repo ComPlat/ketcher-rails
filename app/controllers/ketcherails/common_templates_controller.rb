@@ -58,7 +58,9 @@ module Ketcherails
 
     # PATCH/PUT /common_templates/1
     def update
-      if @common_template.update(common_template_params)
+      @common_template.attributes = common_template_params
+      @common_template.make_icon params[:svg] if params[:svg].present?
+      if @common_template.save
         redirect_to @common_template,
                     notice: 'Common template was successfully updated.'
       else

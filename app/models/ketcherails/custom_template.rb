@@ -18,6 +18,11 @@ module Ketcherails
       filename = digest + '.png'
       svg_file_path = "public/images/templates/#{filename}"
       img.write_to_png(svg_file_path)
+
+      if self.icon_path.present? # delete old icon file
+        old_png = "public/images/templates/#{self.icon_path}"
+        File.rm old_png if File.exists? old_png
+      end
       self.icon_path = filename
     end
 

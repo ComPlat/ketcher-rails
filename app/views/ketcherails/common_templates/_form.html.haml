@@ -26,11 +26,13 @@
     = f.label :name
     = f.text_field :name
   .field
-    %button.btn.btn-primary{'data-target': '#ketcherModal',
-                            'data-toggle': 'modal',
+    %button.btn.btn-primary{onclick: 'showKetcherModal()',
                             type: 'button',
                             class: 'pull-right'}
-      Draw a structure
+      - if @common_template.persisted?
+        Edit structure
+      - else
+        Draw a structure
     = f.label :molfile
     = f.file_field :file_molfile, onchange: 'updateMolfileFromFileInput(this)'
     %br

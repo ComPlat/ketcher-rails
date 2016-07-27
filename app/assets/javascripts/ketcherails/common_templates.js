@@ -1,13 +1,22 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-saveStructure = function() {
-  var ketcherFrame = document.getElementById("ifKetcher");
-  var ketcher = null;
 
+getKetcher = function() {
+  var ketcherFrame = document.getElementById("ifKetcher");
+  
   if (ketcherFrame && ("contentDocument" in ketcherFrame))
-    ketcher = ketcherFrame.contentWindow.ketcher;
+    return ketcherFrame.contentWindow.ketcher;
   else
-    ketcher = document.frames['ifKetcher'].window.ketcher;
+    return document.frames['ifKetcher'].window.ketcher;
+}
+
+showKetcherModal = function() {
+  var ketcher = getKetcher();
+  var molfile = $('textarea#common_template_molfile').val();
+  ketcher.setMolecule(molfile);
+  $('#ketcherModal').modal('show');
+}
+
+saveStructure = function() {
+  var ketcher = getKetcher();
 
   var molfile = ketcher.getMolfile();
   var svg = ketcher.getSVG();
