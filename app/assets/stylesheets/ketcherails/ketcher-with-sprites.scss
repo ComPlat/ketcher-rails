@@ -103,11 +103,6 @@ table#ketcher_window > tr
 
 .dropdownIconTemplate
 {
-    height: 48px;
-}
-
-.dropdownIconUserTemplate
-{
     height: 64px;
 }
 
@@ -234,7 +229,7 @@ table#ketcher_window > tr
     top: 196px;
 }
 
-#customtemplate_dropdown_list, #usertemplate_dropdown_list
+#commontemplate_dropdown_list, #usertemplate_dropdown_list
 {
     top: 48px;
     left: 45px;
@@ -376,7 +371,7 @@ div#loading
   top:   200px;
 }
 
-#usertemplate_dropdown_list {
+#usertemplate_dropdown_list, #commontemplate_dropdown_list {
   max-height: 300px;
   overflow-y: scroll;
 }

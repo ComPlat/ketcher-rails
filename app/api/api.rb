@@ -1,4 +1,5 @@
 API.class_eval do
   mount Ketcherails::KetcherAPI
-  mount Ketcherails::CustomTemplateAPI
+  mount Ketcherails::CustomTemplatesAPI
+  mount Ketcherails::CommonTemplatesAPI
 end
