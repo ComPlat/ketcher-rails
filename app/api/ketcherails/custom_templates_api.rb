@@ -1,5 +1,5 @@
 module Ketcherails
-  class CustomTemplateAPI < Grape::API
+  class CustomTemplatesAPI < Grape::API
 
     namespace :ketcher do
       desc 'Save structure as a custom template'

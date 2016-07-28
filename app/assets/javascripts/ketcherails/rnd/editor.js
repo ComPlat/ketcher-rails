@@ -97,8 +97,8 @@ rnd.Editor.prototype.toolFor = function(tool) {
         return new rnd.Editor.ChainTool(this);
     } else if (tool.startsWith('template_')) {
         return new rnd.Editor.TemplateTool(this, rnd.templates[parseInt(tool.split('_')[1])]);
-    } else if (tool.startsWith('customtemplate_')) {
-        return new rnd.Editor.TemplateTool(this, rnd.customtemplates[parseInt(tool.split('_')[1])]);
+    } else if (tool.startsWith('commontemplate_')) {
+        return new rnd.Editor.TemplateTool(this, rnd.commontemplates[parseInt(tool.split('_')[1])]);
 		} else if (tool.startsWith('usertemplate_')) {
         return new rnd.Editor.TemplateTool(this, rnd.usertemplates[parseInt(tool.split('_')[1])]);
     } else if (tool == 'charge_plus') {

@@ -186,8 +186,8 @@
                 <tr align="center" class="sideButtonCell serverRequired">
                     <td>
                         <div style="position:relative">
-                          <%= image_tag asset_path('ketcherails/sprite.png'), id: 'customtemplate', class: 'sideButton modeButton stateButton icon-png-customtemplate-customtemplate0-sidebar', title: '', selid: 'customtemplate_0', alt: '' %>
-                          <%= image_tag asset_path('ketcherails/sprite.png'), id: 'customtemplate_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+                          <%= image_tag asset_path('ketcherails/sprite.png'), id: 'commontemplate', class: 'sideButton modeButton stateButton icon-png-commontemplate-commontemplate0-sidebar', title: '', selid: 'commontemplate_0', alt: '' %>
+                          <%= image_tag asset_path('ketcherails/sprite.png'), id: 'commontemplate_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
                         </div>
                     </td>
                     <td><div class="sideButton modeButton" id="atom_table" title="Periodic table"></div></td>
@@ -359,17 +359,21 @@
                   <% end %>
                 </table>
             </div>
-            <div class="dropdownList renderFirst" id="customtemplate_dropdown_list" style="display:none">
-                <table>
-                    <tr class="dropdownListItem" id="customtemplate_0" title="Benzene (T)">
-                        <td>
-                          <div id="customtemplate_0_preview">
-                            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-customtemplate-customtemplate0-dropdown', alt: '' %>
-                          </div>
-                          Benzene
-                      </td>
-                    </tr>
-                </table>
+            <div class="dropdownList renderFirst" id="commontemplate_dropdown_list" style="display:none">
+              <table>
+                <thead>
+                  <tr class="dataCommonTemplate">
+                    <th>
+                      <label>Search:</label>
+                    </th>
+                    <th>
+                      <input id="commontemplate_search_name" type="string" maxlength="15" size="15" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
             </div>
 
             <div class="dropdownList renderFirst" id="usertemplate_dropdown_list" style="display:none">

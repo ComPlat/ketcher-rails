@@ -30,7 +30,7 @@ module Ketcherails
         list = list.reject &:blank?
         list.each do |molfile|
           common_template = CommonTemplate.new(common_template_params)
-          common_template.name = common_template.name + '_ ' + index.succ.to_s
+          common_template.name = common_template.name + '_' + index.succ.to_s
           lines = molfile.lines
           lines.prepend("\n") unless lines[0].blank?
           lines.delete_at 1 # delete template file name

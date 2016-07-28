@@ -1,7 +1,7 @@
 
 getKetcher = function() {
   var ketcherFrame = document.getElementById("ifKetcher");
-  
+
   if (ketcherFrame && ("contentDocument" in ketcherFrame))
     return ketcherFrame.contentWindow.ketcher;
   else
@@ -11,7 +11,6 @@ getKetcher = function() {
 showKetcherModal = function() {
   var ketcher = getKetcher();
   var molfile = $('textarea#common_template_molfile').val();
-  ketcher.setMolecule(molfile);
   $('#ketcherModal').modal('show');
 }
 

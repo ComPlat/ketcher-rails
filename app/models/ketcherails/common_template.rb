@@ -9,9 +9,9 @@ module Ketcherails
 
     # we add 1-by-1 on front-end part. so newest item is on the top
     default_scope { order('created_at DESC') }
-    scope :approved, -> { where('approved_at NOT NULL') }
-    scope :pending, -> { where('approved_at NOT NULL') }
-    scope :pending, -> { where('rejected_at NOT NULL') }
+    scope :approved, -> { where('approved_at IS NOT NULL') }
+    scope :pending, -> { where('approved_at IS NOT NULL') }
+    scope :pending, -> { where('rejected_at IS NOT NULL') }
 
     before_save :set_name, :get_icon
 
