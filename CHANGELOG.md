@@ -17,3 +17,10 @@
 -**Features:**
   * User-defined molecule structure templates
 [v0.1.2]: https://github.com/ComPlat/ketcher-rails/releases/tag/0.1.2
+
+## [v0.1.3]
+> 2016-05-31
+-**Features:**
+  * Common templates management system
+  * List of common templates in the editor
+[v0.1.3]: https://github.com/ComPlat/ketcher-rails/releases/tag/0.1.3
