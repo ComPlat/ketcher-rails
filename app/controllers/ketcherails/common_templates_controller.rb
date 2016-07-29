@@ -1,12 +1,17 @@
 module Ketcherails
   class CommonTemplatesController < ::ApplicationController
     before_action :check_user_permissions
-    before_action :set_common_template, only: [:show, :edit, :update, :destroy]
+    before_action :set_common_template, only: %i(show edit update destroy)
+    before_action :set_template_categories, only: [:new, :edit]
     layout 'ketcherails/application'
+    helper CommonTemplatesHelper
+    PER_PAGE = 10
 
     # GET /common_templates
     def index
-      @common_templates = CommonTemplate.all
+      per_page = params[:per_page] || PER_PAGE
+
+      @common_templates = CommonTemplate.includes(:template_category).page params[:page]
     end
 
     # GET /common_templates/1
@@ -35,6 +40,7 @@ module Ketcherails
           lines.prepend("\n") unless lines[0].blank?
           lines.delete_at 1 # delete template file name
           common_template.molfile = lines.join
+          common_template.status ||= 'approved'
           common_template.approved_at = Time.now
           common_template.save!
 
@@ -46,6 +52,7 @@ module Ketcherails
       else
         @common_template = CommonTemplate.new(common_template_params)
         @common_template.make_icon params[:svg] if params[:svg].present?
+        @common_template.status ||= 'approved'
         @common_template.approved_at = Time.now
 
         if @common_template.save
@@ -87,9 +94,14 @@ private
       @common_template = CommonTemplate.find(params[:id])
     end
 
+    def set_template_categories
+      @template_categories = TemplateCategory.all
+    end
+
     # Only allow a trusted parameter "white list" through.
     def common_template_params
-      params.require(:common_template).permit(:name, :notes, :molfile)
+      params.require(:common_template).permit(:name, :notes, :molfile,
+        :template_category_id, :status)
     end
   end
 end

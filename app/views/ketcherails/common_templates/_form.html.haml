@@ -39,6 +39,12 @@
     = f.text_area :molfile, cols: '80', rows: '20'
     = hidden_field_tag :svg
   .field
+    = f.label :category
+    = template_category_select(f)
+  .field
+    = f.label :status
+    = status_select(f)
+  .field
     = f.label :notes
     %br
     = f.text_area :notes, cols: '30', rows: '5'
@@ -50,4 +56,4 @@
       = f.label :rejected_at
       = @common_template.rejected_at
   .actions
-    = f.submit 'Save', class: 'btn'
+    = f.submit 'Save', class: 'btn btn-primary'

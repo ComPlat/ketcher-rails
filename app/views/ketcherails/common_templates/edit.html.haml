@@ -1,6 +1,5 @@
 %div{class: 'panel col-sm-7'}
   %h1 Editing common_template
   = render 'form'
-  = link_to 'Show', @common_template
-  \|
-  = link_to 'Back', common_templates_path
+  = link_to 'Show', @common_template, class: 'btn btn-default'
+  = link_to 'Back', common_templates_path, class: 'btn btn-warning'

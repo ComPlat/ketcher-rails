@@ -1,6 +1,8 @@
 module Ketcherails
   class Engine < ::Rails::Engine
     require 'jquery-ui-rails'
+    require 'kaminari'
+    require 'bootstrap-kaminari-views'
 
     isolate_namespace Ketcherails
 

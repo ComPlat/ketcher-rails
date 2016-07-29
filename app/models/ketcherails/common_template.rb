@@ -2,6 +2,7 @@ module Ketcherails
   class CommonTemplate < ActiveRecord::Base
 
     IMG_SIZE = 64 # 64x64 pixels icon
+    STATUSES = %w(pending approved rejected)
 
     belongs_to :suggestor, foreign_key: :suggested_by, class_name: 'User'
     belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User'
@@ -9,23 +10,17 @@ module Ketcherails
 
     # we add 1-by-1 on front-end part. so newest item is on the top
     default_scope { order('created_at DESC') }
-    scope :approved, -> { where('approved_at IS NOT NULL') }
-    scope :pending, -> { where('approved_at IS NOT NULL') }
-    scope :pending, -> { where('rejected_at IS NOT NULL') }
+    scope :approved, -> { where(status: 'approved') }
+    scope :pending, -> { where(status: 'pending') }
+    scope :rejected, -> { where(status: 'rejected') }
 
     before_save :set_name, :get_icon
 
     #TODO: enable this validation
     # validate :icon_path, presence: true
 
-    def status
-      if rejected_at.present?
-        'rejected'
-      elsif approved_at.present?
-        'approved'
-      else
-        'pending'
-      end
+    def category_name
+      self.template_category.try :name
     end
 
     def get_icon svg = nil

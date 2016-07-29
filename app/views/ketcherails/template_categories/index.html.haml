@@ -1,6 +1,8 @@
-%h1 Listing template_categories
+%h1 Listing template categories
 
-%table
+= link_to 'New Template category', new_template_category_path, class: 'btn btn-primary pull-right'
+
+%table{class: 'table'}
   %thead
     %tr
       %th Name
@@ -11,11 +13,13 @@
   %tbody
     - @template_categories.each do |template_category|
       %tr
-        %td= template_category.name
-        %td= link_to 'Show', template_category
-        %td= link_to 'Edit', edit_template_category_path(template_category)
-        %td= link_to 'Destroy', template_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td{class: 'col-md-10'}
+          = template_category.name
+        %td
+          = link_to 'Show', template_category, class: 'btn btn-default'
+        %td
+          = link_to 'Edit', edit_template_category_path(template_category), class: 'btn btn-warning'
+        %td
+          = link_to 'Destroy', template_category, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
-%br
-
-= link_to 'New Template category', new_template_category_path
+= paginate @template_categories, theme: 'twitter-bootstrap-3'

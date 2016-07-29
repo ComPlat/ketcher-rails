@@ -6,7 +6,7 @@ module Ketcherails
 
     # GET /template_categories
     def index
-      @template_categories = TemplateCategory.all
+      @template_categories = TemplateCategory.page params[:page]
     end
 
     # GET /template_categories/1
