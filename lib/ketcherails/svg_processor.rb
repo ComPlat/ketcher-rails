@@ -70,13 +70,13 @@ module Ketcherails
           shift = get_translation_from_transform_translate(transformation)
         end
 
-        @transforms << shift
+        @transforms << shift if shift
       end
     end
 
     def get_internal_transform_shift
       get_internal_transform_shifts
-      @shift=transform_count
+      @shift=transform_count || [0,0]
     end
 
     def remove_all_internal_transform
@@ -88,8 +88,10 @@ module Ketcherails
     def centered_and_scaled_svg
       clean
       find_extrema
-      center_and_scale
-      redefine_window_size
+      if (@min+@max).compact.size == 4
+        center_and_scale
+        redefine_window_size
+      end
       to_xml
     end
 
@@ -129,8 +131,10 @@ module Ketcherails
       shiftx,shifty = *@shift
       minx,miny = *@min
       maxx,maxy = *@max
-      @min=[minx+shiftx, miny+shifty]
-      @max=[maxx+shiftx, maxy+shifty]
+      if minx&&miny&&maxx&&maxy
+        @min=[minx+shiftx, miny+shifty]
+        @max=[maxx+shiftx, maxy+shifty]
+      end
     end
 
 
@@ -193,8 +197,9 @@ module Ketcherails
           counts << 1
         end
       end
-
-      transforms[counts.index(counts.max)]
+      if ind = counts.index(counts.max)
+        transforms[ind]
+      end
     end
 
 
