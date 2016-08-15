@@ -63,7 +63,7 @@ module Ketcherails
 
       # Only allow a trusted parameter "white list" through.
       def template_category_params
-        params.require(:template_category).permit(:name)
+        params.require(:template_category).permit(:name, :icon)
       end
   end
 end

@@ -4,6 +4,10 @@
   %b Name:
   = @template_category.name
 
+%p
+  %b Icon:
+  = image_tag @template_category.icon.url(:small)
+
 = link_to 'Edit', edit_template_category_path(@template_category)
 \|
 = link_to 'Back', template_categories_path

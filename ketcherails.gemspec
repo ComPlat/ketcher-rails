@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.license     = 'GPLv3'
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.2.0"
   s.add_dependency "nokogiri", "1.6.7.2"
@@ -23,10 +23,12 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-ui-rails", "5.0.5"
   s.add_dependency 'kaminari'
   s.add_dependency 'bootstrap-kaminari-views'
+  s.add_dependency 'paperclip', '~> 5.0.0'
 
   s.add_development_dependency "pg"
   s.add_development_dependency "grape"
   s.add_development_dependency "byebug"
+  s.add_development_dependency "rspec"
   s.add_development_dependency 'bootstrap-generators', '~> 3.3.4'
   s.add_development_dependency 'bootstrap-sass', '~> 3.3.5'
 end
