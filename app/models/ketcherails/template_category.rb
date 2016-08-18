@@ -6,6 +6,13 @@ module Ketcherails
     has_attached_file :icon, styles: { small: "32x32#" },
                       default_url: "/images/:style/missing.png"
 
+    scope :with_templates, -> {
+      self.joins(:common_templates)
+          .select('ketcherails_template_categories.*')
+          .group('ketcherails_template_categories.id')
+          .having('count(ketcherails_common_templates.id) >= 0')
+    }
+
     validates :name, presence: true
     validates_attachment_content_type :icon, content_type: /\Aimage\/.*\Z/
   end

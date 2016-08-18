@@ -116,52 +116,6 @@ ui.initDropdownObservers = function() {
   $$('#usertemplate_search_name').each(function (el) {
     el.observe(EventMap['input'], ui.userTemplatesSearch)
   });
-
-  $$('#commontemplate_search_name').each(function (el) {
-    el.observe(EventMap['input'], ui.commonTemplatesSearch)
-  });
-}
-
-ui.addCommonTemplate = function(tmpl, idx) {
-  var tbody = $('commontemplate_dropdown_list').select('table > tbody')[0];
-  ui.commontemplate_tool_modes.push('commontemplate_' + idx);
-  tbody.insert('<tr class="dropdownListItem" id="commontemplate_' + idx +
-          '" title="' + tmpl.name + ' (Shift+T)"><td><div id="commontemplate_' + idx +
-          '_preview" style="float:right"><img style="align:right" class="dropdownIconTemplate" src="/images/' + tmpl.icon_path +
-          '" alt="" /></div></td><td>' + tmpl.name + '</td></tr>');
-  rnd.commontemplates.push(tmpl);
-
-  if(rnd.commontemplates.length == 0) {
-    ui.DropdownListSetIconAndTitle($('commontemplate'), $('commontemplate_0'));
-  }
-};
-
-ui.commonTemplatesSearch = function() {
-  // Load user templates from the server
-  new Ajax.Request(ui.api_path + 'common_templates_search',
-  {
-      method: 'get',
-      asynchronous : false,
-      parameters: {query: this.value},
-      onComplete: function (res)
-      {
-        try {
-          ui.refreshCommonTemplates();
-
-          var idx = 0;
-          res.responseJSON.templates.each(function (tmpl) {
-            ui.addCommonTemplate(tmpl, idx);
-            idx++;
-          });
-
-          ui.initDropdownObservers();
-        } catch (er) {
-            if (ui.forwardExceptions)
-                throw er;
-            return;
-        }
-      }
-  });
 }
 
 ui.userTemplatesSearch = function() {
@@ -192,12 +146,6 @@ ui.userTemplatesSearch = function() {
   });
 }
 
-ui.refreshCommonTemplates = function() {
-  var tbody = $('commontemplate_dropdown_list').select('table > tbody')[0];
-  tbody.innerHTML = '';
-  rnd.commontemplates = [];
-};
-
 ui.refreshUserTemplates = function() {
   var tbody = $('usertemplate_dropdown_list').select('table > tbody')[0];
   tbody.innerHTML = '';
@@ -209,11 +157,11 @@ ui.addUserTemplate = function(tmpl, idx) {
   ui.usertemplate_tool_modes.push('usertemplate_' + idx);
   tbody.insert('<tr class="dropdownListItem" id="usertemplate_' + idx +
           '" title="' + tmpl.name + ' (Shift+T)"><td><div id="usertemplate_' + idx +
-          '_preview" style="float:right"><img style="align:right" class="dropdownIconTemplate" src="/images/templates/' + tmpl.icon_path +
-          '" alt="" /></div></td><td>' + tmpl.name +
+          '_preview"><img style="align:right" class="dropdownIconTemplate" src="/images/templates/' + tmpl.icon_path +
+          '" alt="" /></div></td><td>' + tmpl.name + '</td>' +
           '<td><a class="usertemplate-destroy-btn" item-id="' + idx +
           '" record-id="' + tmpl.id + '" record-name="' + tmpl.name +
-          '">Delete</a></td></td></tr>');
+          '">Delete</a></td></tr>');
   rnd.usertemplates.push(tmpl);
 
   if(rnd.usertemplates.length == 0) {
@@ -275,37 +223,6 @@ ui.deleteUserTemplate = function() {
   $('usertemplate_confirm_ok').observe('click', onClickOk);
 }
 
-ui.initUserTemplates = function ()
-{
-  // Init user templates
-  new Ajax.Request(ui.api_path + 'templates_list',
-  {
-      method: 'get',
-      asynchronous : false,
-      onComplete: function (res)
-      {
-        try {
-
-          var idx = 0;
-          res.responseJSON.templates.each(function (tmpl) {
-            ui.addUserTemplate(tmpl, idx);
-            idx++;
-          });
-        } catch (er) {
-            if (ui.forwardExceptions)
-                throw er;
-            return;
-        }
-
-
-      }
-  });
-
-  if(rnd.usertemplates.length > 0) {
-    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'));
-  }
-}
-
 ui.initTemplates = function ()
 {
     function parseSdf(sdf) {
@@ -344,32 +261,6 @@ ui.initTemplates = function ()
 
         return parsed;
     }
-
-    // Init common templates
-    rnd.commontemplates = [];
-    new Ajax.Request(ui.api_path + 'common_templates_list',
-    {
-        method: 'get',
-        asynchronous : false,
-        onComplete: function (res)
-        {
-          try {
-            var idx = 0;
-            res.responseJSON.templates.each(function (tmpl) {
-              ui.addCommonTemplate(tmpl, idx);
-              idx++;
-            });
-          } catch (er) {
-              if (ui.forwardExceptions)
-                  throw er;
-              return;
-          }
-        }
-    });
-
-    if(rnd.commontemplates.length > 0) {
-      ui.DropdownListSetIconAndTitle($('commontemplate'), $('commontemplate_0'));
-    }
 };
 
 ui.onClick_SideButton = function ()
@@ -392,7 +283,7 @@ ui.onClick_DropdownButton = function ()
 };
 
 ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
-    if(dropdown.getAttribute('id') == 'commontemplate')
+    if(dropdown.getAttribute('id').startsWith('commontemplate'))
       dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
     else if(dropdown.getAttribute('id') == 'usertemplate')
       dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
@@ -506,7 +397,6 @@ ui.init = function (parameters, opts)
 
     if (!this.standalone) {
       this.initTemplates();
-      this.initUserTemplates();
     }
 
     // Document events
@@ -528,6 +418,11 @@ ui.init = function (parameters, opts)
     $$('.dropdownButton').each(function (el)
     {
         el.observe('click', ui.onClick_DropdownButton);
+    });
+
+    $$('.templateCategoryDropdownButton').each(function (el)
+    {
+      el.observe('click', ui.onClick_DropdownButton);
     });
     this.initDropdownObservers()
     $('new').observe('click', ui.onClick_NewFile);
@@ -707,9 +602,11 @@ ui.toggleDropdownList = function (name)
 
     // hide commontemplates explicitly cause we don't do it automatically
     // for that list. reason is search button
-    var ut_list_id = 'commontemplate_dropdown_list';
-    if(list_id != ut_list_id && $(ut_list_id).visible())
-      $(ut_list_id).hide();
+    <% Ketcherails::TemplateCategory.with_templates.pluck(:id).each do |id| %>
+      var ut_list_id = 'commontemplate' + '<%= id %>' + '_dropdown_list';
+      if(list_id != ut_list_id && $(ut_list_id).visible())
+        $(ut_list_id).hide();
+    <% end %>
 };
 
 

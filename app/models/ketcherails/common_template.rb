@@ -9,7 +9,7 @@ module Ketcherails
     belongs_to :template_category
 
     # we add 1-by-1 on front-end part. so newest item is on the top
-    default_scope { order('created_at DESC') }
+    default_scope { order('name ASC') }
     scope :approved, -> { where(status: 'approved') }
     scope :pending, -> { where(status: 'pending') }
     scope :rejected, -> { where(status: 'rejected') }

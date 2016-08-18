@@ -117,7 +117,7 @@ table#ketcher_window > tr
     width: 36px;
 }
 
-.sideButtonCell
+.menuButtonCell
 {
     height: 36px;
 }
@@ -229,7 +229,7 @@ table#ketcher_window > tr
     top: 196px;
 }
 
-#commontemplate_dropdown_list, #usertemplate_dropdown_list
+#commontemplate_dropdown_list, #usertemplate_dropdown_list, .commonTemplateDropdownList
 {
     top: 48px;
     left: 45px;
@@ -371,7 +371,8 @@ div#loading
   top:   200px;
 }
 
-#usertemplate_dropdown_list, #commontemplate_dropdown_list {
+#usertemplate_dropdown_list, #commontemplate_dropdown_list, .commonTemplateDropdownList
+{
   max-height: 300px;
   overflow-y: scroll;
 }

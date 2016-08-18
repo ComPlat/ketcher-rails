@@ -3,6 +3,7 @@ module Ketcherails
     require 'jquery-ui-rails'
     require 'kaminari'
     require 'bootstrap-kaminari-views'
+    require 'paperclip'
 
     isolate_namespace Ketcherails
 
