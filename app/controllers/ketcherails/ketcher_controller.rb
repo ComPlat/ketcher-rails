@@ -6,7 +6,7 @@ module Ketcherails
     layout false
 
     def index
-      @template_categories = TemplateCategory.with_templates
+      @template_categories = TemplateCategory.with_approved_templates
       @user_templates = CustomTemplate.where(user: current_user)
     end
   end

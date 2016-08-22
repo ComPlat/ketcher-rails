@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari'
   s.add_dependency 'bootstrap-kaminari-views'
   s.add_dependency 'paperclip', '~> 5.0.0'
+  s.add_dependency 'sprite-factory'
 
   s.add_development_dependency "pg"
   s.add_development_dependency "grape"

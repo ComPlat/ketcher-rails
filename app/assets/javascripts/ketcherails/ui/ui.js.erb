@@ -602,7 +602,7 @@ ui.toggleDropdownList = function (name)
 
     // hide commontemplates explicitly cause we don't do it automatically
     // for that list. reason is search button
-    <% Ketcherails::TemplateCategory.with_templates.pluck(:id).each do |id| %>
+    <% Ketcherails::TemplateCategory.with_approved_templates.pluck(:id).each do |id| %>
       var ut_list_id = 'commontemplate' + '<%= id %>' + '_dropdown_list';
       if(list_id != ut_list_id && $(ut_list_id).visible())
         $(ut_list_id).hide();

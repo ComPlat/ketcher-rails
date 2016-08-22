@@ -4,6 +4,7 @@ module Ketcherails
     require 'kaminari'
     require 'bootstrap-kaminari-views'
     require 'paperclip'
+    require 'sprite_factory'
 
     isolate_namespace Ketcherails
 

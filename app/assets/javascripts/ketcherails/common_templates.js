@@ -11,6 +11,7 @@ getKetcher = function() {
 showKetcherModal = function() {
   var ketcher = getKetcher();
   var molfile = $('textarea#common_template_molfile').val();
+  ketcher.setMolecule(molfile);
   $('#ketcherModal').modal('show');
 }
 
