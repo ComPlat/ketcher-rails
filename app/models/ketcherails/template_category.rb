@@ -4,6 +4,8 @@ module Ketcherails
     has_many :common_templates
 
     has_attached_file :icon, styles: { small: "32x32#" },
+                      url: 'ketcherails/:attachment/:style/:basename.:extension',
+                      path: ':rails_root/public/images/ketcherails/:attachment/:style/:basename.:extension',
                       default_url: "/images/:style/missing.png"
 
     scope :with_templates, -> {
