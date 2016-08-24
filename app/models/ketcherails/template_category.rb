@@ -8,12 +8,15 @@ module Ketcherails
                       path: ':rails_root/public/images/ketcherails/:attachment/:style/:basename.:extension',
                       default_url: "/images/:style/missing.png"
 
-    scope :with_templates, -> {
+    scope :with_approved_templates, -> {
       self.joins(:common_templates)
+          .where("ketcherails_common_templates.status = 'approved'")
           .select('ketcherails_template_categories.*')
           .group('ketcherails_template_categories.id')
           .having('count(ketcherails_common_templates.id) >= 0')
     }
+
+    scope :icon_present, -> { where("icon_file_name IS NOT NULL") }
 
     validates :name, presence: true
     validates_attachment_content_type :icon, content_type: /\Aimage\/.*\Z/

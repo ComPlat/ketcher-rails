@@ -9,6 +9,7 @@ PATH
       nokogiri (= 1.6.7.2)
       paperclip (~> 5.0.0)
       rails (~> 4.2.0)
+      sprite-factory
 
 GEM
   remote: https://rubygems.org/
@@ -183,6 +184,7 @@ GEM
       sexp_processor (~> 4.1)
     sass (3.4.18)
     sexp_processor (4.7.0)
+    sprite-factory (1.7.1)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)

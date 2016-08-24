@@ -4,7 +4,7 @@ module Ketcherails
     namespace :ketcher do
       desc 'Get categories list'
       get :template_categories_list do
-        data = Ketcherails::TemplateCategory.with_templates
+        data = Ketcherails::TemplateCategory.with_approved_templates
 
         { categories: data.map {|d| TemplateCategorySerializer.new(d)} }
       end

@@ -7,6 +7,7 @@
     <title>Ketcher</title>
     <%= stylesheet_link_tag 'ketcherails/ketcher-with-sprites' %>
     <%= javascript_include_tag 'ketcherails/ketcher' %>
+    <%= stylesheet_link_tag Ketcherails::SPRITES_CSS_FILENAME %>
     <script type="text/javascript">
       window.onload = function () {
         // Parse URL parameters
@@ -231,14 +232,16 @@
         </tr>
         <tr align="center" class="menuButtonCell">
           <td class="toolButtonCell">
-            <td>
-              <% @template_categories.each do |cat| %>
-                <td class="toolButtonCell toolButton templateCategory templateCategoryDropdownButton" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown' %>" data-id="<%= cat.id %>" colspan="1">
-                  <%= image_tag cat.icon.url(:small), title: cat.name, class: 'sideButton', id: 'commontemplate' + cat.id.to_s %>
-                </td>
-                  <% end %>
-                </tr>
-              </table>
+          </td>
+          <td class="toolButtonCell" style="display: inline-flex;">
+            <% @template_categories.each do |cat| %>
+              <div class="toolButtonCell toolButton templateCategory templateCategoryDropdownButton" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown' %>" data-id="<%= cat.id %>" span="1">
+                <%= template_category_icon_tag cat %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      </table>
 
               <div class="dropdownList" id="selector_dropdown_list" style="display:none">
                 <table>
