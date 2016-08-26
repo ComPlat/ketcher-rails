@@ -238,6 +238,9 @@
               <div class="toolButtonCell toolButton templateCategory templateCategoryDropdownButton" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown' %>" data-id="<%= cat.id %>" span="1">
                 <%= template_category_icon_tag cat %>
               </div>
+              <div style="display: none;" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown_default' %>">
+                <%= template_category_icon_tag cat %>
+              </div>
             <% end %>
           </td>
         </tr>
@@ -410,7 +413,7 @@
                       <tr class="dropdownListItem" id="<%= "commontemplate#{cat.id}_#{idx}" %>" title="<%= tmpl.name %>">
                         <td>
                           <div id="commontemplate_<%= idx %>_preview" style="float: right;">
-                            <%= image_tag(tmpl.icon_path, style: 'align:right', class: "dropdownIconTemplate") %>
+                            <%= common_template_icon_tag tmpl %>
                           </div>
                         </td>
                         <td>
@@ -1115,6 +1118,8 @@
   var idx = 0;
   <% @template_categories.each do |cat| %>
     <% cat.common_templates.each do |tmpl| %>
+      ui.dropdown_lists.push('commontemplate<%= cat.id %>_dropdown_list');
+      ui.commontemplate_cat_ids.push(<%= cat.id %>);
       ui.commontemplate_tool_modes.push('<%= "commontemplate#{cat.id}_" %>' + idx);
       rnd.commontemplates.push(<%= inline_template(tmpl) %>);
       idx++;

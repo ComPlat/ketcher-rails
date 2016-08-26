@@ -6,18 +6,23 @@ class MakeKetcherailsSprites < ActiveJob::Base
     css = Ketcherails::SPRITES_CSS_FILENAME
     log = SpriteFactory.run!(
       'public/images/ketcherails',
-      output_style: "#{Rails.root}/public/stylesheets/#{css}"
+      output_style: "#{Rails.root}/public/stylesheets/#{css}",
+      output_image: "#{Rails.root}/public/stylesheets/ketcherails.png",
+      margin: 1
     )
 
-    Ketcherails::TemplateCategory.update_all('sprite_class=NULL')
 
-    Ketcherails::TemplateCategory.icon_present.find_each do |cat|
-      sprite_class = cat.icon.url[/ketcherails\/(.+)\./, 1]
-      sprite_class.gsub!('/', '_')
-      sprite_class.gsub!('original', 'small')
+    klasses = [Ketcherails::TemplateCategory, Ketcherails::CommonTemplate]
+    klasses.each do |klass|
+      klass.update_all('sprite_class=NULL')
+      klass.icon_present.find_each do |item|
+        sprite_class = item.icon.url[/ketcherails\/(.+)\./, 1]
+        sprite_class.gsub!('/', '_')
+        sprite_class.gsub!('original', 'small')
 
-      if log.include? "img.#{sprite_class}"
-        cat.update_attribute :sprite_class, sprite_class
+        if log.include? "img.#{sprite_class}"
+          item.update_attribute :sprite_class, sprite_class
+        end
       end
     end
   end
