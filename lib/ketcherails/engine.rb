@@ -22,6 +22,10 @@ module Ketcherails
       app.config.assets.precompile += %w(ketcherails/ketcher.js ketcherails/ketcher-with-sprites.css ketcherails/sprite.png)
     end
 
+    initializer "static assets" do |app|
+      app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public")
+    end
+
     initializer :append_migrations do |app|
       unless app.root.to_s.match root.to_s
         config.paths["db/migrate"].expanded.each do |expanded_path|

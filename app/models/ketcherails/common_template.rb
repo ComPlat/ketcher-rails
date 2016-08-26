@@ -1,12 +1,16 @@
 module Ketcherails
   class CommonTemplate < ActiveRecord::Base
 
+    include Iconed
+
     IMG_SIZE = 64 # 64x64 pixels icon
     STATUSES = %w(pending approved rejected)
 
+    has_icon small: '64x64#', icon:'32x32#'
+
     belongs_to :suggestor, foreign_key: :suggested_by, class_name: 'User'
     belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User'
-    belongs_to :template_category
+    belongs_to :template_category, touch: true
 
     # we add 1-by-1 on front-end part. so newest item is on the top
     default_scope { order('name ASC') }
@@ -16,15 +20,15 @@ module Ketcherails
 
     before_save :set_name, :get_icon
 
-    #TODO: enable this validation
-    # validate :icon_path, presence: true
-
     def category_name
       self.template_category.try :name
     end
 
     def get_icon svg = nil
-      return true if self.icon_path.present?
+      if !self.molfile_changed? && self.icon.present?
+        return true
+      end
+
       process = svg.present?
 
       svg ||= Ketcherails::OpenBabelService.svg_from_molfile self.molfile
@@ -42,10 +46,9 @@ module Ketcherails
 
       img = Svg2pdf.convert_to_img_data(svg, :png)
       digest = Digest::SHA256.hexdigest(SecureRandom.hex(16))
-      filename = "templates/#{digest}.png"
-      svg_file_path = "public/images/#{filename}"
-      img.write_to_png(svg_file_path)
-      self.icon_path = filename
+      tmp = Tempfile.new([ digest, '.png' ])
+      img.write_to_png(tmp.path)
+      self.icon = tmp
     end
 
     private
