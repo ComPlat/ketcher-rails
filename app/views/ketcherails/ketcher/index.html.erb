@@ -1118,7 +1118,6 @@
   var idx = 0;
   <% @template_categories.each do |cat| %>
     <% cat.common_templates.each do |tmpl| %>
-      ui.dropdown_lists.push('commontemplate<%= cat.id %>_dropdown_list');
       ui.commontemplate_cat_ids.push(<%= cat.id %>);
       ui.commontemplate_tool_modes.push('<%= "commontemplate#{cat.id}_" %>' + idx);
       rnd.commontemplates.push(<%= inline_template(tmpl) %>);
