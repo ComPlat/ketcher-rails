@@ -23,7 +23,6 @@ module Ketcherails
         class: 'dropdownIconTemplate',
         id: 'commontemplate' + tmpl.id.to_s
       }
-
       if tmpl.sprite_class.present?
         sprite_tag(tmpl.sprite_class, opts)
       else

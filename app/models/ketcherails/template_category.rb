@@ -7,6 +7,8 @@ module Ketcherails
 
     has_icon icon: '32x32#' # has 32x32px icon
 
+    default_scope  { order('ketcherails_template_categories.name ASC') }
+
     scope :with_approved_templates, -> {
       self.joins(:common_templates)
           .where("ketcherails_common_templates.status = 'approved'")

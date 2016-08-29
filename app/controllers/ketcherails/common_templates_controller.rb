@@ -11,7 +11,9 @@ module Ketcherails
     def index
       per_page = params[:per_page] || PER_PAGE
 
-      @common_templates = CommonTemplate.includes(:template_category).page params[:page]
+      @common_templates = CommonTemplate.order('updated_at DESC')
+                                        .includes(:template_category)
+                                        .page params[:page]
     end
 
     # GET /common_templates/1

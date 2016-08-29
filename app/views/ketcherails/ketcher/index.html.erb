@@ -409,7 +409,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% cat.common_templates.each_with_index do |tmpl| %>
+                    <% cat.common_templates.order('name ASC').each_with_index do |tmpl| %>
                       <tr class="dropdownListItem" id="<%= "commontemplate#{cat.id}_#{idx}" %>" title="<%= tmpl.name %>">
                         <td>
                           <div id="commontemplate_<%= idx %>_preview" style="float: right;">
@@ -1117,7 +1117,7 @@
 
   var idx = 0;
   <% @template_categories.each do |cat| %>
-    <% cat.common_templates.each do |tmpl| %>
+    <% cat.common_templates.order('name ASC').each do |tmpl| %>
       ui.commontemplate_cat_ids.push(<%= cat.id %>);
       ui.commontemplate_tool_modes.push('<%= "commontemplate#{cat.id}_" %>' + idx);
       rnd.commontemplates.push(<%= inline_template(tmpl) %>);

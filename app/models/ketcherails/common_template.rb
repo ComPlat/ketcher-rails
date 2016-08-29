@@ -12,8 +12,6 @@ module Ketcherails
     belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User'
     belongs_to :template_category, touch: true
 
-    # we add 1-by-1 on front-end part. so newest item is on the top
-    default_scope { order('name ASC') }
     scope :approved, -> { where(status: 'approved') }
     scope :pending, -> { where(status: 'pending') }
     scope :rejected, -> { where(status: 'rejected') }
@@ -55,7 +53,12 @@ module Ketcherails
 
     def set_name
       if self.name.blank?
-        self.name = Ketcherails::OpenBabelService.get_formula self.molfile
+        name_from_file = self.molfile.lines[0]
+        if name_from_file.present?
+          self.name = name_from_file.strip
+        else
+          self.name = Ketcherails::OpenBabelService.get_formula self.molfile
+        end
       end
     end
   end
