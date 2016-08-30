@@ -5,7 +5,7 @@ module Ketcherails
 
     include Ketcherails::Iconed
 
-    has_icon icon: '32x32#' # has 32x32px icon
+    has_icon small: '32x32' # has 32x32px icon
 
     default_scope  { order('ketcherails_template_categories.name ASC') }
 

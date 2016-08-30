@@ -6,7 +6,7 @@ module Ketcherails
     IMG_SIZE = 64 # 64x64 pixels icon
     STATUSES = %w(pending approved rejected)
 
-    has_icon small: '64x64#', icon:'32x32#'
+    has_icon small: '64x64', icon:'32x32'
 
     belongs_to :suggestor, foreign_key: :suggested_by, class_name: 'User'
     belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User'
@@ -23,7 +23,7 @@ module Ketcherails
     end
 
     def get_icon svg = nil
-      if !self.molfile_changed? && self.icon.present?
+      if !self.molfile_changed? || self.icon_file_name_changed?
         return true
       end
 

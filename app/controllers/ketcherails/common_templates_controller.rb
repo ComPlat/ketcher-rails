@@ -31,7 +31,9 @@ module Ketcherails
 
     # POST /common_templates
     def create
-      list = common_template_params[:molfile].split('$$$$')
+      list = common_template_params[:molfile].split('$$$$').reject do |item|
+        item.blank?
+      end
       if list.size > 1
         index = 0 # we use it outside of cycle, so forget `each_with_index`
         list = list.reject &:blank?
