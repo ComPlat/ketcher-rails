@@ -21,16 +21,14 @@ input[type="radio"], input[type="checkbox"] {
   margin-top: 7px;
 }
 
-#ketcherModal .modal-content {
-  width: 900px;
-}
-#ketcherModal #ifKetcher {
-  width: 882px;
-  height: 610px;
+// this applys to Ketcher window in templates admin part
+.structure-editor-modal {
+  width: 90vw !important;
 }
 
-@media screen and (max-height: 768px) {
-  #ketcherModal #ifKetcher {
-    height: 570px;
-  }
+iframe#ifKetcher {
+  width: 100%;
+  height: 590px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }

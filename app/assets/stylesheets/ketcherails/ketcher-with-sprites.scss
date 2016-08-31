@@ -16,6 +16,7 @@
 body
 {
     margin: 0;
+    overflow: hidden;
 }
 
 body > div:first-child
@@ -23,19 +24,6 @@ body > div:first-child
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-.ketcherDivMaxSize
-{
-   max-width: 1000px;
-   height: 600px;
-   max-height: 600px;
-}
-
-@media screen and (max-height: 768px) {
-  .ketcherDivMaxSize {
-    height: 510px;
-  }
 }
 
 a, img
