@@ -621,6 +621,9 @@ rnd.Editor.AtomTool.prototype.OnMouseDown = function(event) {
     }
 };
 rnd.Editor.AtomTool.prototype.OnMouseMove = function(event) {
+		if(event.movementX == 0 && event.movementY == 0)
+			return true;
+
     var _E_ = this.editor, _R_ = _E_.render;
     if ('dragCtx' in this && 'item' in this.dragCtx) {
         var _DC_ = this.dragCtx;
