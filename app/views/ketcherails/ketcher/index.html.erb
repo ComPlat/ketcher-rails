@@ -104,7 +104,7 @@
           <td>
             <%= image_tag asset_path('ketcherails/sprite.png'), id: 'select_erase', class: 'sideButton modeButton icon-png-main-edit-clear', title: 'Erase', alt: '' %>
           </td>
-          <td colspan="21" rowspan="13">
+          <td colspan="21" rowspan="<%= 13 + @add_tr_count%>">
             <div id="client_area"></div>
           </td>
           <td>
@@ -230,7 +230,15 @@
             <div class="sideButton modeButton" id="atom_reagenerics" title="Reaxys Generics"></div>
           </td>
         </tr>
-        <tr align="center" class="menuButtonCell">
+
+        <% @add_tr_count.times do  %>
+          <tr align="center" class="menuButtonCell">
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <tr align="center" class="menuButtonCell" id="template_categories_menu_row">
           <td class="toolButtonCell">
           </td>
           <td class="toolButtonCell" style="display: inline-flex;">
