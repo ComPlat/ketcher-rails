@@ -48,12 +48,5 @@ module Ketcherails
       options[:class] = "#{name} #{options[:class]}" # add sprite class
       image_tag('transparent.png', options) # image URL comes in CSS
     end
-
-    def get_add_tr_count height
-      delta = height*0.8 - 590
-      return if delta <= 0
-
-      (delta/36.0).round # each tr has 36px size
-    end
   end
 end
