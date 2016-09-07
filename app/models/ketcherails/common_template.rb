@@ -17,6 +17,7 @@ module Ketcherails
     scope :rejected, -> { where(status: 'rejected') }
 
     before_save :set_name, :get_icon
+    after_save :convert_grayscale
 
     def category_name
       self.template_category.try :name
@@ -59,6 +60,13 @@ module Ketcherails
         else
           self.name = Ketcherails::OpenBabelService.get_formula self.molfile
         end
+      end
+    end
+
+    def convert_grayscale
+      %i(icon small).each do |style|
+        path = self.icon.path(style)
+        system "convert #{path} -fx '(r+g+b)/3' #{path}"
       end
     end
   end
