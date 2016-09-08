@@ -8,7 +8,8 @@ class MakeKetcherailsSprites < ActiveJob::Base
       'public/images/ketcherails',
       output_style: "#{Rails.root}/public/stylesheets/#{css}",
       output_image: "#{Rails.root}/public/stylesheets/ketcherails.png",
-      margin: 1
+      margin: 1,
+      layout: :packed
     )
 
 

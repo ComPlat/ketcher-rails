@@ -8,7 +8,10 @@ module Ketcherails
       before_save :generate_sprites
 
       def generate_sprites
-        Delayed::Job.enqueue(MakeKetcherailsSprites.new) if self.icon_file_name_changed?
+        if self.icon_updated_at_changed?
+          self.sprite_class = nil
+          Delayed::Job.enqueue(MakeKetcherailsSprites.new)
+        end
       end
     end
 
