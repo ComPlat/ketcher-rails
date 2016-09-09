@@ -1,7 +1,8 @@
 %h1 Listing common templates
 
 = link_to 'New Common template', new_common_template_path,
-          class: 'btn btn-primary pull-right new-ctemplate-btn'
+          class: 'btn btn-primary pull-right new-ctemplate-btn',
+          id: 'template-form-link'
 = paginate @common_templates, theme: 'twitter-bootstrap-3'
 
 %table{class: 'table'}
@@ -32,9 +33,14 @@
         %td{class: 'col-md-1'}
           = link_to 'Show', common_template, class: 'btn btn-default'
         %td{class: 'col-md-1'}
-          = link_to 'Edit', edit_common_template_path(common_template), class: 'btn btn-warning'
+          = link_to 'Edit', edit_common_template_path(common_template), class: 'btn btn-warning template-form-link'
         %td{class: 'col-md-1'}
           = link_to 'Destroy', common_template, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
 
 %br
 = paginate @common_templates, theme: 'twitter-bootstrap-3'
+
+:javascript
+window.onload = function () {
+  attachKetcherHeighttoUrl('.template-form-link');
+}
