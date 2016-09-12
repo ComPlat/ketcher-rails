@@ -1,13 +1,18 @@
 class MakeKetcherailsSprites < ActiveJob::Base
   queue_as :default
 
-  def perform
+  SPRITES_PATH = "#{Rails.root}/public/images/sprites/"
 
+  unless Dir.exists? SPRITES_PATH
+    Dir.mkdir SPRITES_PATH
+  end
+
+  def perform
     css = Ketcherails::SPRITES_CSS_FILENAME
     log = SpriteFactory.run!(
       'public/images/ketcherails',
-      output_style: "#{Rails.root}/public/stylesheets/#{css}",
-      output_image: "#{Rails.root}/public/stylesheets/ketcherails.png",
+      output_style: "#{SPRITES_PATH}#{css}",
+      output_image: "#{SPRITES_PATH}ketcherails.png",
       margin: 1,
       layout: :packed
     )

@@ -7,7 +7,9 @@
     <title>Ketcher</title>
     <%= stylesheet_link_tag 'ketcherails/ketcher-with-sprites' %>
     <%= javascript_include_tag 'ketcherails/ketcher' %>
-    <%= stylesheet_link_tag Ketcherails::SPRITES_CSS_FILENAME %>
+    <% if File.exists?(path = Rails.root + 'public/images/sprites/' + Ketcherails::SPRITES_CSS_FILENAME) %>
+      <link rel="stylesheet" media="screen" href="/images/sprites/ketcherails-sprites.css" />
+    <% end %>
     <script type="text/javascript">
       window.onload = function () {
         // Parse URL parameters
