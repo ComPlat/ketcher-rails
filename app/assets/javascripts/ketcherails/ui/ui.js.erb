@@ -176,7 +176,7 @@ ui.addUserTemplate = function(tmpl, idx) {
   rnd.usertemplates.push(tmpl);
 
   if(rnd.usertemplates.length == 0) {
-    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'));
+    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'), false);
   }
 };
 
@@ -293,7 +293,7 @@ ui.onClick_DropdownButton = function ()
     ui.toggleDropdownList(this.id);
 };
 
-ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
+ui.DropdownListSetIconAndTitle = function(dropdown, selected, setAsActiveTool = true) {
   var dropdown_id = dropdown.getAttribute('id');
     if(dropdown_id.startsWith('commontemplate')) {
       ui.commontemplate_cat_ids.each(function(id) {
@@ -310,7 +310,13 @@ ui.DropdownListSetIconAndTitle = function(dropdown, selected) {
     else if(dropdown_id == 'usertemplate')
       dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
     else
-      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown.','-sidebar-'));
+      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown','-sidebar'));
+
+    if(dropdown_id == 'usertemplate')
+      $('usertemplate').setAttribute('class', dropdown.getAttribute('class').replace('buttonSelected', ''));
+
+    if(setAsActiveTool)
+      dropdown.setAttribute('class', dropdown.getAttribute('class') + ' sideButton modeButton stateButton buttonSelected');
     dropdown.title = selected.title;
 }
 

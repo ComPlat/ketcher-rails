@@ -38,59 +38,59 @@
         <tr align="center" id="main_toolbar">
           <td style="width:36px">
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'selector', class: 'sideButton modeButton stateButton icon-png-selection-lasso-sidebar', title: 'Lasso Selection Tool (Esc)', alt: '', selid: 'selector_lasso' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'selector_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'selector', class: 'sideButton modeButton stateButton selection_lasso-sidebar', title: 'Lasso Selection Tool (Esc)', alt: '', selid: 'selector_lasso' %>
+              <%= sprite_tag '', id: 'selector_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
           <td class="toolDelimiter"></td>
           <!--td style="width:36px"><object type="image/svg+xml" width="28" height="28" data="svg/document-new28x28.svg"></object></td-->
           <td class="toolButtonCell toolButton" id="new">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-document-new', title: 'Clear Canvas (Ctrl+N)', alt: '' %>
+            <%= sprite_tag '', class: 'main_document-new', title: 'Clear Canvas (Ctrl+N)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton" id="open">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-document-open', title: 'Open... (Ctrl+O)', alt: '' %>
+            <%= sprite_tag '', class: 'main_document-open', title: 'Open... (Ctrl+O)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton" id="save">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-document-save-as', title: 'Save As... (Ctrl+S)', alt: '' %>
+            <%= sprite_tag '', class: 'main_document-save-as', title: 'Save As... (Ctrl+S)', alt: '' %>
           </td>
           <td class="toolDelimiter"></td>
           <td class="toolButtonCell toolButton buttonDisabled" id="undo">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-edit-undo', title: 'Undo (Ctrl+Z)', alt: '' %>
+            <%= sprite_tag '', class: 'main_edit-undo', title: 'Undo (Ctrl+Z)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton buttonDisabled" id="redo">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-edit-redo', title: 'Redo (Ctrl+Y)', alt: '' %>
+            <%= sprite_tag '', class: 'main_edit-redo', title: 'Redo (Ctrl+Y)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton buttonDisabled" id="cut">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-edit-cut', title: 'Cut (Ctrl+X)', alt: '' %>
+            <%= sprite_tag '', class: 'main_edit-cut', title: 'Cut (Ctrl+X)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton buttonDisabled" id="copy">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-edit-copy', title: 'Copy (Ctrl+C)', alt: '' %>
+            <%= sprite_tag '', class: 'main_edit-copy', title: 'Copy (Ctrl+C)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton buttonDisabled" id="paste">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-edit-paste', title: 'Paste (Ctrl+V)', alt: '' %>
+            <%= sprite_tag '', class: 'main_edit-paste', title: 'Paste (Ctrl+V)', alt: '' %>
           </td>
           <td class="toolDelimiter"></td>
           <td class="toolButtonCell toolButton" id="zoom_in">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-view-zoom-in', title: 'Zoom In (+)', alt: '' %>
+            <%= sprite_tag '', class: 'main_view-zoom-in', title: 'Zoom In (+)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton" id="zoom_out">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-view-zoom-out', title: 'Zoom Out (-)', alt: '' %>
+            <%= sprite_tag '', class: 'main_view-zoom-out', title: 'Zoom Out (-)', alt: '' %>
           </td>
           <td id="zoom_list_cell" style="width:95px">
             <select id="zoom_list"></select>
           </td>
           <td class="toolDelimiter"></td>
           <td class="toolButtonCell toolButton serverRequired" id="clean_up">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-layout', title: 'Clean Up (Ctrl+L)', alt: '' %>
+            <%= sprite_tag '', class: 'main_layout', title: 'Clean Up (Ctrl+L)', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton serverRequired buttonDisabled" id="aromatize">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-arom', title: 'Aromatize', alt: '' %>
+            <%= sprite_tag '', class: 'main_arom', title: 'Aromatize', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton serverRequired buttonDisabled" id="dearomatize">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-dearom', title: 'Dearomatize', alt: '' %>
+            <%= sprite_tag '', class: 'main_dearom', title: 'Dearomatize', alt: '' %>
           </td>
           <td class="toolButtonCell toolButton serverRequired" id="save_template">
-            <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-star', title: 'Save Template', alt: '' %>
+            <%= sprite_tag '', class: 'main_star', title: 'Save Template', alt: '' %>
           </td>
           <td style="width:100%"></td>
           <td id="toolText" style="width:32px"></td>
@@ -98,13 +98,13 @@
           <td style="width:1px" rowspan="15"></td>
           <td style="width:36px;padding:0 2px 0 0;">
             <a href="#" onclick="ui.showDialog('about_dialog')">
-              <%= image_tag asset_path('ketcherails/sprite.png'), class: 'icon-png-main-logo', title: 'GGA Software Services', alt: '' %>
+              <%= sprite_tag '', class: 'main_logo', title: 'GGA Software Services', alt: '' %>
             </a>
           </td>
         </tr>
         <tr align="center" class="menuButtonCell">
           <td>
-            <%= image_tag asset_path('ketcherails/sprite.png'), id: 'select_erase', class: 'sideButton modeButton icon-png-main-edit-clear', title: 'Erase', alt: '' %>
+            <%= sprite_tag '', id: 'select_erase', class: 'sideButton modeButton main_edit-clear', title: 'Erase', alt: '' %>
           </td>
           <td colspan="21" rowspan="<%= 13 + @add_tr_count%>">
             <div id="client_area"></div>
@@ -116,8 +116,8 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'bond', class: 'sideButton modeButton stateButton icon-png-bond-bond_single-sidebar', title: 'Single Bond (1)', alt: '', selid: 'bond_single' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'bond_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'bond', class: 'sideButton modeButton stateButton bond_bond_single-sidebar', title: 'Single Bond (1)', alt: '', selid: 'bond_single' %>
+              <%= sprite_tag '', id: 'bond_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
 
@@ -128,7 +128,7 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'chain', class: 'sideButton modeButton icon-png-main-chain', title: 'Chain Tool', alt: '' %>
+              <%= sprite_tag '', id: 'chain', class: 'sideButton modeButton main_chain', title: 'Chain Tool', alt: '' %>
             </div>
           </td>
           <td>
@@ -138,8 +138,8 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'template', class: 'sideButton modeButton stateButton icon-png-template-template0-sidebar', title: 'Benzene (T)', selid: 'template_0', alt: '' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'template_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'template', class: 'sideButton modeButton stateButton template_template0-sidebar', title: 'Benzene (T)', selid: 'template_0', alt: '' %>
+              <%= sprite_tag '', id: 'template_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
           <td>
@@ -149,7 +149,7 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'charge_plus', class: 'sideButton modeButton icon-png-main-charge_plus', title: 'Charge Plus (5)', alt: '' %>
+              <%= sprite_tag '', id: 'charge_plus', class: 'sideButton modeButton main_charge_plus', title: 'Charge Plus (5)', alt: '' %>
             </div>
           </td>
           <td>
@@ -159,7 +159,7 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'charge_minus', class: 'sideButton modeButton icon-png-main-charge_minus', title: 'Charge Minus (5)', alt: '' %>
+              <%= sprite_tag '', id: 'charge_minus', class: 'sideButton modeButton main_charge_minus', title: 'Charge Minus (5)', alt: '' %>
             </div>
           </td>
           <td>
@@ -169,8 +169,8 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'reaction', class: 'sideButton modeButton stateButton icon-png-reaction-reaction-arrow-sidebar', selid: 'reaction_arrow', title: 'Reaction Arrow Tool', alt: '' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'reaction_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'reaction', class: 'sideButton modeButton stateButton reaction_reaction-arrow-sidebar', selid: 'reaction_arrow', title: 'Reaction Arrow Tool', alt: '' %>
+              <%= sprite_tag '', id: 'reaction_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
           <td>
@@ -179,7 +179,7 @@
         </tr>
         <tr align="center" class="menuButtonCell">
           <td>
-            <%= image_tag asset_path('ketcherails/sprite.png'), id: 'sgroup', class: 'sideButton modeButton icon-png-main-sgroup', title: 'S-Group (Ctrl+G)', alt: '' %>
+            <%= sprite_tag '', id: 'sgroup', class: 'sideButton modeButton main_sgroup', title: 'S-Group (Ctrl+G)', alt: '' %>
           </td>
           <td>
             <div class="sideButton modeButton" id="atom_cl" title="Cl Atom (Shift+C)"></div>
@@ -188,8 +188,8 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'rgroup', class: 'sideButton modeButton stateButton icon-png-rgroup-rgroup-label-sidebar', selid: 'rgroup_label', title: 'R-Group Tool (Shift+R)', alt: '' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'rgroup_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'rgroup', class: 'sideButton modeButton stateButton rgroup_rgroup-label-sidebar', selid: 'rgroup_label', title: 'R-Group Tool (Shift+R)', alt: '' %>
+              <%= sprite_tag '', id: 'rgroup_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
           <td>
@@ -199,8 +199,8 @@
         <tr align="center" class="menuButtonCell">
           <td>
             <div style="position:relative">
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'transform', class: 'sideButton modeButton stateButton icon-png-transform-transform-rotate-sidebar', selid: 'transform_rotate', title: 'Rotate Tool', alt: '' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'transform_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'transform', class: 'sideButton modeButton stateButton transform_transform-rotate-sidebar', selid: 'transform_rotate', title: 'Rotate Tool', alt: '' %>
+              <%= sprite_tag '', id: 'transform_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
           <td>
@@ -211,7 +211,7 @@
           <td>
             <div style="position:relative">
               <%= image_tag '', id: 'usertemplate', class: 'sideButton modeButton stateButton', title: '', selid: 'usertemplate_0', alt: '' %>
-              <%= image_tag asset_path('ketcherails/sprite.png'), id: 'usertemplate_dropdown', class: 'dropdownButton icon-png-main-dropdown', alt: '' %>
+              <%= sprite_tag '', id: 'usertemplate_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
           <td>
@@ -220,7 +220,7 @@
         </tr>
         <tr align="center" class="menuButtonCell serverRequired">
           <td>
-            <%= image_tag asset_path('ketcherails/sprite.png'), id: 'polymer', class: 'sideButton modeButton icon-png-main-polymer', alt: '', title: 'Polymer' %>
+            <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton main_polymer', alt: '', title: 'Polymer' %>
           </td>
           <td>
             <div class="sideButton modeButton" id="atom_table" title="Periodic table"></div>
@@ -262,7 +262,7 @@
                   <tr class="dropdownListItem" id="selector_lasso" title="Lasso Selection Tool (Esc)">
                     <td>
                       <div id="select_lasso_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-selection-lasso-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon selection_lasso-dropdown', alt: '' %>
                       </div>
                       Lasso Selection Tool
                     </td>
@@ -270,7 +270,7 @@
                   <tr class="dropdownListItem" id="selector_square" title="Rectangle Selection Tool (Esc)">
                     <td>
                       <div id="select_square_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-selection-rectangle-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon selection_rectangle-dropdown', alt: '' %>
                       </div>
                       Rectangle Selection Tool
                     </td>
@@ -278,7 +278,7 @@
                   <tr class="dropdownListItem" id="selector_fragment" title="Fragment Selection Tool (Esc)">
                     <td>
                       <div id="select_fragment">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-selection-structure-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon selection_structure-dropdown', alt: '' %>
                       </div>
                       Fragment Selection Tool
                     </td>
@@ -291,14 +291,14 @@
                   <tr class="dropdownListItem" id="bond_single" title="Single Bond (1)">
                     <td>
                       <div id="bond_single_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_single-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_single-dropdown', alt: '' %>
                       </div>Single
                     </td>
                   </tr>
                   <tr class="dropdownListItem" id="bond_double" title="Double Bond (2)">
                     <td>
                       <div id="bond_double_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_double-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_double-dropdown', alt: '' %>
                       </div>
                       Double
                     </td>
@@ -306,7 +306,7 @@
                   <tr class="dropdownListItem" id="bond_triple" title="Triple Bond (3)">
                     <td>
                       <div id="bond_triple_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_triple-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_triple-dropdown', alt: '' %>
                       </div>
                       Triple
                     </td>
@@ -317,7 +317,7 @@
                   <tr class="dropdownListItem" id="bond_up" title="Single Up Bond (1)">
                     <td>
                       <div id="bond_up_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_up-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_up-dropdown', alt: '' %>
                       </div>
                       Single Up
                     </td>
@@ -325,7 +325,7 @@
                   <tr class="dropdownListItem" id="bond_down" title="Single Down Bond (1)">
                     <td>
                       <div id="bond_down_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_down-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_down-dropdown', alt: '' %>
                       </div>
                       Single Down
                     </td>
@@ -333,7 +333,7 @@
                   <tr class="dropdownListItem" id="bond_updown" title="Single Up/Down Bond (1)">
                     <td>
                       <div id="bond_updown_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_updown-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_updown-dropdown', alt: '' %>
                       </div>
                       Single Up/Down
                     </td>
@@ -341,7 +341,7 @@
                   <tr class="dropdownListItem" id="bond_crossed" title="Double Cis/Trans Bond (2)">
                     <td>
                       <div id="bond_crossed_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_crossed-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_crossed-dropdown', alt: '' %>
                       </div>
                       Double Cis/Trans
                     </td>
@@ -352,7 +352,7 @@
                   <tr class="dropdownListItem" id="bond_any" title="Any Bond (0)">
                     <td>
                       <div id="bond_any_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_any-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_any-dropdown', alt: '' %>
                       </div>
                       Any
                     </td>
@@ -360,7 +360,7 @@
                   <tr class="dropdownListItem" id="bond_aromatic" title="Aromatic Bond (4)">
                     <td>
                       <div id="bond_aromatic_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_aromatic-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_aromatic-dropdown', alt: '' %>
                       </div>
                       Aromatic
                     </td>
@@ -368,7 +368,7 @@
                   <tr class="dropdownListItem" id="bond_singledouble" title="Single/Double Bond">
                     <td>
                       <div id="bond_singledouble_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_singledouble-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_singledouble-dropdown', alt: '' %>
                       </div>
                       Single/Double
                     </td>
@@ -376,7 +376,7 @@
                   <tr class="dropdownListItem" id="bond_singlearomatic" title="Single/Aromatic Bond">
                     <td>
                       <div id="bond_singlearomatic_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_singlearomatic-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_singlearomatic-dropdown', alt: '' %>
                       </div>
                       Single/Aromatic
                     </td>
@@ -384,7 +384,7 @@
                   <tr class="dropdownListItem" id="bond_doublearomatic" title="Double/Aromatic Bond">
                     <td>
                       <div id="bond_doublearomatic_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-bond-bond_doublearomatic-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_doublearomatic-dropdown', alt: '' %>
                       </div>
                       Double/Aromatic
                     </td>
@@ -398,7 +398,7 @@
                   <tr class="dropdownListItem" id="template_<%= index %>" title="<%= tmpl %> (T)">
                     <td>
                       <div id="template_<%= index %>_preview">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-template-template' + index.to_s + '-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon template_template' + index.to_s + '-dropdown', alt: '' %>
                       </div>
                       <%= tmpl %>
                     </td>
@@ -476,7 +476,7 @@
                   <tr class="<%= action == 'automap' ? 'dropdownListItem serverRequired' : 'dropdownListItem' %>" id="reaction_<%= action %>" title="Reaction <%= title %> Tool">
                     <td>
                       <div id="reaction_<%= action %>_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-reaction-reaction-' + action.to_s + '-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon reaction_reaction-' + action.to_s + '-dropdown', alt: '' %>
                       </div>
                       Reaction
                       <%= title %>
@@ -492,7 +492,7 @@
                   <tr class="dropdownListItem" id="rgroup_label" title="R-Group Label Tool (Shift+R)">
                     <td>
                       <div id="rgroup_label_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-rgroup-rgroup-label-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon rgroup_rgroup-label-dropdown', alt: '' %>
                       </div>
                       R-Group Label Tool
                     </td>
@@ -500,7 +500,7 @@
                   <tr class="dropdownListItem" id="rgroup_fragment" title="R-Group Fragment Tool (Shift+R)">
                     <td>
                       <div id="rgroup_fragment_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-rgroup-rgroup-fragment-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon rgroup_rgroup-fragment-dropdown', alt: '' %>
                       </div>
                       R-Group Fragment Tool
                     </td>
@@ -508,7 +508,7 @@
                   <tr class="dropdownListItem" id="rgroup_attpoints" title="Attachment Point Tool (Shift+R)">
                     <td>
                       <div id="rgroup_attpoints_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-rgroup-rgroup-attpoints-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon rgroup_rgroup-attpoints-dropdown', alt: '' %>
                       </div>
                       Attachment Point Tool
                     </td>
@@ -521,7 +521,7 @@
                   <tr class="dropdownListItem" id="transform_rotate" title="Rotate Tool">
                     <td>
                       <div id="transform_rotate_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-transform-transform-rotate-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon transform_transform-rotate-dropdown', alt: '' %>
                       </div>
                       Rotate Tool
                     </td>
@@ -529,7 +529,7 @@
                   <tr class="dropdownListItem" id="transform_flip_h" title="Horizontal Flip">
                     <td>
                       <div id="transform_flip_h_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-transform-transform-flip-h-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon transform_transform-flip-h-dropdown', alt: '' %>
                       </div>
                       Horizontal Flip
                     </td>
@@ -537,7 +537,7 @@
                   <tr class="dropdownListItem" id="transform_flip_v" title="Vertical Flip">
                     <td>
                       <div id="transform_flip_v_todo">
-                        <%= image_tag asset_path('ketcherails/sprite.png'), class: 'dropdownIcon icon-png-transform-transform-flip-v-dropdown', alt: '' %>
+                        <%= sprite_tag '', class: 'dropdownIcon transform_transform-flip-v-dropdown', alt: '' %>
                       </div>
                       Vertical Flip
                     </td>
@@ -1141,7 +1141,7 @@
   <% end %>
 
   if(rnd.usertemplates.length > 0) {
-    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'));
+    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'), false);
   };
 </script>
 <% end %>

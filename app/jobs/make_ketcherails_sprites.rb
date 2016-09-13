@@ -14,7 +14,8 @@ class MakeKetcherailsSprites < ActiveJob::Base
       output_style: "#{SPRITES_PATH}#{css}",
       output_image: "#{SPRITES_PATH}ketcherails.png",
       margin: 1,
-      layout: :packed
+      layout: :packed,
+      nocomments: true
     )
 
 
