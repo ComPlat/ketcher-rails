@@ -92,6 +92,9 @@
           <td class="toolButtonCell toolButton serverRequired" id="save_template">
             <%= sprite_tag '', class: 'main_star', title: 'Save Template', alt: '' %>
           </td>
+          <td class="toolButtonCell toolButton serverRequired" id="show_mol_info">
+            <%= sprite_tag 'main_info', title: 'Show Molecule Info', alt: '' %>
+          </td>
           <td style="width:100%"></td>
           <td id="toolText" style="width:32px"></td>
           <td class="toolDelimiter"></td>
@@ -956,6 +959,36 @@
                   <div style="margin-top:0.5em">
                     <input id="usertemplate_prop_cancel" type="button" value="Cancel"/>
                     <input id="usertemplate_prop_ok" type="button" value="OK"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="moleculePropertiesDialog" id="molecule_properties" style="display:none;">
+                <div style="width:100%">
+                  <div>
+                    Molecule properties
+                  </div>
+                  <div style="height:0.5em"></div>
+                  <table style="text-align:left">
+                    <tr>
+                      <td>
+                        <label>Molecular weight:</label>
+                      </td>
+                      <td>
+                        <p id="mw_value"></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Molecular weight (selected):</label>
+                      </td>
+                      <td>
+                        <p id="mw_selected_value"></p>
+                      </td>
+                    </tr>
+                  </table>
+                  <div style="margin-top:0.5em; text-align: center;">
+                    <input id="molecule_properties_btn_ok" type="button" value="OK"/>
                   </div>
                 </div>
               </div>

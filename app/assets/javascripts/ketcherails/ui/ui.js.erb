@@ -467,6 +467,7 @@ ui.init = function (parameters, opts)
     $('aromatize').observe('click', ui.onClick_Aromatize);
     $('dearomatize').observe('click', ui.onClick_Dearomatize);
     $('save_template').observe('click', ui.onClick_SaveTemplate);
+    $('show_mol_info').observe('click', ui.onClick_ShowMolInfo);
     $('atom_table').observe('click', ui.onClick_ElemTableButton);
     $('elem_table_list').observe('click', ui.onSelect_ElemTableNotList);
     $('elem_table_notlist').observe('click', ui.onSelect_ElemTableNotList);
@@ -1584,6 +1585,27 @@ ui.onClick_SaveTemplate = function ()
     $('usertemplate_prop_ok').observe('click', onClickOk);
 };
 
+ui.onClick_ShowMolInfo = function ()
+{
+    if (this.hasClassName('buttonDisabled'))
+        return;
+
+    var el = $('molecule_properties');
+    if(el.visible()) {
+      el.hide();
+    } else {
+      $('mw_value').innerHTML = rnd.mw_total.toString();
+      $('mw_selected_value').innerHTML = rnd.mw_selected.toString();
+      el.show();
+    }
+
+    var onClickOk = function () {
+      el.hide();
+    }
+
+    $('molecule_properties_btn_ok').observe('click', onClickOk);
+};
+
 ui.page2canvas2 = function (pos)
 {
     var offset = ui.client_area.cumulativeOffset();
@@ -1614,7 +1636,6 @@ ui.onScroll_ClientArea = function(event)
 
     ui.scrollLeft = ui.client_area.scrollLeft;
     ui.scrollTop = ui.client_area.scrollTop;
-    ui.render.alignMWtextNode(ui.scrollLeft, ui.scrollTop)
 
     util.stopEventPropagation(event);
 };

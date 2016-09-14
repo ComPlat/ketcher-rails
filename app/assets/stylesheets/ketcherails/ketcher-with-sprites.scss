@@ -183,7 +183,7 @@ table#ketcher_window > tr
     top: 28px;
 }
 
-.dropdownList
+.dropdownList, .moleculePropertiesDialog
 {
     position: absolute;
     z-index: 2;
@@ -215,9 +215,9 @@ table#ketcher_window > tr
     top: 196px;
 }
 
-#commontemplate_dropdown_list, #usertemplate_dropdown_list, .commonTemplateDropdownList
+#commontemplate_dropdown_list, #usertemplate_dropdown_list, .commonTemplateDropdownList, .moleculePropertiesDialog
 {
-    top: 52px;
+    top: 46px;
     left: 42px;
 }
 

@@ -18,10 +18,8 @@ if (!window.rnd || !rnd.ReStruct)
 rnd.DEBUG = false;
 
 rnd.NUM_PRECISION = 5; //show 5 numbers after comma
-rnd.MWTEXT_ALL_ANCHOR_X = 100;
-rnd.MWTEXT_ALL_ANCHOR_Y = 20;
-rnd.MWTEXT_SEL_ANCHOR_X = 130;
-rnd.MWTEXT_SEL_ANCHOR_Y = rnd.MWTEXT_ALL_ANCHOR_Y + 20;
+rnd.mw_total = 0;
+rnd.mw_selected = 0;
 
 rnd.logcnt = 0;
 rnd.logmouse = false;
@@ -532,7 +530,8 @@ rnd.Render.prototype.setSelection = function (selection)
 			this.ctab.showItemSelection(id, item, selected);
 		}, this);
 	}
-	this.refreshMWTEXT(selMWSum, true);
+	rnd.mw_selected = selMWSum.toFixed(rnd.NUM_PRECISION);
+	$('mw_selected_value').innerHTML = rnd.mw_selected.toString();
 };
 
 rnd.Render.prototype.initStyles = function ()
@@ -939,46 +938,7 @@ rnd.Render.prototype.update = function (force)
 		}
 	}
 
-	this.totalMW = rnd.calculateMW();
-	this.refreshMWTEXT(this.totalMW, false);
-};
-
-rnd.Render.prototype.refreshMWTEXT = function(value, selectedOnly) {
-	var nodeProp;
-	var text;
-	var offset = 0;
-	if(selectedOnly) {
-		nodeProp = 'mwSelectedTextNode'
-		offset =  this.totalMW.toFixed().length - value.toFixed().length;
-		var s = '';
-		for(i = 0; i < offset; i++) { s = s.concat('\u00A0'); }; //NBSP
-		text = 'Molecular weight (selected): ' +s+ value.toFixed(rnd.NUM_PRECISION);
-	} else {
-		nodeProp = 'mwTextNode'
-		text = 'Molecular weight: ' + value.toFixed(rnd.NUM_PRECISION);
-	}
-
-	if(this[nodeProp]) {
-		this[nodeProp].remove();
-	}
-	var textType = selectedOnly ? 'SEL' : 'ALL'
-	var x = ui.client_area.scrollLeft + rnd['MWTEXT_' + textType + '_ANCHOR_X'];
-	var y = ui.client_area.scrollTop + rnd['MWTEXT_' + textType + '_ANCHOR_Y'];
-	this[nodeProp] = this.paper.text(x, y, text)
-	this[nodeProp].attr({ "font-size": 14});
-};
-
-rnd.Render.prototype.alignMWtextNode = function(scrollLeft, scrollTop) {
-	this.mwTextNode.attr(
-		{
-			x: scrollLeft + rnd.MWTEXT_ALL_ANCHOR_X,
-			y: scrollTop + rnd.MWTEXT_ALL_ANCHOR_Y
-		});
-	this.mwSelectedTextNode.attr(
-		{
-			x: scrollLeft + rnd.MWTEXT_SEL_ANCHOR_X,
-			y: scrollTop + rnd.MWTEXT_SEL_ANCHOR_Y
-		});
+	rnd.mw_total = rnd.calculateMW().toFixed(rnd.NUM_PRECISION);
 };
 
 rnd.Render.prototype.checkBondExists = function (begin, end) {
