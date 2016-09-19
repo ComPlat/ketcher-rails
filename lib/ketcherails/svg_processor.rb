@@ -89,6 +89,16 @@ module Ketcherails
       to_xml
     end
 
+    def fit_viewbox_svg
+      clean
+      find_extrema
+      if (@min+@max).compact.size == 4
+        x1,y1=*@min
+        x2,y2=*@max
+        @svg.at_css("svg")["viewBox"]='%i %i %i %i' % [x1, y1, x2-x1,y2-y1]
+      end
+      to_xml
+    end
 
     def path_extrema(ind=nil)
       if ind
