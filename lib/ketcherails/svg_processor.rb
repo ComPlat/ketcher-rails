@@ -10,9 +10,6 @@ module Ketcherails
       svg = @svg.at_css("svg")
       original_w = svg  && svg["width"].to_f
       original_h = svg  && svg["height"].to_f
-      @width = (options[:width].is_a?(Integer) && options[:width]) || original_w
-      @height = (options[:height].is_a?(Integer) && options[:height]) || original_h
-      #@remove_internal_transform = true
       @transforms = []
       @shift=[nil,nil]
     end
@@ -36,12 +33,6 @@ module Ketcherails
         end
       end
       @svg.search('desc').each(&:remove)
-    end
-
-    def redefine_window_size
-      svg=@svg.at_css("svg")
-      svg["width"] = @width
-      svg["height"] = @height
     end
 
     def find_extrema
@@ -83,19 +74,11 @@ module Ketcherails
       clean
       find_extrema
       if (@min+@max).compact.size == 4
-        center_and_scale
-        redefine_window_size
-      end
-      to_xml
-    end
-
-    def fit_viewbox_svg
-      clean
-      find_extrema
-      if (@min+@max).compact.size == 4
         x1,y1=*@min
         x2,y2=*@max
         @svg.at_css("svg")["viewBox"]='%i %i %i %i' % [x1, y1, x2-x1,y2-y1]
+        @svg.at_css("svg")["width"]= x2-x1
+        @svg.at_css("svg")["height"]=y2-y1
       end
       to_xml
     end
