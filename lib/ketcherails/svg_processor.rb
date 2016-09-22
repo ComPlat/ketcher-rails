@@ -7,11 +7,6 @@ module Ketcherails
       @svg = Nokogiri::XML(svg)
       @min,@max=[nil,nil],[nil,nil]
       @margins= (options[:margins].is_a?(Array)&& options[:margins])  || [10,10]
-      svg = @svg.at_css("svg")
-      original_w = svg  && svg["width"].to_f
-      original_h = svg  && svg["height"].to_f
-      @transforms = []
-      @shift=[nil,nil]
     end
 
     def paths
@@ -36,32 +31,20 @@ module Ketcherails
     end
 
     def find_extrema
-      get_internal_transform_shift
-      #remove_all_internal_transform if remove_internal_transform
       path_extrema
       circle_extrema
       text_extrema
-      shift_extrema
       self
     end
 
-    def get_internal_transform_shifts
-      paths.each do |path|
-        transformation = path["transform"]
-        if transformation.match(/^matrix/)
-          matrix = get_matrix_from_transform_matrix(transformation)
-          shift = get_translation_from_matrix(matrix)
-        elsif transformation.match(/^translate/)
-          shift = get_translation_from_transform_translate(transformation)
-        end
-
-        @transforms << shift if shift
+    def get_internal_transform_shift(path)
+      transformation = path["transform"]
+      if transformation.match(/^matrix/)
+        matrix = get_matrix_from_transform_matrix(transformation)
+        get_translation_from_matrix(matrix)
+      elsif transformation.match(/^translate/)
+        get_translation_from_transform_translate(transformation)
       end
-    end
-
-    def get_internal_transform_shift
-      get_internal_transform_shifts
-      @shift=transform_count || [0,0]
     end
 
     def remove_all_internal_transform
@@ -73,12 +56,20 @@ module Ketcherails
     def centered_and_scaled_svg
       clean
       find_extrema
+      mx = @margins[0] || 10
+      my = @margins[1] || 10
       if (@min+@max).compact.size == 4
         x1,y1=*@min
         x2,y2=*@max
-        @svg.at_css("svg")["viewBox"]='%i %i %i %i' % [x1, y1, x2-x1,y2-y1]
+        @svg.at_css("svg")["viewBox"]='%i %i %i %i' % [0, 0, x2-x1 + mx,y2-y1 + my]
         @svg.at_css("svg")["width"]= x2-x1
         @svg.at_css("svg")["height"]=y2-y1
+        children = @svg.at_css("svg").children
+        @svg.at_css("svg").children.first.add_previous_sibling "<g transform='translate(#{(-x1+mx/2).round}, #{(-y1+my/2).round})'>"
+        first_child = @svg.at_css("svg").children.first
+        children.each do |n|
+          n.parent = first_child
+        end
       end
       to_xml
     end
@@ -89,41 +80,35 @@ module Ketcherails
         minmax
         return [@min,@max]
       end
-      paths.each do |path|
-        coordinates = splitxy_for_path(path["d"])
+      paths.each do |element|
+        coordinates = splitxy_for_path(element["d"])
+        sx,sy = *get_internal_transform_shift(element)
+        coordinates.map!{|xy| x,y = *xy; [x+sx,y+sy]}
         minmax(coordinates)
       end
     end
 
     def text_extrema
-      texts.each do |text|
-        if !text["style"].match(/display:\s*none/)
-          coordinates = splitxy_for_text(text)
+      texts.each do |element|
+        if !element["style"].match(/display:\s*none/)
+          coordinates = splitxy_for_text(element)
+          sx,sy = *get_internal_transform_shift(element)
+          coordinates.map!{|xy| x,y = *xy; [x+sx,y+sy]}
           minmax(coordinates)
         end
       end
     end
 
     def circle_extrema
-      circles.each do |circle|
-        if !circle["style"].match(/display:\s*none/)
-
-          coordinates = splitxy_for_circle(circle)
+      circles.each do |element|
+        if !element["style"].match(/display:\s*none/)
+          coordinates = splitxy_for_circle(element)
+          sx,sy = *get_internal_transform_shift(element)
+          coordinates.map!{|xy| x,y = *xy; [x+sx,y+sy]}
           minmax(coordinates)
         end
       end
     end
-
-    def shift_extrema
-      shiftx,shifty = *@shift
-      minx,miny = *@min
-      maxx,maxy = *@max
-      if minx&&miny&&maxx&&maxy
-        @min=[minx+shiftx, miny+shifty]
-        @max=[maxx+shiftx, maxy+shifty]
-      end
-    end
-
 
     def viewbox
       @viewbox = @svg.at_css("svg")["viewbox"]#.split(/,| /)
@@ -134,61 +119,11 @@ module Ketcherails
       self
     end
 
-    def center_and_scale
-      return if ([@min,@max].flatten.compact.empty?)
-      svg = @svg.at_css("svg")
-      marx,mary = *@margins
-      height = svg["height"].to_f-mary*2
-      width = svg["width"].to_f-marx*2
-      minx,miny = *@min
-      maxx,maxy = *@max
-      w,h = maxx-minx,maxy-miny
-      scale_low,scale_high = *([width/w , height/h].sort)
-
-      if width/w <height/h
-        #then recenter along y
-        translation = [-minx*scale_low+marx,-miny*scale_low+mary+(scale_high-scale_low)*h/2]
-      else
-        #recenter along x
-        translation = [-minx*scale_low+marx+(scale_high-scale_low)*w/2,-miny*scale_low+mary]
-      end
-
-      translate = "translate(%i,%i) " %translation
-      scale = "scale(%.2f) " %scale_low
-      if g = @svg.at_css("svg g")
-        #todo
-      else
-        svg = @svg.at_css("svg")
-        children = svg.children
-        transform ="<g transform=\""   + translate + scale+ "\"></g>"
-        svg.prepend_child(transform)
-        g=svg.at_css("g")
-        children.each{ |node| node.parent=g   }
-      end
-    end
-
     def to_xml
       @svg.to_xml
     end
 
     private
-
-    def transform_count
-      transforms=[]
-      counts=[]
-      @transforms.sort.each do | trans|
-        if transforms[-1] == trans
-          counts[-1] += 1
-        else
-          transforms << trans
-          counts << 1
-        end
-      end
-      if ind = counts.index(counts.max)
-        transforms[ind]
-      end
-    end
-
 
     def get_translation_from_transform_translate(transformation)
       transformation.match(/translate\( ([-+]?\d+\.?\d*)\s*(,\s*([-+]?\d+\.?\d*))?\)/)
@@ -231,6 +166,7 @@ module Ketcherails
       l=text.content.size
       [[x,y],[x+font*l,y+font]]
     end
+
     def splitxy_for_circle(circle)
       cx,cy,r=circle["cx"].to_f,circle["cy"].to_f,circle["r"].to_f
       [[cx-r,cy-r],[cx+r,cy+r]]
