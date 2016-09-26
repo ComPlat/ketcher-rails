@@ -7,6 +7,8 @@ module Ketcherails
       @svg = Nokogiri::XML(svg)
       @min,@max=[nil,nil],[nil,nil]
       @margins= (options[:margins].is_a?(Array)&& options[:margins])  || [10,10]
+      @width = (options[:width].is_a?(Integer) && options[:width])
+      @height = (options[:height].is_a?(Integer) && options[:height])
     end
 
     def paths
@@ -53,6 +55,13 @@ module Ketcherails
       end
     end
 
+    def redefine_window_size
+      svg=@svg.at_css("svg")
+      svg["width"] = @width
+      svg["height"] = @height
+      svg["meetOrSlice"] = 'meet'
+    end
+
     def centered_and_scaled_svg
       clean
       find_extrema
@@ -71,6 +80,7 @@ module Ketcherails
           n.parent = first_child
         end
       end
+      redefine_window_size if @width && @height
       to_xml
     end
 

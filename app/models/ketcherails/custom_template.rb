@@ -5,6 +5,7 @@ module Ketcherails
     before_save :set_name, on: :create
 
     IMG_PATH = 'public/images/templates/'
+    IMG_SIZE = 64 # 64x64 pixels icon
     unless Dir.exists?(Rails.root + IMG_PATH)
       Dir.mkdir(Rails.root + IMG_PATH)
     end
@@ -13,7 +14,8 @@ module Ketcherails
     default_scope  { order('created_at DESC') }
 
     def make_icon svg_file
-      processor = Ketcherails::SVGProcessor.new(svg_file)
+      processor = Ketcherails::SVGProcessor.new(svg_file,
+                                              width: IMG_SIZE, height: IMG_SIZE)
 
       svg = processor.centered_and_scaled_svg
       img = Svg2pdf.convert_to_img_data(svg, :png)
