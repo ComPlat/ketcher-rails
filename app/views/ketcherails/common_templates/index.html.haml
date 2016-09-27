@@ -1,8 +1,7 @@
 %h1 Listing common templates
 
 = link_to 'New Common template', new_common_template_path,
-          class: 'btn btn-primary pull-right new-ctemplate-btn',
-          id: 'template-form-link'
+      class: 'btn btn-primary pull-right new-ctemplate-btn'
 = paginate @common_templates, theme: 'twitter-bootstrap-3'
 
 %table{class: 'table'}
@@ -42,5 +41,6 @@
 
 :javascript
 window.onload = function () {
+  attachKetcherHeighttoUrl('.new-ctemplate-btn');
   attachKetcherHeighttoUrl('.template-form-link');
 }

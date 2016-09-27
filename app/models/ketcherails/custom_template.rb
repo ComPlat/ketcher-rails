@@ -5,10 +5,10 @@ module Ketcherails
     before_save :set_name, on: :create
 
     IMG_PATH = 'public/images/templates/'
+    IMG_SIZE = 64 # 64x64 pixels icon
     unless Dir.exists?(Rails.root + IMG_PATH)
       Dir.mkdir(Rails.root + IMG_PATH)
     end
-    IMG_SIZE = 64 # 64x64 pixels icon
 
     # we add 1-by-1 on front-end part. so newest item is on the top
     default_scope  { order('created_at DESC') }
