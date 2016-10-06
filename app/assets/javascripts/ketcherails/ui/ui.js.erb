@@ -356,7 +356,8 @@ ui.init = function (parameters, opts)
     }
 
     this.is_osx = (navigator.userAgent.indexOf('Mac OS X') != -1);
-    this.is_touch = 'ontouchstart' in document && util.isNull(document.ontouchstart);
+    // the logic for touch screens does not work well
+    // this.is_touch = 'ontouchstart' in document && util.isNull(document.ontouchstart);
 
     // IE specific styles
     if (Prototype.Browser.IE)
