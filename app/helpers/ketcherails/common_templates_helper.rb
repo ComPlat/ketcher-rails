@@ -14,13 +14,6 @@ module Ketcherails
       form.select :status, opts, class: 'form-control'
     end
 
-    def ketcher_layout_cache_key
-      'ketcher' +
-      Ketcherails::TemplateCategory.order('updated_at DESC').first.updated_at +
-      Ketcherails::CommonTemplate.order('updated_at DESC').first.updated_at +
-      Ketcherails::CustomTemplate.where(user: current_user).order('updated_at DESC').first.updated_at
-    end
-
     def adjusted_height height
       min_height = 590
       add_tr_count = tr_count(height)
