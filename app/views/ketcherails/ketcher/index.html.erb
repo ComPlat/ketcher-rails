@@ -213,7 +213,7 @@
         <tr align="center" class="menuButtonCell serverRequired">
           <td>
             <div style="position:relative">
-              <%= image_tag '', id: 'usertemplate', class: 'sideButton modeButton stateButton', title: '', selid: 'usertemplate_0', alt: '' %>
+              <%= sprite_tag '', id: 'usertemplate', class: 'sideButton modeButton stateButton main_4stars', title: '', selid: 'usertemplate_0', alt: '' %>
               <%= sprite_tag '', id: 'usertemplate_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </td>
@@ -1172,9 +1172,5 @@
     rnd.usertemplates.push(<%= inline_template(tmpl) %>);
     ui.usertemplate_tool_modes.push('usertemplate_' + <%= idx %>);
   <% end %>
-
-  if(rnd.usertemplates.length > 0) {
-    ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'), false);
-  };
 </script>
 <% end %>
