@@ -295,29 +295,32 @@ ui.onClick_DropdownButton = function ()
 
 ui.DropdownListSetIconAndTitle = function(dropdown, selected, setAsActiveTool = true) {
   var dropdown_id = dropdown.getAttribute('id');
-    if(dropdown_id.startsWith('commontemplate')) {
-      ui.commontemplate_cat_ids.each(function(id) {
-        var sel = 'commontemplate' + id + '_dropdown';
-        if(sel == dropdown_id + '_dropdown') return;
 
-        $(sel).innerHTML = $(sel + '_default').innerHTML;
-      });
-      dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
+  if(dropdown_id == 'usertemplate') return; // disable for usertemplates
 
-      if(selected.select('img')[0].getAttribute('class').include('_small_'))
-        dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('_small_','_icon_'));
-    }
-    else if(dropdown_id == 'usertemplate')
-      dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
-    else
-      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown','-sidebar'));
+  if(dropdown_id.startsWith('commontemplate')) {
+    ui.commontemplate_cat_ids.each(function(id) {
+      var sel = 'commontemplate' + id + '_dropdown';
+      if(sel == dropdown_id + '_dropdown') return;
 
-    if(dropdown_id == 'usertemplate')
-      $('usertemplate').setAttribute('class', dropdown.getAttribute('class').replace('buttonSelected', ''));
+      $(sel).innerHTML = $(sel + '_default').innerHTML;
+    });
+    dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
 
-    if(setAsActiveTool)
-      dropdown.setAttribute('class', dropdown.getAttribute('class') + ' sideButton modeButton stateButton buttonSelected');
-    dropdown.title = selected.title;
+    if(selected.select('img')[0].getAttribute('class').include('_small_'))
+      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('_small_','_icon_'));
+  }
+  else if(dropdown_id == 'usertemplate')
+    dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
+  else
+    dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('-dropdown','-sidebar'));
+
+  if(dropdown_id == 'usertemplate')
+    $('usertemplate').setAttribute('class', dropdown.getAttribute('class').replace('buttonSelected', ''));
+
+  if(setAsActiveTool)
+    dropdown.setAttribute('class', dropdown.getAttribute('class') + ' sideButton modeButton stateButton buttonSelected');
+  dropdown.title = selected.title;
 }
 
 ui.onMouseDown_DropdownListItem = function (event)
