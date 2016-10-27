@@ -13,12 +13,14 @@ module Ketcherails
       end
       post :layout do
         mol_data = params[:moldata]
-        r_list_index = mol_data.lines.index do |line|
+        init_data = mol_data.lines
+
+        r_list_index = init_data.index do |line|
           line.match /> <PolymersList>/
         end
 
         if r_list_index
-          r_list = mol_data.lines[r_list_index + 1].split.map(&:to_i)
+          r_list = init_data[r_list_index + 1].split.map(&:to_i)
         end
 
         c = OpenBabel::OBConversion.new
@@ -47,6 +49,12 @@ module Ketcherails
 
           result.insert end_index + 1, "> <PolymersList>\n"
           result.insert end_index + 2, r_list.join(' ') + "\n"
+        end
+
+        bonds_table_index = t_v2000_index + result[t_v2000_index].to_i + 1
+        # copy initial bonds table
+        (bonds_table_index..(end_index - 1)).each do |index|
+          result[index] = init_data[index]
         end
 
         env['api.format'] = :binary
