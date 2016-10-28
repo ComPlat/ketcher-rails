@@ -80,7 +80,8 @@ chem.Molfile.fmtInfo = {
 		1: chem.Struct.BOND.STEREO.UP,
 		4: chem.Struct.BOND.STEREO.EITHER,
 		6: chem.Struct.BOND.STEREO.DOWN,
-		3: chem.Struct.BOND.STEREO.CIS_TRANS
+		3: chem.Struct.BOND.STEREO.CIS_TRANS,
+		9: chem.Struct.BOND.STEREO.BOLD
 		},
 	v30bondStereoMap: {
 		0: chem.Struct.BOND.STEREO.NONE,

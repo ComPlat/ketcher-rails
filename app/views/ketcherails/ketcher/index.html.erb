@@ -325,6 +325,14 @@
                       Single Up
                     </td>
                   </tr>
+                  <tr class="dropdownListItem" id="bond_bold" title="Bold bond">
+                    <td>
+                      <div id="bond_bold_preview">
+                        <%= sprite_tag '', class: 'dropdownIcon bond_bond_bold-dropdown', alt: '' %>
+                      </div>
+                      Bold
+                    </td>
+                  </tr>
                   <tr class="dropdownListItem" id="bond_down" title="Single Down Bond (1)">
                     <td>
                       <div id="bond_down_preview">
@@ -814,6 +822,7 @@
                         <select id="bond_type" style="width:100%">
                           <option value="single">Single</option>
                           <option value="up">Single Up</option>
+                          <option value="bold">Single Double</option>
                           <option value="down">Single Down</option>
                           <option value="updown">Single Up/Down</option>
                           <option value="double">Double</option>

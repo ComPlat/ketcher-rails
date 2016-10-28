@@ -103,6 +103,20 @@ rnd.ReStruct.prototype.stereoUpBondGetCoordinates = function(hb, neihbid)
     return sin > 0 ? [a1, a2] : [a2, a1];
 };
 
+rnd.ReStruct.prototype.drawBondSingleStereoDoubleBold = function(hb1, hb2, bond)
+{
+	var a = hb1.p, b = hb2.p;
+	var paper = this.render.paper;
+	var styles = this.render.styles;
+
+	return paper.path(rnd.ReStruct.makeStroke(a, b)).attr(styles.lineattr).attr({
+							'stroke': '#000',
+							'stroke-linecap': 'circle',
+							'fill': '#000',
+							'stroke-width': 8
+	    	});
+}
+
 rnd.ReStruct.prototype.drawBondSingleStereoBold = function(hb1, hb2, bond, isDouble)
 {
     var paper = this.render.paper;
@@ -519,7 +533,7 @@ rnd.ReStruct.prototype.drawTopologyMark = function (bond, hb1, hb2)
 rnd.ReStruct.prototype.drawBond = function (bond, hb1, hb2)
 {
 	var path = null;
-        var molecule = this.molecule;
+  var molecule = this.molecule;
 	switch (bond.b.type)
 	{
 		case chem.Struct.BOND.TYPE.SINGLE:
@@ -533,6 +547,9 @@ rnd.ReStruct.prototype.drawBond = function (bond, hb1, hb2)
 					break;
 				case chem.Struct.BOND.STEREO.DOWN:
 					path = this.drawBondSingleDown(hb1, hb2, bond);
+					break;
+				case chem.Struct.BOND.STEREO.BOLD:
+					path = this.drawBondSingleStereoDoubleBold(hb1, hb2, bond);
 					break;
 				case chem.Struct.BOND.STEREO.EITHER:
 					path = this.drawBondSingleEither(hb1, hb2, bond);
