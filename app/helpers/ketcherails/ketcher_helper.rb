@@ -9,6 +9,8 @@ module Ketcherails
         end
       end
 
+      result += params[:height].to_s
+      result += params[:add_tr_count].to_s
       result
     end
 
