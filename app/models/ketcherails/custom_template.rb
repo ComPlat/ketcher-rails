@@ -18,11 +18,12 @@ module Ketcherails
                                               width: IMG_SIZE, height: IMG_SIZE)
 
       svg = processor.centered_and_scaled_svg
-      img = Svg2pdf.convert_to_img_data(svg, :png)
+      svg_file = Tempfile.new(['image', '.svg'])
+      File.open(svg_file.path, 'w') { |file| file.write(svg) }
       digest = Digest::SHA256.hexdigest(SecureRandom.hex(16))
       filename = digest + '.png'
-      svg_file_path = IMG_PATH + filename
-      img.write_to_png(svg_file_path)
+      result_file_path = IMG_PATH + filename
+      system "inkscape --export-text-to-path --without-gui --file=#{svg_file.path} --export-png=#{result_file_path} --export-width=60 --export-height=60"
 
       if self.icon_path.present? # delete old icon file
         old_png = "public/images/templates/#{self.icon_path}"
