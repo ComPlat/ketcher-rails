@@ -660,6 +660,25 @@ rnd.ReStruct.prototype.pathAndRBoxTranslate = function (path, rbb, x, y)
 
 var markerColors = ['black', 'cyan', 'magenta', 'red', 'green', 'blue', 'green'];
 
+rnd.ReStruct.prototype.drawPolymerBeads = function()
+{
+	var render = this.render;
+	var paper = render.paper;
+	var _obj = this;
+
+	this.atoms.each(function (aid, atom) {
+		var atom = _obj.atoms.get(aid);
+    var ps = render.ps(atom.a.pp);
+		if(atom.a.isPolymer){
+			var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
+			circle.attr("fill", "r(0.2,0.3)#fff-000");// fill it with gradient
+			circle.attr("stroke", "#fff");
+			circle.attr("class", "polymer_bead")
+			_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
+		}
+	});
+};
+
 rnd.ReStruct.prototype.showLabels = function ()
 {
 	var render = this.render;
@@ -691,10 +710,7 @@ rnd.ReStruct.prototype.showLabels = function ()
                 var color = '#000000';
 
 		if(atom.a.isPolymer){
-			var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
-			circle.attr("fill", "#000");// fill it with a black color
-			circle.attr("stroke", "#fff");
-			this.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
+			atom.showLabel = false;
 		}
 
 		if (atom.showLabel)
