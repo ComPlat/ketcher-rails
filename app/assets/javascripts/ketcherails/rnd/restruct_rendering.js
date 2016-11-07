@@ -111,9 +111,9 @@ rnd.ReStruct.prototype.drawBondSingleStereoDoubleBold = function(hb1, hb2, bond)
 
 	return paper.path(rnd.ReStruct.makeStroke(a, b)).attr(styles.lineattr).attr({
 							'stroke': '#000',
-							'stroke-linecap': 'circle',
+							'stroke-linecap': 'round',
 							'fill': '#000',
-							'stroke-width': 8
+							'stroke-width': 7
 	    	});
 }
 
@@ -160,7 +160,7 @@ rnd.ReStruct.prototype.drawBondSingleStereoBold = function(hb1, hb2, bond, isDou
     return pathMain;
 };
 
-rnd.ReStruct.prototype.drawBondSingleDown = function (hb1, hb2)
+rnd.ReStruct.prototype.drawBondSingleDown = function(hb1, hb2, bond, isBold = false)
 {
 	var a = hb1.p, b = hb2.p, n = hb1.norm;
 	var settings = this.render.settings;
@@ -176,14 +176,28 @@ rnd.ReStruct.prototype.drawBondSingleDown = function (hb1, hb2)
 	var step = len / (nlines - 1);
 
 	var path = "", p, q, r = a;
-	for (var i = 0; i < nlines; ++i) {
-		r = a.addScaled(d, step * i);
-		p = r.addScaled(n, bsp * (i+0.5) / (nlines - 0.5));
-		q = r.addScaled(n, -bsp * (i+0.5) / (nlines - 0.5));
-		path += rnd.ReStruct.makeStroke(p, q);
+	if(isBold) {
+		for (var i = 0; i < nlines; ++i) {
+			r = a.addScaled(d, step * i);
+			p = r.addScaled(n, bsp);
+			q = r.addScaled(n, -bsp);
+			path += rnd.ReStruct.makeStroke(p, q);
+		}
+	} else {
+		for (var i = 0; i < nlines; ++i) {
+			r = a.addScaled(d, step * i);
+			p = r.addScaled(n, bsp * (i+0.5) / (nlines - 0.5));
+			q = r.addScaled(n, -bsp * (i+0.5) / (nlines - 0.5));
+			path += rnd.ReStruct.makeStroke(p, q);
+		}
 	}
 	return paper.path(path)
     .attr(styles.lineattr);
+};
+
+rnd.ReStruct.prototype.drawBondSingleBoldDown = function (hb1, hb2, bond)
+{
+	return this.drawBondSingleDown(hb1, hb2, bond, true);
 };
 
 rnd.ReStruct.prototype.drawBondSingleEither = function (hb1, hb2)
@@ -545,11 +559,21 @@ rnd.ReStruct.prototype.drawBond = function (bond, hb1, hb2)
 		    else
 					path = this.drawBondSingleUp(hb1, hb2, bond);
 					break;
+				case chem.Struct.BOND.STEREO.BOLD_UP:
+				this.findIncomingUpBonds(hb1.bid, bond);
+				if(bond.boldStereo && bond.neihbid1 >= 0 && bond.neihbid2 >= 0){
+					bond.b.type = chem.Struct.BOND.STEREO.UP;
+					bond.b.stereo = chem.Struct.BOND.STEREO.UP;
+					path = this.drawBondSingleStereoBold(hb1, hb2, bond);
+				}
+				else
+				path = this.drawBondSingleStereoDoubleBold(hb1, hb2, bond);
+				break;
 				case chem.Struct.BOND.STEREO.DOWN:
 					path = this.drawBondSingleDown(hb1, hb2, bond);
 					break;
-				case chem.Struct.BOND.STEREO.BOLD:
-					path = this.drawBondSingleStereoDoubleBold(hb1, hb2, bond);
+				case chem.Struct.BOND.STEREO.BOLD_DOWN:
+					path = this.drawBondSingleBoldDown(hb1, hb2, bond);
 					break;
 				case chem.Struct.BOND.STEREO.EITHER:
 					path = this.drawBondSingleEither(hb1, hb2, bond);

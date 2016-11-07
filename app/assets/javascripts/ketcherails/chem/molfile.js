@@ -81,7 +81,7 @@ chem.Molfile.fmtInfo = {
 		4: chem.Struct.BOND.STEREO.EITHER,
 		6: chem.Struct.BOND.STEREO.DOWN,
 		3: chem.Struct.BOND.STEREO.CIS_TRANS,
-		9: chem.Struct.BOND.STEREO.BOLD
+		9: chem.Struct.BOND.STEREO.BOLD_UP
 		},
 	v30bondStereoMap: {
 		0: chem.Struct.BOND.STEREO.NONE,
@@ -955,12 +955,24 @@ chem.Molfile.parseCTab = function (/* string */ ctabLines) /* chem.Struct */
 chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ struct) /* chem.Struct */
 {
 	ctabLines.each(function(line, index){
-		var polymersFound = line.search('PolymersList');
-		if(polymersFound > 0){
+		if(line.search('PolymersList') > 0){
 			ctabLines[index + 1].strip().split(' ').each(function (id){
 				//this.molecule.polymers.add({ id : id});
 				if(struct.atoms.get(id))
 					struct.atoms.get(id).isPolymer = true;
+			});
+		}
+
+		if(line.search('BoldBondsList') > 0) {
+			ctabLines[index + 1].strip().split(' ').each(function (id){
+				var bond = struct.bonds.get(id)
+				if(bond){
+					if(bond.stereo == chem.Struct.BOND.STEREO.UP){
+						bond.stereo = chem.Struct.BOND.STEREO.BOLD_UP
+					} else if(bond.stereo == chem.Struct.BOND.STEREO.DOWN) {
+						bond.stereo = chem.Struct.BOND.STEREO.BOLD_DOWN
+					}
+				}
 			});
 		}
 	});
@@ -1252,6 +1264,7 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 	}, this);
 
 	this.bondMapping = {};
+	this.boldBonds = [];
 	i = 1;
 	this.molecule.bonds.each(function (id, bond)
 	{
@@ -1260,8 +1273,17 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 		this.writePaddedNumber(this.mapping[bond.end], 3);
 		this.writePaddedNumber(bond.type, 3);
 
-		if (Object.isUndefined(bond.stereo))
+		if (Object.isUndefined(bond.stereo)){
 			bond.stereo = 0;
+		} else {
+			if(bond.stereo == chem.Struct.BOND.STEREO.BOLD_UP) {
+				bond.stereo = chem.Struct.BOND.STEREO.UP;
+				this.boldBonds.push(id);
+			} else if(bond.stereo == chem.Struct.BOND.STEREO.BOLD_DOWN) {
+				bond.stereo = chem.Struct.BOND.STEREO.DOWN;
+				this.boldBonds.push(id);
+			}
+		}
 		this.writePaddedNumber(bond.stereo, 3);
 
 		this.writeWhiteSpace(3);
@@ -1454,16 +1476,24 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 };
 
 chem.MolfileSaver.prototype.writeAdditionalData = function (){
+	var additional_data = '';
 	// return if we have no polymer-items
-	if(this.molecule.polymers.count() == 0)
-		return;
+	if(this.molecule.polymers.count() > 0) {
+		additional_data += '> <PolymersList>\n';
+		this.molecule.polymers.each(function (index, obj) {
+			additional_data += obj.id.toString();
+			additional_data += ' ';
+		});
+		additional_data += '\n';
+	}
 
-	var additional_data = '> <PolymersList>\n';
-	this.molecule.polymers.each(function (index, obj) {
-		additional_data += obj.id.toString();
-		additional_data += ' ';
-	});
-	additional_data += '\n$$$$\n';
+	if(this.boldBonds && this.boldBonds.length > 0) {
+		additional_data += '> <BoldBondsList>\n';
+		additional_data += this.boldBonds.join(' ');
+		additional_data += '\n';
+	}
+
+	additional_data += '$$$$\n';
 	this.writeCR(additional_data);
 };
 

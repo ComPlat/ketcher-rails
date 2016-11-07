@@ -853,19 +853,20 @@ ui.selectMode = function (mode)
 };
 
 ui.bondTypeMap = {
-    'single'   : {type: 1, stereo: chem.Struct.BOND.STEREO.NONE},
-    'up'       : {type: 1, stereo: chem.Struct.BOND.STEREO.UP},
-    'bold'     : {type: 1, stereo: chem.Struct.BOND.STEREO.BOLD},
-    'down'     : {type: 1, stereo: chem.Struct.BOND.STEREO.DOWN},
-    'updown'   : {type: 1, stereo: chem.Struct.BOND.STEREO.EITHER},
-    'double'   : {type: 2, stereo: chem.Struct.BOND.STEREO.NONE},
-    'crossed'  : {type: 2, stereo: chem.Struct.BOND.STEREO.CIS_TRANS},
-    'triple'   : {type: 3, stereo: chem.Struct.BOND.STEREO.NONE},
-    'aromatic' : {type: 4, stereo: chem.Struct.BOND.STEREO.NONE},
+    'single'    : {type: 1, stereo: chem.Struct.BOND.STEREO.NONE},
+    'up'        : {type: 1, stereo: chem.Struct.BOND.STEREO.UP},
+    'bold'      : {type: 1, stereo: chem.Struct.BOND.STEREO.BOLD_UP},
+    'bold_down' : {type: 1, stereo: chem.Struct.BOND.STEREO.BOLD_DOWN},
+    'down'      : {type: 1, stereo: chem.Struct.BOND.STEREO.DOWN},
+    'updown'    : {type: 1, stereo: chem.Struct.BOND.STEREO.EITHER},
+    'double'    : {type: 2, stereo: chem.Struct.BOND.STEREO.NONE},
+    'crossed'   : {type: 2, stereo: chem.Struct.BOND.STEREO.CIS_TRANS},
+    'triple'    : {type: 3, stereo: chem.Struct.BOND.STEREO.NONE},
+    'aromatic'  : {type: 4, stereo: chem.Struct.BOND.STEREO.NONE},
     'singledouble'   : {type: 5, stereo: chem.Struct.BOND.STEREO.NONE},
     'singlearomatic' : {type: 6, stereo: chem.Struct.BOND.STEREO.NONE},
     'doublearomatic' : {type: 7, stereo: chem.Struct.BOND.STEREO.NONE},
-    'any'      :  {type: 8, stereo: chem.Struct.BOND.STEREO.NONE}
+    'any'       :  {type: 8, stereo: chem.Struct.BOND.STEREO.NONE}
 };
 
 ui.bondType = function (mode)
