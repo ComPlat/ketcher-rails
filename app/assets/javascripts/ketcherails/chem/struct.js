@@ -289,8 +289,9 @@ chem.Struct.BOND =
 		NONE: 0,
 		UP: 1,
 		EITHER: 4,
-		BOLD: 9,
+		BOLD_UP: 9,
 		DOWN: 6,
+		BOLD_DOWN: 10,
 		CIS_TRANS: 3
 	},
 
