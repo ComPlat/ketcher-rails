@@ -8,7 +8,6 @@ module Ketcherails
 
     def index
       @template_categories = TemplateCategory.with_approved_templates
-      @user_templates = CustomTemplate.where(user: current_user)
       if params[:add_tr_count].present?
         @add_tr_count = params[:add_tr_count].to_i
       else

@@ -47,6 +47,7 @@ ui.is_touch = false;
 ui.initialized = false;
 
 rnd.usertemplates = [];
+rnd.commontemplates = [];
 ui.usertemplate_tool_modes = [];
 ui.dropdown_lists = [
     'input_label',
@@ -166,10 +167,11 @@ ui.refreshUserTemplates = function() {
 ui.addUserTemplate = function(tmpl, idx) {
   var tbody = $('usertemplate_dropdown_list').select('table > tbody')[0];
   ui.usertemplate_tool_modes.push('usertemplate_' + idx);
+  var img_tag = '<img style="align:right" class="dropdownIconTemplate"' +
+              ' src="/images/templates/' + tmpl.icon_path + '"/>';
   tbody.insert('<tr class="dropdownListItem" id="usertemplate_' + idx +
           '" title="' + tmpl.name + ' (Shift+T)"><td><div id="usertemplate_' + idx +
-          '_preview"><img style="align:right" class="dropdownIconTemplate" src="/images/templates/' + tmpl.icon_path +
-          '" alt="" /></div></td><td>' + tmpl.name + '</td>' +
+          '_preview">' + img_tag + '</div></td><td>' + tmpl.name + '</td>' +
           '<td><a class="usertemplate-destroy-btn" item-id="' + idx +
           '" record-id="' + tmpl.id + '" record-name="' + tmpl.name +
           '">Delete</a></td></tr>');
@@ -178,6 +180,49 @@ ui.addUserTemplate = function(tmpl, idx) {
   if(rnd.usertemplates.length == 0) {
     ui.DropdownListSetIconAndTitle($('usertemplate'), $('usertemplate_0'), false);
   }
+};
+
+ui.addCommonTemplate = function(tmpl, idx) {
+  var cat_id = tmpl.template_category_id;
+  var selector = 'commontemplate' + cat_id + '_dropdown_list';
+  var tbody = $(selector).select('table > tbody')[0];
+
+  var tool_mode = 'commontemplate' + cat_id  + '_' + idx;
+  ui.commontemplate_tool_modes.push(tool_mode);
+  var img_tag;
+  if(tmpl.sprite_class) {
+    img_tag = '<img style="align:right" class="dropdownIconTemplate ' +
+              tmpl.sprite_class + '" src="/images/transparent.png"/>';
+  } else {
+    img_tag = '<img style="align:right" class="dropdownIconTemplate"' +
+              ' src="/images/' + tmpl.icon + '"/>';
+  }
+  tbody.insert('<tr class="dropdownListItem" id="' + tool_mode +
+          '" title="' + tmpl.name + ' (Shift+T)"><td><div id="' + tool_mode +
+          '_preview">' + img_tag + '</div></td><td>' + tmpl.name + '</td></tr>');
+  rnd.commontemplates.push(tmpl);
+};
+
+ui.initCommonTemplates = function() {
+  new Ajax.Request(ui.api_path + 'common_templates_list',
+  {
+      method: 'get',
+      asynchronous : false,
+      onComplete: function (res)
+      {
+        try {
+          var idx = 0;
+          res.responseJSON.templates.each(function (tmpl) {
+            ui.addCommonTemplate(tmpl, idx)
+            idx++;
+          });
+        } catch (er) {
+            if (ui.forwardExceptions)
+                throw er;
+            return;
+        }
+      }
+  });
 };
 
 ui.deleteUserTemplate = function() {
@@ -236,42 +281,8 @@ ui.deleteUserTemplate = function() {
 
 ui.initTemplates = function ()
 {
-    function parseSdf(sdf) {
-        var items = sdf.split(/^[$][$][$][$]$/m);
-        var parsed = [];
-
-        items.each(function (item) {
-            item = item.replace(/\r/g, '');
-            item = item.strip();
-            var end_idx = item.indexOf('M  END');
-
-            if (end_idx == -1) {
-                return;
-            }
-
-            var iparsed = {};
-
-            iparsed.molfile = item.substring(0, end_idx + 6);
-            iparsed.name = item.substring(0, item.indexOf('\n')).strip();
-            item = item.substr(end_idx + 7).strip();
-
-            var entries = item.split(/^$/m);
-
-            entries.each(function (entry) {
-                entry = entry.strip();
-                if (!entry.startsWith('> <')) {
-                    return;
-                }
-                var lines = entry.split('\n');
-                var field = lines[0].strip().substring(3, lines[0].lastIndexOf('>')).strip();
-
-                iparsed[field] = parseInt(lines[1].strip()) || lines[1].strip();
-            });
-            parsed.push(iparsed);
-        });
-
-        return parsed;
-    }
+  this.userTemplatesSearch(); // search templates will no params returns all
+  this.initCommonTemplates();
 };
 
 ui.onClick_SideButton = function ()
