@@ -433,19 +433,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% cat.common_templates.approved.order('name ASC').each_with_index do |tmpl| %>
-                      <tr class="dropdownListItem" id="<%= "commontemplate#{cat.id}_#{idx}" %>" title="<%= tmpl.name %>">
-                        <td>
-                          <div id="commontemplate_<%= idx %>_preview" style="float: right;">
-                            <%= common_template_icon_tag tmpl %>
-                          </div>
-                        </td>
-                        <td>
-                          <%= tmpl.name %>
-                        </td>
-                      </tr>
-                      <% idx += 1 %>
-                    <% end %>
                   </tbody>
                 </table>
               </div>
@@ -464,23 +451,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% @user_templates.each_with_index do |tmpl, idx| %>
-                      <tr class="dropdownListItem" id="usertemplate_<%= idx %>" title="<%= tmpl.name %>">
-                        <td>
-                          <div id="usertemplate_<%= idx %>_preview">
-                            <%= image_tag('templates/' + tmpl.icon_path, style: 'align:right', class: 'dropdownIconTemplate', alt: '') %>
-                          </div>
-                        </td>
-                        <td>
-                          <%= tmpl.name %>
-                        </td>
-                        <td>
-                          <a class="usertemplate-destroy-btn" item-id="<%= idx %>" record-id="<%= tmpl.id %>" record-name="<%= tmpl.name %>">
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                    <% end %>
                   </tbody>
                 </table>
               </div>
@@ -1129,60 +1099,11 @@
                 </div>
               </div>
 
-              <div class="aboutDialog" id="about_dialog" style="display:none;">
-                <div>
-                  <div>
-                    About
-                  </div>
-                  <div style="height:0.5em"></div>
-                  <div>
-                    <a href="http://ggasoftware.com/opensource/ketcher#overview" target="_blank">
-                      <img src="assets/ketcherails/icons/logo_small01.jpg"></img>
-                    </a>
-                  </div>
-                  <table style="width:100%" cellspacing="5">
-                    <tr>
-                      <td style="float:left">
-                        <a href="http://ggasoftware.com/opensource/ketcher#overview" target="_blank" style="color:#0000CC">Ketcher</a>
-                      </td>
-                      <td style="float:right" id="ketcher_version">Version 1.0</td>
-                    </tr>
-                    <tr>
-                      <td style="float:left">
-                        <a href="http://ggasoftware.com" target="_blank" style="color:#0000CC">GGA Software Services</a>
-                      </td>
-                      <td style="float:right">
-                        <a href="http://ggasoftware.com/opensource/ketcher#feedback" target="_blank" style="color:#0000CC">Feedback</a>
-                      </td>
-                    </tr>
-                  </table>
-                  <div style="margin:4px;">
-                    <button onclick="ui.hideDialog('about_dialog')">Close</button>
-                  </div>
-                </div>
-              </div>
-
               <iframe name="buffer_frame" id="buffer_frame" src="about:blank" style="display:none"></iframe>
             </div>
           </body>
         </html>
 <script>
-  rnd.commontemplates = [];
-  ui.commontemplate_tool_modes = [];
-
-  var idx = 0;
-  <% @template_categories.each do |cat| %>
-    <% cat.common_templates.approved.order('name ASC').each do |tmpl| %>
-      ui.commontemplate_cat_ids.push(<%= cat.id %>);
-      ui.commontemplate_tool_modes.push('<%= "commontemplate#{cat.id}_" %>' + idx);
-      rnd.commontemplates.push(<%= inline_template(tmpl) %>);
-      idx++;
-    <% end %>
-  <% end %>
-
-  <% @user_templates.each_with_index do |tmpl, idx| %>
-    rnd.usertemplates.push(<%= inline_template(tmpl) %>);
-    ui.usertemplate_tool_modes.push('usertemplate_' + <%= idx %>);
-  <% end %>
+  ui.commontemplate_cat_ids = [<%= @template_categories.pluck(:id).join(', ') %>];
 </script>
 <% end %>
