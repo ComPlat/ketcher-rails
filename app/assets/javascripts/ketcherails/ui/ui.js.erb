@@ -139,21 +139,21 @@ ui.userTemplatesSearch = function() {
       parameters: {query: this.value},
       onComplete: function (res)
       {
-        try {
-          ui.refreshUserTemplates();
-
-          var idx = 0;
-          res.responseJSON.templates.each(function (tmpl) {
+        ui.refreshUserTemplates();
+        var idx = 0;
+        res.responseJSON.templates.each(function (tmpl) {
+          try {
             ui.addUserTemplate(tmpl, idx);
             idx++;
-          });
 
-          ui.initDropdownObservers();
-        } catch (er) {
+          } catch (er) {
             if (ui.forwardExceptions)
                 throw er;
             return;
-        }
+          }
+        });
+
+        ui.initDropdownObservers();
       }
   });
 }
@@ -210,17 +210,17 @@ ui.initCommonTemplates = function() {
       asynchronous : false,
       onComplete: function (res)
       {
-        try {
-          var idx = 0;
-          res.responseJSON.templates.each(function (tmpl) {
+        var idx = 0;
+        res.responseJSON.templates.each(function (tmpl) {
+          try {
             ui.addCommonTemplate(tmpl, idx)
             idx++;
-          });
-        } catch (er) {
+          } catch (er) {
             if (ui.forwardExceptions)
-                throw er;
+              throw er;
             return;
-        }
+          }
+        });
       }
   });
 };
