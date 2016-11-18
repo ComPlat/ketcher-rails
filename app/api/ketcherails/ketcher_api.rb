@@ -1,6 +1,11 @@
 module Ketcherails
   class KetcherAPI < Grape::API
 
+    EXT_PROPS = {
+      r_list: 'PolymersList',
+      b_bonds: 'BoldBondsList'
+    }
+
     namespace :ketcher do
       desc 'Respond to live-check'
       get 'knocknock' do
@@ -15,12 +20,16 @@ module Ketcherails
         mol_data = params[:moldata]
         init_data = mol_data.lines
 
-        r_list_index = init_data.index do |line|
-          line.match /> <PolymersList>/
-        end
+        add_props = {}
 
-        if r_list_index
-          r_list = init_data[r_list_index + 1].split.map(&:to_i)
+        EXT_PROPS.each do |name, prop_label_molfile|
+          add_props[name.to_s + '_index'] = init_data.index do |line|
+            line.match /> <#{prop_label_molfile}>/
+          end
+
+          if index = add_props[name.to_s + '_index']
+            add_props[name] = init_data[index + 1].split.map(&:to_i)
+          end
         end
 
         c = OpenBabel::OBConversion.new
@@ -42,13 +51,20 @@ module Ketcherails
           line.match /M\s+END/
         end
 
-        if r_list && r_list.any? && t_v2000_index && end_index
-          r_list.each do |line_number|
-            result[t_v2000_index + 1 + line_number].gsub! ' * ', ' R# '
-          end
+        # write additional properties
+        if t_v2000_index && end_index
+          EXT_PROPS.each do |name, prop_label_molfile|
+            if add_props[name] && add_props[name].any?
+              if name == :r_list
+                add_props[:r_list].each do |line_number|
+                  result[t_v2000_index + 1 + line_number].gsub! ' * ', ' R# '
+                end
+              end
 
-          result.insert end_index + 1, "> <PolymersList>\n"
-          result.insert end_index + 2, r_list.join(' ') + "\n"
+              result.insert end_index + 1, "> <#{EXT_PROPS[name]}>\n"
+              result.insert end_index + 2, add_props[name].join(' ') + "\n"
+            end
+          end
         end
 
         bonds_table_index = t_v2000_index + result[t_v2000_index].to_i + 1

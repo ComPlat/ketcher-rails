@@ -110,10 +110,10 @@ rnd.ReStruct.prototype.drawBondSingleStereoDoubleBold = function(hb1, hb2, bond)
 	var styles = this.render.styles;
 
 	var linecap;
-	if(hb1.loop < 0 && hb2.loop < 0) {
-		linecap = 'butt';
-	} else {
+	if(hb1.loop >= 0 || hb2.loop >= 0 || bond.doubleBondShift > 0) {
 		linecap = 'round'
+	} else {
+		linecap = 'square';
 	}
 	return paper.path(rnd.ReStruct.makeStroke(a, b)).attr(styles.lineattr).attr({
 							'stroke': '#000',
