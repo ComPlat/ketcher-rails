@@ -34,224 +34,135 @@
   <body>
 
     <div id="ketcher_div" class="ketcherDivMaxSize">
-      <table id="ketcher_window">
-        <tr align="center" id="main_toolbar">
-          <td style="width:36px">
-            <div style="position:relative">
+      <div id="ketcher_window">
+        <main id="client_area"></main>
+        <menu role="toolbar">
+          <li id="main_menu">
+            <div>
               <%= sprite_tag '', id: 'selector', class: 'sideButton modeButton stateButton selection_lasso-sidebar', title: 'Lasso Selection Tool (Esc)', alt: '', selid: 'selector_lasso' %>
               <%= sprite_tag '', id: 'selector_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-          <td class="toolDelimiter"></td>
-          <!--td style="width:36px"><object type="image/svg+xml" width="28" height="28" data="svg/document-new28x28.svg"></object></td-->
-          <td class="toolButtonCell toolButton" id="new">
-            <%= sprite_tag '', class: 'main_document-new', title: 'Clear Canvas (Ctrl+N)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton" id="open">
-            <%= sprite_tag '', class: 'main_document-open', title: 'Open... (Ctrl+O)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton" id="save">
-            <%= sprite_tag '', class: 'main_document-save-as', title: 'Save As... (Ctrl+S)', alt: '' %>
-          </td>
-          <td class="toolDelimiter"></td>
-          <td class="toolButtonCell toolButton buttonDisabled" id="undo">
-            <%= sprite_tag '', class: 'main_edit-undo', title: 'Undo (Ctrl+Z)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton buttonDisabled" id="redo">
-            <%= sprite_tag '', class: 'main_edit-redo', title: 'Redo (Ctrl+Y)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton buttonDisabled" id="cut">
-            <%= sprite_tag '', class: 'main_edit-cut', title: 'Cut (Ctrl+X)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton buttonDisabled" id="copy">
-            <%= sprite_tag '', class: 'main_edit-copy', title: 'Copy (Ctrl+C)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton buttonDisabled" id="paste">
-            <%= sprite_tag '', class: 'main_edit-paste', title: 'Paste (Ctrl+V)', alt: '' %>
-          </td>
-          <td class="toolDelimiter"></td>
-          <td class="toolButtonCell toolButton" id="zoom_in">
-            <%= sprite_tag '', class: 'main_view-zoom-in', title: 'Zoom In (+)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton" id="zoom_out">
-            <%= sprite_tag '', class: 'main_view-zoom-out', title: 'Zoom Out (-)', alt: '' %>
-          </td>
-          <td id="zoom_list_cell" style="width:95px">
-            <select id="zoom_list"></select>
-          </td>
-          <td class="toolDelimiter"></td>
-          <td class="toolButtonCell toolButton serverRequired" id="clean_up">
-            <%= sprite_tag '', class: 'main_layout', title: 'Clean Up (Ctrl+L)', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton serverRequired buttonDisabled" id="aromatize">
-            <%= sprite_tag '', class: 'main_arom', title: 'Aromatize', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton serverRequired buttonDisabled" id="dearomatize">
-            <%= sprite_tag '', class: 'main_dearom', title: 'Dearomatize', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton serverRequired" id="save_template">
-            <%= sprite_tag '', class: 'main_star', title: 'Save Template', alt: '' %>
-          </td>
-          <td class="toolButtonCell toolButton serverRequired" id="show_mol_info">
-            <%= sprite_tag 'main_info', title: 'Show Molecule Info', alt: '' %>
-          </td>
-          <td style="width:100%"></td>
-          <td id="toolText" style="width:32px"></td>
-          <td style="width:1px" rowspan="15"></td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <%= sprite_tag '', id: 'select_erase', class: 'sideButton modeButton main_edit-clear', title: 'Erase', alt: '' %>
-          </td>
-          <td colspan="21" rowspan="<%= 13 + @add_tr_count%>">
-            <div id="client_area"></div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_h" title="H Atom (H)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="toolDelimiter"></div>
+            <div class="toolButtonCell toolButton" id="new">
+              <%= sprite_tag '', class: 'main_document-new', title: 'Clear Canvas (Ctrl+N)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton" id="open">
+              <%= sprite_tag '', class: 'main_document-open', title: 'Open... (Ctrl+O)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton" id="save">
+              <%= sprite_tag '', class: 'main_document-save-as', title: 'Save As... (Ctrl+S)', alt: '' %>
+            </div>
+            <div class="toolDelimiter"></div>
+            <div class="toolButtonCell toolButton buttonDisabled" id="undo">
+              <%= sprite_tag '', class: 'main_edit-undo', title: 'Undo (Ctrl+Z)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton buttonDisabled" id="redo">
+              <%= sprite_tag '', class: 'main_edit-redo', title: 'Redo (Ctrl+Y)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton buttonDisabled" id="cut">
+              <%= sprite_tag '', class: 'main_edit-cut', title: 'Cut (Ctrl+X)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton buttonDisabled" id="copy">
+              <%= sprite_tag '', class: 'main_edit-copy', title: 'Copy (Ctrl+C)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton buttonDisabled" id="paste">
+              <%= sprite_tag '', class: 'main_edit-paste', title: 'Paste (Ctrl+V)', alt: '' %>
+            </div>
+            <div class="toolDelimiter"></div>
+            <div class="toolButtonCell toolButton" id="zoom_in">
+              <%= sprite_tag '', class: 'main_view-zoom-in', title: 'Zoom In (+)', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton" id="zoom_out">
+              <%= sprite_tag '', class: 'main_view-zoom-out', title: 'Zoom Out (-)', alt: '' %>
+            </div>
+            <div class="toolDelimiter"></div>
+            <div id="zoom_list_cell">
+              <select id="zoom_list"></select>
+            </div>
+            <div class="toolDelimiter"></div>
+            <div class="toolButtonCell toolButton serverRequired" id="clean_up">
+              <%= sprite_tag '', class: 'main_layout', title: 'Clean Up (Ctrl+L)', alt: '' %>
+            </div>
+            <div id="toolText" style="width:32px"></div>
+            <div class="toolButtonCell toolButton serverRequired" id="save_template">
+              <%= sprite_tag '', class: 'main_star', title: 'Save Template', alt: '' %>
+            </div>
+            <div class="toolButtonCell toolButton serverRequired" id="show_mol_info">
+              <%= sprite_tag 'main_info', title: 'Show Molecule Info', alt: '' %>
+            </div>
+          </li>
+          <li id="toolbox">
+            <div class="menuButtonCell">
+              <%= sprite_tag '', id: 'select_erase', class: 'sideButton modeButton main_edit-clear', title: 'Erase', alt: '' %>
+            </div>
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'bond', class: 'sideButton modeButton stateButton bond_bond_single-sidebar', title: 'Single Bond (1)', alt: '', selid: 'bond_single' %>
               <%= sprite_tag '', id: 'bond_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-
-          <td>
-            <div class="sideButton modeButton" id="atom_c" title="C Atom (C)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'chain', class: 'sideButton modeButton main_chain', title: 'Chain Tool', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_n" title="N Atom (N)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'template', class: 'sideButton modeButton stateButton template_template0-sidebar', title: 'Benzene (T)', selid: 'template_0', alt: '' %>
               <%= sprite_tag '', id: 'template_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_o" title="O Atom (O)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'charge_plus', class: 'sideButton modeButton main_charge_plus', title: 'Charge Plus (5)', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_s" title="S Atom (S)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'charge_minus', class: 'sideButton modeButton main_charge_minus', title: 'Charge Minus (5)', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_p" title="P Atom (P)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'reaction', class: 'sideButton modeButton stateButton reaction_reaction-arrow-sidebar', selid: 'reaction_arrow', title: 'Reaction Arrow Tool', alt: '' %>
               <%= sprite_tag '', id: 'reaction_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_f" title="F Atom (F)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <%= sprite_tag '', id: 'sgroup', class: 'sideButton modeButton main_sgroup', title: 'S-Group (Ctrl+G)', alt: '' %>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_cl" title="Cl Atom (Shift+C)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
+              <%= sprite_tag '', id: 'sgroup', class: 'sideButton modeButton main_sgroup', title: 'S-Group (Ctrl+G)', alt: '' %>
+            </div>
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'rgroup', class: 'sideButton modeButton stateButton rgroup_rgroup-label-sidebar', selid: 'rgroup_label', title: 'R-Group Tool (Shift+R)', alt: '' %>
               <%= sprite_tag '', id: 'rgroup_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_br" title="Br Atom (Shift+B)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'transform', class: 'sideButton modeButton stateButton transform_transform-rotate-sidebar', selid: 'transform_rotate', title: 'Rotate Tool', alt: '' %>
               <%= sprite_tag '', id: 'transform_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_i" title="I Atom (I)"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell serverRequired">
-          <td>
-            <div style="position:relative">
+            <div class="menuButtonCell">
               <%= sprite_tag '', id: 'usertemplate', class: 'sideButton modeButton stateButton main_4stars', title: '', selid: 'usertemplate_0', alt: '' %>
               <%= sprite_tag '', id: 'usertemplate_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
-          </td>
-          <td>
+            <div class="menuButtonCell serverRequired">
+              <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton main_polymer', alt: '', title: 'Polymer' %>
+            </div>
+          </li>
+          <li id="templates">
+            <div class="toolButtonCell cellFlex">
+              <% @template_categories.each do |cat| %>
+                <div class="toolButtonCell toolButton templateCategory templateCategoryDropdownButton" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown' %>" data-id="<%= cat.id %>" span="1">
+                  <%= template_category_icon_tag cat %>
+                </div>
+                <div style="display: none;" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown_default' %>">
+                  <%= template_category_icon_tag cat %>
+                </div>
+              <% end %>
+            </div>
+          </li>
+          <li id="elements">
+            <div class="sideButton modeButton" id="atom_h" title="H Atom (H)"></div>
+            <div class="sideButton modeButton" id="atom_c" title="C Atom (C)"></div>
+            <div class="sideButton modeButton" id="atom_n" title="N Atom (N)"></div>
+            <div class="sideButton modeButton" id="atom_o" title="O Atom (O)"></div>
+            <div class="sideButton modeButton" id="atom_s" title="S Atom (S)"></div>
+            <div class="sideButton modeButton" id="atom_p" title="P Atom (P)"></div>
+            <div class="sideButton modeButton" id="atom_f" title="F Atom (F)"></div>
+            <div class="sideButton modeButton" id="atom_cl" title="Cl Atom (Shift+C)"></div>
+            <div class="sideButton modeButton" id="atom_br" title="Br Atom (Shift+B)"></div>
+            <div class="sideButton modeButton" id="atom_i" title="I Atom (I)"></div>
             <div class="sideButton modeButton" id="atom_table" title="Periodic table"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell serverRequired">
-          <td>
-            <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton main_polymer', alt: '', title: 'Polymer' %>
-          </td>
-          <td>
-            <div class="sideButton modeButton" id="atom_table" title="Periodic table"></div>
-          </td>
-        </tr>
-        <tr align="center" class="menuButtonCell">
-          <td></td>
-          <td>
             <div class="sideButton modeButton" id="atom_reagenerics" title="Reaxys Generics"></div>
-          </td>
-        </tr>
-
-        <% @add_tr_count.times do  %>
-          <tr align="center" class="menuButtonCell">
-            <td></td>
-            <td></td>
-          </tr>
-        <% end %>
-
-        <tr align="center" class="menuButtonCell" id="template_categories_menu_row">
-          <td class="toolButtonCell">
-          </td>
-          <td class="toolButtonCell" style="display: inline-flex;">
-            <% @template_categories.each do |cat| %>
-              <div class="toolButtonCell toolButton templateCategory templateCategoryDropdownButton" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown' %>" data-id="<%= cat.id %>" span="1">
-                <%= template_category_icon_tag cat %>
-              </div>
-              <div style="display: none;" id="<%= 'commontemplate' + cat.id.to_s + '_dropdown_default' %>">
-                <%= template_category_icon_tag cat %>
-              </div>
-            <% end %>
-          </td>
-        </tr>
-      </table>
+          </li>
+        </menu>
+      </div>
 
               <div class="dropdownList" id="selector_dropdown_list" style="display:none">
                 <table>
@@ -586,7 +497,6 @@
                     <textarea class="chemicalText" id="output_mol" wrap="off" readonly></textarea>
                     <form id="download_mol" style="margin-top:0.5em;text-align:center" action="save" enctype="multipart/form-data" target="_self" method="post">
                       <input type="hidden" id="mol_data" name="filedata"/>
-                      <input type="submit" class="serverRequired" value="Save..."/>
                       <input id="save_ok" type="button" value="Close"/>
                     </form>
                   </div>

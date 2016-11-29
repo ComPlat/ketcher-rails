@@ -13,6 +13,19 @@
 *= require ketcherails/ketcher-sprites
 */
 
+li, menu, ul {
+  list-style: none;
+}
+
+[role=toolbar] {
+  margin: 0px;
+}
+
+[role=toolbar] li {
+    display: inline-block;
+    vertical-align: top;
+}
+
 body
 {
     margin: 0;
@@ -34,32 +47,55 @@ a, img
     vertical-align: middle;
 }
 
-td
+#ketcher_window
 {
-    padding: 0;
-}
-
-table#ketcher_window
-{
-    position: absolute;
-    z-index: 1;
     width: 100%;
     height: 100%;
-    table-layout: fixed;
     background-color: #E0E0E0;
     border-color: white;
     border-style: outset;
     border-width: thin;
 }
 
-table#ketcher_window > tr
-{
-    height: 32px;
+#main_menu {
+  width: 100%;
+  display: inline-flex;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  background-color: #E0E0E0;
 }
 
-#main_toolbar
+#toolbox {
+  position: absolute;
+  height: 100%;
+  left: 3px;
+  top: 40px;
+  background-color: #E0E0E0;
+}
+
+#templates {
+  position: absolute;
+  width: 100%;
+  bottom: 3px;
+  left: 38px;
+  background-color: #E0E0E0;
+}
+
+#elements {
+  position: absolute;
+  right: 3px;
+  background-color: #E0E0E0;
+  height: 100%;
+  top: 40px;
+}
+
+.dropdownButton
 {
-    height: 40px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: 30px;
+    margin-top: -8px;
 }
 
 .toolButton, .sideButton
@@ -69,15 +105,6 @@ table#ketcher_window > tr
     border-width: thin;
     border-style: solid;
     background-color: #DADADA;
-    /*vertical-align: middle;*/
-}
-
-.modeButton
-{
-}
-
-.stateButton
-{
 }
 
 .dropdownIcon
@@ -100,6 +127,14 @@ table#ketcher_window > tr
 .toolButtonCell
 {
     width: 36px;
+}
+
+.cellFlex {
+  display: inline-flex;
+}
+
+select#zoom_list {
+  margin-top: 8px;
 }
 
 .menuButtonCell
@@ -153,8 +188,11 @@ table#ketcher_window > tr
     border-style: inset;
     border-width: 1px;
     text-align: left;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    bottom: 36px;
+    left: 40px;
 }
 
 #elem_table_area
@@ -173,14 +211,6 @@ table#ketcher_window > tr
 {
     background-color:#E0E0E0;
     border-style: none;
-}
-
-.dropdownButton
-{
-    cursor: pointer;
-    position: absolute;
-    left: 28px;
-    top: 28px;
 }
 
 .dropdownList, .moleculePropertiesDialog
@@ -202,38 +232,39 @@ table#ketcher_window > tr
 
 #selector_dropdown_list
 {
-    top: 43px;
+    top: 37px;
 }
 
 #bond_dropdown_list
 {
-    top: 120px;
+    top: 114px;
 }
 
 #template_dropdown_list
 {
-    top: 196px;
+    top: 184px;
 }
 
 #commontemplate_dropdown_list, #usertemplate_dropdown_list, .commonTemplateDropdownList, .moleculePropertiesDialog
 {
-    top: 46px;
-    left: 42px;
+  border: 0.5px thin grey;
+  top: 42px;
+  left: 42px;
 }
 
 #reaction_dropdown_list
 {
-    top: 310px;
+    top: 293px;
 }
 
 #rgroup_dropdown_list
 {
-    top: 386px;
+    top: 378px;
 }
 
 #transform_dropdown_list
 {
-    top: 424px;
+    top: 400px;
 }
 
 .dropdownListItem
