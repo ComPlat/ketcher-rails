@@ -479,8 +479,8 @@ ui.init = function (parameters, opts)
     $('zoom_in').observe('click', ui.onClick_ZoomIn);
     $('zoom_out').observe('click', ui.onClick_ZoomOut);
     $('clean_up').observe('click', ui.onClick_CleanUp);
-    $('aromatize').observe('click', ui.onClick_Aromatize);
-    $('dearomatize').observe('click', ui.onClick_Dearomatize);
+    /*$('aromatize').observe('click', ui.onClick_Aromatize);
+    $('dearomatize').observe('click', ui.onClick_Dearomatize);*/
     $('save_template').observe('click', ui.onClick_SaveTemplate);
     $('show_mol_info').observe('click', ui.onClick_ShowMolInfo);
     $('atom_table').observe('click', ui.onClick_ElemTableButton);
@@ -656,10 +656,10 @@ ui.toggleDropdownList = function (name)
 
 ui.onResize_Ketcher = function ()
 {
-    if (Prototype.Browser.IE)
+    /*if (Prototype.Browser.IE)
         ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
 
-    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';
+    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';*/
 };
 
 //

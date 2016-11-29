@@ -83,7 +83,7 @@ ketcher.getMolfile = function ()
 ketcher.getSVG = function ()
 {
     var svg_data = '<?xml version="1.0"?>'
-    var wrapper = $$('table#ketcher_window div#client_area')[0];
+    var wrapper = ui.client_area;
 
     return svg_data.concat(wrapper.innerHTML);
 };
