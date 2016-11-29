@@ -33,9 +33,3 @@ updateMolfileFromFileInput = function (e) {
     $('textarea#common_template_molfile').html(e.target.result);
   };
 }
-
-attachKetcherHeighttoUrl = function (selector) {
-  $(selector).each(function(i, el) {
-    $(el).attr('href', $(el).attr('href') + '?height=' + window.innerHeight)
-  });
-}
