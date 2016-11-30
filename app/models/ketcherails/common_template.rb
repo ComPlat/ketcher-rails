@@ -41,6 +41,7 @@ module Ketcherails
                                               width: IMG_SIZE, height: IMG_SIZE)
 
         svg = processor.centered_and_scaled_svg
+        svg = svg.gsub(/font="30px([^"]+)"/, '')
       end
       img_path = 'public/images/templates/'
       svg_file = Tempfile.new(['image', '.svg'])
@@ -48,7 +49,7 @@ module Ketcherails
       digest = Digest::SHA256.hexdigest(SecureRandom.hex(16))
       filename = digest + '.png'
       result_file_path = img_path + filename
-      system "inkscape --export-text-to-path --without-gui --file=#{svg_file.path} --export-png=#{result_file_path} --export-width=60 --export-height=60"
+      system "inkscape --export-text-to-path --without-gui --file=#{svg_file.path} --export-png=#{result_file_path} --export-width=1200 --export-height=1200"
       self.icon = File.open(result_file_path)
     end
 

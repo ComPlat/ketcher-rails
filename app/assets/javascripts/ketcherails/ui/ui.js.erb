@@ -318,8 +318,7 @@ ui.DropdownListSetIconAndTitle = function(dropdown, selected, setAsActiveTool = 
     });
     dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
 
-    if(selected.select('img')[0].getAttribute('class').include('_small_'))
-      dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('_small_','_icon_'));
+    dropdown.setAttribute('class', selected.select('img')[0].getAttribute('class').replace('_small_','_icon_'));
   }
   else if(dropdown_id == 'usertemplate')
     dropdown.setAttribute('src', selected.select('img')[0].getAttribute('src'));
