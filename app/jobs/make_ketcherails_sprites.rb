@@ -28,7 +28,7 @@ class MakeKetcherailsSprites < ActiveJob::Base
         sprite_class.gsub!('original', 'small')
 
         if log.include? "img.#{sprite_class}"
-          item.update_attribute :sprite_class, sprite_class
+          item.update_column :sprite_class, sprite_class
         end
       end
     end
