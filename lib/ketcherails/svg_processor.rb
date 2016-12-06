@@ -6,7 +6,7 @@ module Ketcherails
     def initialize(svg="",**options)
       @svg = Nokogiri::XML(svg)
       @min,@max=[nil,nil],[nil,nil]
-      @margins= (options[:margins].is_a?(Array)&& options[:margins])  || [10,10]
+      @margins= (options[:margins].is_a?(Array)&& options[:margins])  || [10,20]
       @width = (options[:width].is_a?(Integer) && options[:width])
       @height = (options[:height].is_a?(Integer) && options[:height])
     end
@@ -66,7 +66,7 @@ module Ketcherails
       clean
       find_extrema
       mx = @margins[0] || 10
-      my = @margins[1] || 10
+      my = @margins[1] || 20 # this value correlates to SVG text font as well
       if (@min+@max).compact.size == 4
         x1,y1=*@min
         x2,y2=*@max
