@@ -566,19 +566,19 @@ rnd.Render.prototype.initStyles = function ()
 		'stroke':'darkgray',
 		'stroke-width':0.5*settings.lineWidth
 		};
-	this.styles.atomSelectionPlateRadius = settings.labelFontSize * 1.8 ;
+	this.styles.atomSelectionPlateRadius = settings.labelFontSize * 1.0 ;
 };
 
 rnd.Render.prototype.initSettings = function()
 {
 	var settings = this.settings = {};
 	settings.delta = this.ctab.molecule.getCoordBoundingBox();
-	settings.margin = 0.1;
+	settings.margin = 0.07;
 	settings.scaleFactor = this.scale;
-	settings.lineWidth = settings.scaleFactor / 20;
-	settings.bondShift = settings.scaleFactor / 6;
-	settings.bondSpace = settings.scaleFactor / 7;
-	settings.labelFontSize = Math.ceil(1.9 * (settings.scaleFactor / 6)); // TODO: don't round?
+	settings.lineWidth = settings.scaleFactor / 25;
+	settings.bondShift = settings.scaleFactor / 1.5;
+	settings.bondSpace = settings.scaleFactor / 6;
+	settings.labelFontSize = Math.ceil(3.5 * (settings.scaleFactor / 6)); // TODO: don't round?
 	settings.subFontSize = Math.ceil(0.7 * settings.labelFontSize);
 	// font size is not determined by the number in this string,
 	//  but by the 'font-size' property

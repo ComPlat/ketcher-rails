@@ -598,7 +598,7 @@ ui.init = function (parameters, opts)
     }
 
     // Init renderer
-    opts.atomColoring = true;
+    opts.atomColoring = false;
     this.render =  new rnd.Render(this.client_area, ui.scale, opts);
     this.editor = new rnd.Editor(this.render);
 
