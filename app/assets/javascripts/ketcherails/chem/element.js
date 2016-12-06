@@ -1,11 +1,11 @@
 /****************************************************************************
  * Copyright (C) 2009-2010 GGA Software Services LLC
- * 
+ *
  * This file may be distributed and/or modified under the terms of the
  * GNU Affero General Public License version 3 as published by the Free
  * Software Foundation and appearing in the file LICENSE.GPL included in
  * the packaging of this file.
- * 
+ *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  ***************************************************************************/
@@ -34,7 +34,7 @@ function rgbCompToHex(c) {
 }
 
 function rgbToHex(rgb) {
-	return '#' + 
+	return '#' +
 		rgbCompToHex(rgb.r) +
 		rgbCompToHex(rgb.g) +
 		rgbCompToHex(rgb.b);
@@ -62,7 +62,7 @@ chem.Element = function (label, period, group, putHydrogenOnTheLeft, color, ypos
     this.labelColor = rgbToHex(rgbRescale(hexToRGB(this.color),150));
 	this.xpos = xpos || group;
 	this.ypos = ypos || period;
-	
+
 	var r = (("0x"+this.color.substring(1,3)) - 0)/255;
 	var g = (("0x"+this.color.substring(3,5)) - 0)/255;
 	var b = (("0x"+this.color.substring(5,7)) - 0)/255;
