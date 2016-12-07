@@ -94,8 +94,12 @@ a, img
 {
     cursor: pointer;
     position: absolute;
-    margin-left: 30px;
-    margin-top: -8px;
+    margin-left: -5px;
+    margin-top: 28px;
+    @media screen and (-webkit-min-device-pixel-ratio:0){
+      margin-left: 30px;
+      margin-top: -8px;
+    }
 }
 
 .toolButton, .sideButton
