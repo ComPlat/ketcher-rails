@@ -1615,6 +1615,29 @@ ui.onClick_ShowMolInfo = function ()
       el.show();
     }
 
+    var initX, initY, mousePressX, mousePressY;
+
+    // thanks to http://stackoverflow.com/questions/29703473/pure-javascript-draggable-element
+    el.addEventListener('mousedown', function(event) {
+
+        initX = this.offsetLeft;
+        initY = this.offsetTop;
+        mousePressX = event.clientX;
+        mousePressY = event.clientY;
+
+        this.addEventListener('mousemove', repositionElement, false);
+
+        el.addEventListener('mouseup', function() {
+          el.removeEventListener('mousemove', repositionElement, false);
+        }, false);
+
+    }, false);
+
+    function repositionElement(event) {
+        this.style.left = initX + event.clientX - mousePressX + 'px';
+        this.style.top = initY + event.clientY - mousePressY + 'px';
+    }
+
     var onClickOk = function () {
       el.hide();
     }
