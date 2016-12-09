@@ -20,6 +20,7 @@ rnd.DEBUG = false;
 rnd.NUM_PRECISION = 5; //show 5 numbers after comma
 rnd.mw_total = 0;
 rnd.mw_selected = 0;
+rnd.moleculeInfoVisible = false;
 
 rnd.logcnt = 0;
 rnd.logmouse = false;
@@ -516,6 +517,9 @@ rnd.Render.prototype.setSelection = function (selection)
 {
 	rnd.logMethod("setSelection");
 	var selMWSum = 0;
+	var ela = {
+		"H": 0
+	};
 	for (var map in rnd.ReStruct.maps) {
         if (!rnd.ReStruct.maps[map].isSelectable())
             continue;
@@ -525,6 +529,13 @@ rnd.Render.prototype.setSelection = function (selection)
 			item.selected = selected;
 			if(selected && item instanceof rnd.ReAtom) {
 				selMWSum += rnd.getAtomicWeight(item.a);
+
+				if(ela[item.a.label] == undefined) {
+					ela[item.a.label] = 1
+				} else {
+					ela[item.a.label]++;
+				}
+				ela['H'] += item.a.implicitH;
 			}
 
 			this.ctab.showItemSelection(id, item, selected);
@@ -532,6 +543,8 @@ rnd.Render.prototype.setSelection = function (selection)
 	}
 	rnd.mw_selected = selMWSum.toFixed(rnd.NUM_PRECISION);
 	$('mw_selected_value').innerHTML = rnd.mw_selected.toString();
+	var formulaSelected = rnd.buildFormula(ela);
+	$('formula_selected_value').innerHTML = formulaSelected;
 };
 
 rnd.Render.prototype.initStyles = function ()
@@ -875,6 +888,15 @@ rnd.Render.prototype.testPolygon = function (rr) {
 	this.drawSelectionPolygon(rr);
 };
 
+rnd.Render.prototype.refreshMoleculeInfo = function() {
+	rnd.moleculeInfo = rnd.getMoleculeInfo();
+	rnd.mw_total = rnd.moleculeInfo['mw_total'].toFixed(rnd.NUM_PRECISION);
+	$('mw_value').innerHTML = rnd.mw_total;
+	$('mw_selected_value').innerHTML = rnd.mw_selected.toString();
+	$('formula_value').innerHTML = rnd.moleculeInfo['formula'];
+	$('ela_value').innerHTML = rnd.moleculeInfo['formatted_ela'];
+}
+
 rnd.Render.prototype.update = function (force)
 {
 	rnd.logMethod("update");
@@ -938,7 +960,9 @@ rnd.Render.prototype.update = function (force)
 		}
 	}
 
-	rnd.mw_total = rnd.calculateMW().toFixed(rnd.NUM_PRECISION);
+	if(rnd.moleculeInfoVisible) {
+		ui.render.refreshMoleculeInfo();
+	}
 };
 
 rnd.Render.prototype.checkBondExists = function (begin, end) {

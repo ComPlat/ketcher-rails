@@ -3,7 +3,7 @@ if (!window.Prototype)
 if (!window.rnd)
 	throw new Error("rnd should be defined prior to loading this file");
 
-// IUPAC recommended atomic weights
+// IUPAC recommended atomic weights, for average molecular weight
 rnd.elements = {
   "H":1.00794,
   "He":4.002602,
@@ -133,12 +133,78 @@ rnd.getAtomicWeight = function(atom) {
 	return result;
 }
 
-rnd.calculateMW = function()
-{
+rnd.writeElement = function(atom_label, ela){
+	var str = ''
+	if (ela[atom_label]) {
+		str += atom_label;
+
+		if (ela[atom_label] > 1)
+		  str += ela[atom_label]
+	}
+
+	return str;
+}
+
+rnd.writeELAItem = function(atom_label, atom_n, molecularWeight) {
+	if(!atom_n > 0) return '';
+
+	var value = rnd.elements[atom_label] * atom_n / molecularWeight * 100;// in %
+	if(!value > 0) value = 0;
+	return atom_label + ': ' + value.toFixed(2) + ' '
+}
+
+rnd.buildELA = function(ela, molecularWeight) {
+	var result = '';
+	result += rnd.writeELAItem('C', ela['C'], molecularWeight);
+	result += rnd.writeELAItem('H', ela['H'], molecularWeight);
+	Object.keys(ela).sort().forEach(function(key, index) {
+		if(key == 'C' || key == 'H') return;
+
+		result += rnd.writeELAItem(key, ela[key], molecularWeight)
+	});
+	return result;
+}
+
+rnd.buildFormula = function(ela){
+	result = '';
+
+	// write C and H atoms first
+	result += rnd.writeElement('C', ela);
+	result += rnd.writeElement('H', ela);
+	var keys = Object.keys(ela).sort(); // after CH follow others in sorted order
+	keys.forEach(function(key,index) {
+		if (key == 'C' || key == 'H') {
+			return;
+		}
+		result += rnd.writeElement(key, ela);
+	});
+
+	return result;
+}
+
+rnd.getMoleculeInfo = function() {
 	var sum = 0;
+	var ela = {
+		"H": 0
+	};
 	ui.ctab.atoms.each(function (aid, atom)
 	{
+		if(ela[atom.label] == undefined) {
+			ela[atom.label] = 1
+		} else {
+			ela[atom.label]++;
+		}
+		ela['H'] += atom.implicitH;
+
 		sum += rnd.getAtomicWeight(atom);
 	});
-	return sum;
+
+	var formula = rnd.buildFormula(ela);
+	var ela_data = rnd.buildELA(ela, sum);
+
+	return {
+		"mw_total": sum,
+		"formula": formula,
+		"formatted_ela": ela_data
+	};
 };
