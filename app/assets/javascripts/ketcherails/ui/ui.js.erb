@@ -1609,15 +1609,17 @@ ui.onClick_ShowMolInfo = function ()
     var el = $('molecule_properties');
     if(el.visible()) {
       el.hide();
+      rnd.moleculeInfoVisible = false;
     } else {
-      $('mw_value').innerHTML = rnd.mw_total.toString();
-      $('mw_selected_value').innerHTML = rnd.mw_selected.toString();
+      ui.render.refreshMoleculeInfo();
       el.show();
+      rnd.moleculeInfoVisible = true;
     }
 
     var initX, initY, mousePressX, mousePressY;
 
     // thanks to http://stackoverflow.com/questions/29703473/pure-javascript-draggable-element
+    // TODO: EventMap
     el.addEventListener('mousedown', function(event) {
 
         initX = this.offsetLeft;
