@@ -6,7 +6,7 @@ module Ketcherails
     def initialize(svg="",**options)
       @svg = Nokogiri::XML(svg)
       @min,@max=[nil,nil],[nil,nil]
-      @margins= (options[:margins].is_a?(Array)&& options[:margins])  || [10,20]
+      @margins= (options[:margins].is_a?(Array)&& options[:margins])  || [20,20]
       @width = (options[:width].is_a?(Integer) && options[:width])
       @height = (options[:height].is_a?(Integer) && options[:height])
     end
@@ -65,7 +65,7 @@ module Ketcherails
     def centered_and_scaled_svg
       clean
       find_extrema
-      mx = @margins[0] || 10
+      mx = @margins[0] || 20
       my = @margins[1] || 20 # this value correlates to SVG text font as well
       if (@min+@max).compact.size == 4
         x1,y1=*@min
