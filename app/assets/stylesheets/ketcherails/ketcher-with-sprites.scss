@@ -92,6 +92,7 @@ a, img
 
 #molecule_properties {
   font-family: arial;
+  border-style: groove;
 
   input {
     margin-bottom: 5px;
@@ -186,12 +187,6 @@ select#zoom_list {
   border-width: 1px;
 }
 
-.usertemplate-destroy-btn {
-  background-color: red;
-  border-radius: 1px;
-  border-style: inset;
-}
-
 #client_area
 {
     overflow: auto;
@@ -257,9 +252,14 @@ select#zoom_list {
     top: 184px;
 }
 
-#commontemplate_dropdown_list, #usertemplate_dropdown_list, .commonTemplateDropdownList, .moleculePropertiesDialog
+#commontemplate_dropdown_list, #usertemplate_dropdown_list, .commonTemplateDropdownList
 {
-  border: 0.5px thin grey;
+  border-style: groove;
+  top: 72px;
+  left: 72px;
+}
+
+.moleculePropertiesDialog {
   top: 42px;
   left: 42px;
 }
@@ -396,8 +396,8 @@ div#loading
 {
   position: absolute;
   text-align: center;
-  left:  320px;
-  top:   200px;
+  left:  45%;
+  top:   45%;
 }
 
 #usertemplate_dropdown_list, #commontemplate_dropdown_list, .commonTemplateDropdownList
@@ -423,4 +423,22 @@ div#loading
 .aboutDialog > div > div:first-child
 {
     background-color: #D0D0D0;
+}
+
+a.usertemplate-destroy-btn{
+    float:right;
+    cursor:pointer;
+    color: #fff;
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background: #605F61;
+    font-size: 31px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;
+}
+
+a.usertemplate-destroy-btn:before {
+    content: "×";
 }
