@@ -578,10 +578,10 @@ ui.init = function (parameters, opts)
 	zoom_list.blur();
     });
 
-    ui.onResize_Ketcher();
+    //ui.onResize_Ketcher(); // TODO: remove
     if (Prototype.Browser.IE) {
         ui.client_area.absolutize(); // Needed for clipping and scrollbars in IE
-        $('ketcher_window').observe('resize', ui.onResize_Ketcher);
+        //$('ketcher_window').observe('resize', ui.onResize_Ketcher);
     }
 
     if (this.standalone) {
@@ -653,13 +653,13 @@ ui.toggleDropdownList = function (name)
 };
 
 
-ui.onResize_Ketcher = function ()
+/*ui.onResize_Ketcher = function ()
 {
-    /*if (Prototype.Browser.IE)
+    if (Prototype.Browser.IE)
         ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
 
-    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';*/
-};
+    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';
+};*/
 
 //
 // Main section

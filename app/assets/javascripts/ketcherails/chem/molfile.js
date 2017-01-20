@@ -957,9 +957,12 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 	ctabLines.each(function(line, index){
 		if(line.search('PolymersList') > 0){
 			ctabLines[index + 1].strip().split(' ').each(function (id){
-				//this.molecule.polymers.add({ id : id});
-				if(struct.atoms.get(id))
-					struct.atoms.get(id).isPolymer = true;
+				var aid = parseInt(id);
+				var atom = struct.atoms.get(aid);
+				if(atom){
+					atom.isPolymer = true;
+					atom.isPolymerSurface = id.includes('s');
+				}
 			});
 		}
 
@@ -1210,7 +1213,11 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 	this.molecule.atoms.each(function (id, atom)
 	{
 		if(atom.isPolymer) {
-			this.molecule.polymers.add({ id : id});
+			if(atom.isPolymerSurface) {
+				this.molecule.polymers.add({id: id, isPolymerSurface: true});
+			} else {
+				this.molecule.polymers.add({id: id});
+			}
 		}
 
 		this.writePaddedFloat(atom.pp.x, 10, 4);
@@ -1482,6 +1489,9 @@ chem.MolfileSaver.prototype.writeAdditionalData = function (){
 		additional_data += '> <PolymersList>\n';
 		this.molecule.polymers.each(function (index, obj) {
 			additional_data += obj.id.toString();
+			if (obj.isPolymerSurface) {
+				additional_data += 's';
+			}
 			additional_data += ' ';
 		});
 		additional_data += '\n';

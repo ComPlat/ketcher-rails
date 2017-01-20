@@ -604,7 +604,7 @@ rnd.ReStruct.prototype.update = function (force)
             if (this.chiralFlagsChanged[id] > 0)
                 item.draw(this.render);
         }, this);
-	this.drawPolymerBeads();
+	this.drawPolymers();
 	this.clearMarks();
 	return true;
 };

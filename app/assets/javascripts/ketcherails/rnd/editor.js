@@ -125,8 +125,10 @@ rnd.Editor.prototype.toolFor = function(tool) {
         return new rnd.Editor.APointTool(this);
     } else if (tool.startsWith('transform_rotate')) {
         return new rnd.Editor.RotateTool(this);
-    } else if (tool == 'polymer') {
-			return new rnd.Editor.PolymerTool(this);
+    } else if (tool == 'polymer_bead') {
+			return new rnd.Editor.PolymerBeadTool(this);
+		} else if (tool == 'polymer_surface') {
+			return new rnd.Editor.PolymerSurfaceTool(this);
 		}
     return null;
 };
@@ -1139,29 +1141,18 @@ rnd.Editor.RGroupAtomTool.prototype.OnMouseUp = function(event) {
     }
 };
 
-rnd.Editor.PolymerTool = function(editor) {
+rnd.Editor.PolymerBeadTool = function(editor) {
     this.editor = editor;
 
     this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
 };
 
-rnd.Editor.PolymerTool.prototype = new rnd.Editor.EditorTool();
-rnd.Editor.PolymerTool.prototype.OnMouseMove = function(event) {
+rnd.Editor.PolymerBeadTool.prototype = new rnd.Editor.EditorTool();
+rnd.Editor.PolymerBeadTool.prototype.OnMouseMove = function(event) {
     this._hoverHelper.hover(this.editor.render.findItem(event, ['atoms']));
 };
 
-rnd.Editor.PolymerTool.prototype.OnMouseUp = function(event) {
-		// draw only one polymer item
-		var polymerItemDrawn = this.editor.render.ctab.molecule.atoms.find(
-			function(aid, atom){
-				return atom.isPolymer;
-			}
-		)
-
-		if(polymerItemDrawn != undefined){
-			return false;
-		}
-
+rnd.Editor.PolymerBeadTool.prototype.OnMouseUp = function(event) {
 		var ci = this.editor.render.findItem(event, ['atoms']);
     if (!ci || ci.type == 'Canvas') {
         this._hoverHelper.hover(null);
@@ -1186,6 +1177,46 @@ rnd.Editor.PolymerTool.prototype.OnMouseUp = function(event) {
         this.editor.ui.render.update();
         return true;
     }
+};
+
+rnd.Editor.PolymerSurfaceTool = function(editor) {
+    this.editor = editor;
+
+    this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
+};
+
+rnd.Editor.PolymerSurfaceTool.prototype = new rnd.Editor.EditorTool();
+rnd.Editor.PolymerSurfaceTool.prototype.OnMouseMove = function(event) {
+  this._hoverHelper.hover(this.editor.render.findItem(event, ['atoms']));
+};
+
+rnd.Editor.PolymerSurfaceTool.prototype.OnMouseUp = function(event) {
+
+	var ci = this.editor.render.findItem(event, ['atoms']);
+	if (!ci || ci.type == 'Canvas') {
+			this._hoverHelper.hover(null);
+			this.editor.ui.addUndoAction(
+					this.editor.ui.Action.fromAtomAddition(
+							this.editor.ui.page2obj(this.OnMouseMove0.lastEvent),
+							{ label : 'R#', rglabel : 1, isPolymer : true, isPolymerSurface: true}
+					),
+					true
+			);
+			this.editor.ui.render.update();
+			return true;
+	} else if (ci && ci.map == 'atoms') {
+			this._hoverHelper.hover(null);
+			var atom = this.editor.render.ctab.molecule.atoms.get(ci.id);
+			var newProps = Object.clone(chem.Struct.Atom.attrlist); // TODO review: using Atom.attrlist as a source of default property values
+			newProps.label = 'R#';
+			newProps.rglabel = 1;
+			newProps.aam = atom.aam;
+			newProps.isPolymer = true;
+			newProps.isPolymerSurface = true;
+			this.editor.ui.addUndoAction(this.editor.ui.Action.fromAtomsAttrs(ci.id, newProps), true);
+			this.editor.ui.render.update();
+			return true;
+	}
 };
 
 rnd.Editor.RGroupFragmentTool = function(editor) {

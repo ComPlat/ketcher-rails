@@ -690,7 +690,7 @@ rnd.ReStruct.prototype.pathAndRBoxTranslate = function (path, rbb, x, y)
 
 var markerColors = ['black', 'cyan', 'magenta', 'red', 'green', 'blue', 'green'];
 
-rnd.ReStruct.prototype.drawPolymerBeads = function()
+rnd.ReStruct.prototype.drawPolymers = function()
 {
 	var render = this.render;
 	var paper = render.paper;
@@ -700,11 +700,19 @@ rnd.ReStruct.prototype.drawPolymerBeads = function()
 		var atom = _obj.atoms.get(aid);
     var ps = render.ps(atom.a.pp);
 		if(atom.a.isPolymer){
-			var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
-			circle.attr("fill", "r(0.2,0.3)#fff-000");// fill it with gradient
-			circle.attr("stroke", "#fff");
-			circle.attr("class", "polymer_bead")
-			_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
+			if (atom.a.isPolymerSurface) {
+				var rect_w = 50;
+				["M", 100, 0, "L", 30, 100 ]
+				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
+				line.attr({stroke:'#000',"stroke-width":8});
+				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
+			} else {
+				var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
+				circle.attr("fill", "r(0.2,0.3)#fff-000");// fill it with gradient
+				circle.attr("stroke", "#fff");
+				circle.attr("class", "polymer_bead")
+				_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
+			}
 		}
 	});
 };
