@@ -132,7 +132,8 @@
               <%= sprite_tag '', id: 'usertemplate_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
             <div class="menuButtonCell serverRequired">
-              <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton main_polymer', alt: '', title: 'Polymer' %>
+              <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton stateButton main_polymer', title: 'Polymer', selid: 'polymer_bead', alt: '' %>
+              <%= sprite_tag '', id: 'polymer_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
           </li>
           <li id="templates">
@@ -364,6 +365,24 @@
                   </tbody>
                 </table>
               </div>
+
+              <div class="dropdownList renderFirst" id="polymer_dropdown_list" style="display:none">
+                <table>
+                  <tbody>
+                    <% %W(Bead Surface).each_with_index do |tool, index| %>
+                    <tr class="dropdownListItem" id="polymer_<%= tool.downcase %>" title="<%= tool %>">
+                      <td>
+                        <div id="polymer_<%= index %>_preview">
+                          <%= sprite_tag '', class: 'dropdownIcon polymer_polymer_' + tool.downcase + '-dropdown', alt: '' %>
+                        </div>
+                        <%= tool %>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+
               <div class="dropdownList" id="reaction_dropdown_list" style="display:none">
                 <table>
                   <% { arrow: 'Arrow', plus: 'Plus', automap: 'Auto-Mapping', map: 'Mapping', unmap: 'Unmappping' }.each do |action, title| %>

@@ -336,6 +336,7 @@ chem.Struct.Atom = function (params) {
     util.ifDef(this, params, 'attpnt', def('attpnt')); // attachment point
     util.ifDef(this, params, 'explicitValence', def('explicitValence'));
 		util.ifDef(this, params, 'isPolymer', def('isPolymer'));
+		util.ifDef(this, params, 'isPolymerSurface', def('isPolymerSurface'));
 
     this.valence = 0;
     this.implicitH = 0; // implicitH is not an attribute
@@ -398,7 +399,8 @@ chem.Struct.Atom.attrlist = {
     'rglabel': null,
     'attpnt': null,
     'aam': 0,
-		'isPolymer': false
+		'isPolymer': false,
+		'isPolymerSurface': false
 };
 
 chem.Struct.Atom.prototype.clone = function(fidMap)
