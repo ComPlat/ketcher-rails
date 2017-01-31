@@ -723,7 +723,10 @@ rnd.Editor.BondTool.prototype.OnMouseMove = function(event) {
             }
             // don't rotate the bond if the distance between the start and end point is too small
             if (dist > 0.3) {
-                _DC_.action = _E_.ui.Action.fromBondAddition(this.bondProps, i1, i2, p1, p2)[0];
+							_DC_.action = _E_.ui.Action.fromBondAddition(this.bondProps, i1, i2, p1, p2)[0];
+							if(!_DC_.action.operations[0].data.bid){
+								delete _DC_.action;
+							}
             } else {
                 delete _DC_.action;
             }
@@ -739,7 +742,27 @@ rnd.Editor.BondTool.prototype.OnMouseUp = function(event) {
     if ('dragCtx' in this) {
         var _UI_ = this.editor.ui, _DC_ = this.dragCtx;
         if ('action' in _DC_) {
-            _UI_.addUndoAction(_DC_.action);
+					var newBondBegin = _DC_.action.operations[0].data.begin;
+					var newBondEnd = _DC_.action.operations[0].data.end;
+					var existingBondId = undefined;
+					var bonds = this.editor.render.ctab.molecule.bonds;
+					this.editor.render.ctab.bonds.each(function(bid, bond){
+						if((newBondBegin == bond.b.begin && newBondEnd == bond.b.end) ||
+							 (newBondBegin == bond.b.end && newBondEnd == bond.b.begin)) {
+								 if(existingBondId == undefined) {
+									 existingBondId = bid;
+								 } else {
+									 //bonds.remove(existingBondId)
+								 }
+							 }
+					});
+
+					if(existingBondId != undefined){
+						_DC_.action.operations.splice(0);
+					}
+
+					//_UI_.addUndoAction(_DC_.action);
+
         } else if (!('item' in _DC_)) {
             var xy = this.editor.ui.page2obj(event);
             var v = new util.Vec2(1.0 / 2, 0).rotate(

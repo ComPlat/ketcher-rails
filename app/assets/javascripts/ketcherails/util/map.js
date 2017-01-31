@@ -1,11 +1,11 @@
 /****************************************************************************
  * Copyright (C) 2009-2010 GGA Software Services LLC
- * 
+ *
  * This file may be distributed and/or modified under the terms of the
  * GNU Affero General Public License version 3 as published by the Free
  * Software Foundation and appearing in the file LICENSE.GPL included in
  * the packaging of this file.
- * 
+ *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  ***************************************************************************/
@@ -24,7 +24,7 @@ util.Map.prototype.each = function(func, context) {
     for (var v in this._obj) {
         var v_int = parseInt(v);
         var value = this._obj[v];
-        
+
         if (!isNaN(v_int))
             v = v_int;
         func.call(context, v, value)
@@ -43,7 +43,7 @@ util.Map.prototype.find = function(func, context) {
     for (var v in this._obj) {
         var v_int = parseInt(v);
         var value = this._obj[v];
-        
+
         if (!isNaN(v_int))
             v = v_int;
         if (func.call(context, v, value))
@@ -104,6 +104,11 @@ util.Map.prototype.has = function (key) {
 
 util.Map.prototype.unset = function (key) {
     return this.set(key, undefined);
+};
+
+util.Map.prototype.remove = function (key) {
+    delete this._obj[key];
+    this._count--;
 };
 
 util.Map.prototype.update = function (object) {

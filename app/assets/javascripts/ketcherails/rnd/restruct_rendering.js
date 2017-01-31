@@ -49,8 +49,7 @@ rnd.ReStruct.prototype.drawBondSingle = function (hb1, hb2)
 	var a = hb1.p, b = hb2.p;
 	var paper = this.render.paper;
 	var styles = this.render.styles;
-	return paper.path(rnd.ReStruct.makeStroke(a, b))
-	.attr(styles.lineattr);
+	return paper.path(rnd.ReStruct.makeStroke(a, b)).attr(styles.lineattr);
 };
 
 rnd.ReStruct.prototype.drawBondSingleUp = function (hb1, hb2, bond)
