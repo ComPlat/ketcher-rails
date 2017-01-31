@@ -1623,7 +1623,12 @@ ui.Action.OpBondAdd = function(begin, end, bond) {
         pp.end = this.data.end;
 
         if (!Object.isNumber(this.data.bid)) {
-            this.data.bid = DS.bonds.add(new chem.Struct.Bond(pp));
+            if(!RS.molecule.checkBondExists(this.data.begin, this.data.end)){
+              this.data.bid = DS.bonds.add(new chem.Struct.Bond(pp));
+            } else {
+              pp.type++;
+              return true;
+            }
         } else {
             DS.bonds.set(this.data.bid, new chem.Struct.Bond(pp));
         }
