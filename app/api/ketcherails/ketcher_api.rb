@@ -86,6 +86,19 @@ module Ketcherails
       get :layout do
         body 'ok'
       end
+
+      desc 'Get molecule name fro PubChem'
+      params do
+        requires :moldata, type: String, desc: 'Molecule molfile'
+      end
+      post :info do
+        mol = params[:moldata]
+        mol_info = Chemotion::PubchemService.molecule_info_from_molfile mol
+        {
+          iupac_name: mol_info[:iupac_name],
+          name: mol_info[:names]
+        }
+      end
     end
   end
 end

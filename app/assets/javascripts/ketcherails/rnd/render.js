@@ -888,6 +888,38 @@ rnd.Render.prototype.testPolygon = function (rr) {
 	this.drawSelectionPolygon(rr);
 };
 
+rnd.Render.prototype.fetchMoleculeName = function () {
+	var currentDateTime = new Date();
+
+	// only make a request to the backend API if user inactive for 2 seconds
+	if(currentDateTime - rnd.moleculeChanged < 2000)
+	  return;
+
+	var mol_string = ketcher.getMolfile();
+	new Ajax.Request(ui.api_path + 'info',
+	{
+			method: 'post',
+			asynchronous : true,
+			parameters: {moldata: mol_string},
+			onComplete: function (res)
+			{
+				if(res.status == 201){
+					var data = res.responseJSON;
+					$('iupac_name_value').innerHTML = data.iupac_name || 'n/a';
+					$('names_value').innerHTML = data.name.length > 0
+																			   ?
+																				 data.name.join(', ')
+																				 :
+																				 'n/a';
+				}	else {
+					$('iupac_name_value').innerHTML = 'n/a';
+					$('names_value').innerHTML = 'n/a';
+					console.log(res);
+				}
+			}
+	});
+}
+
 rnd.Render.prototype.refreshMoleculeInfo = function() {
 	rnd.moleculeInfo = rnd.getMoleculeInfo();
 	rnd.mw_total = rnd.moleculeInfo['mw_total'].toFixed(rnd.NUM_PRECISION);
@@ -895,6 +927,14 @@ rnd.Render.prototype.refreshMoleculeInfo = function() {
 	$('mw_selected_value').innerHTML = rnd.mw_selected.toString();
 	$('formula_value').innerHTML = rnd.moleculeInfo['formula'];
 	$('ela_value').innerHTML = rnd.moleculeInfo['formatted_ela'];
+	rnd.moleculeChanged = new Date();
+
+	$('iupac_name_value').innerHTML = '[fetching data...]';
+	$('names_value').innerHTML = '[fetching data...]';
+
+	setTimeout(function () {
+		ui.render.fetchMoleculeName();
+	}, 2001);
 }
 
 rnd.Render.prototype.update = function (force)
