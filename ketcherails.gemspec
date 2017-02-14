@@ -21,10 +21,10 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri", "1.6.7.2"
   s.add_dependency "haml-rails", "0.9.0"
   s.add_dependency "jquery-ui-rails", "5.0.5"
-  s.add_dependency 'kaminari'
-  s.add_dependency 'bootstrap-kaminari-views'
+  s.add_dependency 'kaminari', '0.16.3'
+  s.add_dependency 'bootstrap-kaminari-views', '0.0.5'
   s.add_dependency 'paperclip', '~> 5.0.0'
-  s.add_dependency 'sprite-factory'
+  s.add_dependency 'sprite-factory', '1.7.1'
 
   s.add_development_dependency "pg"
   s.add_development_dependency "grape"
