@@ -1,7 +1,7 @@
 module Ketcherails::PubchemService
 
   def self.molecule_info_from_molfile molfile
-    record = PubChem.get_record_from_molfile(molfile)
+    record = Ketcherails::PubChem.get_record_from_molfile(molfile)
     interpret_record record
   end
 

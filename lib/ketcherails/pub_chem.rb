@@ -1,6 +1,6 @@
 require 'net/http'
 
-module PubChem
+module Ketcherails::PubChem
   include HTTParty
 
 
