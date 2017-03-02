@@ -8,28 +8,28 @@ getKetcher = function() {
     return document.frames['ifKetcher'].window.ketcher;
 }
 
-showKetcherModal = function() {
+showKetcherModal = function(entityName) {
   var ketcher = getKetcher();
-  var molfile = $('textarea#common_template_molfile').val();
+  var molfile = $('textarea#' + entityName + '_molfile').val();
   ketcher.setMolecule(molfile);
   $('#ketcherModal').modal('show');
 }
 
-saveStructure = function() {
+saveStructure = function(entityName) {
   var ketcher = getKetcher();
 
   var molfile = ketcher.getMolfile();
   var svg = ketcher.getSVG();
-  $('textarea#common_template_molfile').html(molfile);
-  $('input#svg').val(svg); //set SVG value from the editor
+  $('textarea#' + entityName + '_molfile').html(molfile);
+  $('input#svg').val(svg); // set SVG value from the editor
   $('#ketcherModal').modal('hide');
 };
 
-updateMolfileFromFileInput = function (e) {
-  var file = $('input#common_template_file_molfile').val();
+updateMolfileFromFileInput = function (e, entityName) {
+  var file = $('input#' + entityName + '_file_molfile').val();
   var reader = new FileReader();
   reader.readAsText(e.files[0]);
   reader.onload = function(e) {
-    $('textarea#common_template_molfile').html(e.target.result);
+    $('textarea#' + entityName + '_molfile').html(e.target.result);
   };
 }

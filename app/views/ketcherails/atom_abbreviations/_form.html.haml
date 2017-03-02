@@ -11,36 +11,33 @@
       .modal-footer
         %button.btn.btn-default{'data-dismiss': 'modal', type: 'button'}
           Close
-        %button.btn.btn-primary{type: 'button', onclick: 'saveStructure(\'common_template\');'}
+        %button.btn.btn-primary{type: 'button', onclick: 'saveStructure(\'atom_abbreviation\');'}
           Save changes
 
-= form_for @common_template do |f|
-  - if @common_template.errors.any?
+= form_for @atom_abbreviation do |f|
+  - if @atom_abbreviation.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@common_template.errors.count, "error")} prohibited this common_template from being saved:"
+      %h2= "#{pluralize(@atom_abbreviation.errors.count, "error")} prohibited this atom abbreviation from being saved:"
       %ul
-        - @common_template.errors.full_messages.each do |msg|
+        - @atom_abbreviation.errors.full_messages.each do |msg|
           %li= msg
 
   .field
     = f.label :name
     = f.text_field :name
   .field
-    %button.btn.btn-primary{onclick: 'showKetcherModal(\'common_template\')',
+    %button.btn.btn-primary{onclick: 'showKetcherModal(\'atom_abbreviation\')',
                             type: 'button',
                             class: 'pull-right'}
-      - if @common_template.persisted?
+      - if @atom_abbreviation.persisted?
         Edit structure
       - else
         Draw a structure
     = f.label :molfile
-    = f.file_field :file_molfile, onchange: 'updateMolfileFromFileInput(this, \'common_template\')'
+    = f.file_field :file_molfile, onchange: 'updateMolfileFromFileInput(this, \'atom_abbreviation\')'
     %br
     = f.text_area :molfile, cols: '80', rows: '20'
     = hidden_field_tag :svg
-  .field
-    = f.label :category
-    = template_category_select(f)
   .field
     = f.label :status
     = status_select(f)
@@ -48,12 +45,12 @@
     = f.label :notes
     %br
     = f.text_area :notes, cols: '30', rows: '5'
-  - if @common_template.persisted?
+  - if @atom_abbreviation.persisted?
     .field
       = f.label :approved_at
-      = @common_template.approved_at
+      = @atom_abbreviation.approved_at
     .field
       = f.label :rejected_at
-      = @common_template.rejected_at
+      = @atom_abbreviation.rejected_at
   .actions
     = f.submit 'Save', class: 'btn btn-primary'
