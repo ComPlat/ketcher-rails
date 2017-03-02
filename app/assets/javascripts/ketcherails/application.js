@@ -2,4 +2,4 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap
-//= require ketcherails/common_templates
+//= require ketcherails/admin_ketcher

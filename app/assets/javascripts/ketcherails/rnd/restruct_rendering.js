@@ -693,6 +693,7 @@ rnd.ReStruct.prototype.drawPolymers = function()
 {
 	var render = this.render;
 	var paper = render.paper;
+	var struct = this.molecule;
 	var _obj = this;
 
 	this.atoms.each(function (aid, atom) {
@@ -712,6 +713,16 @@ rnd.ReStruct.prototype.drawPolymers = function()
 				circle.attr("class", "polymer_bead")
 				_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
 			}
+		} else if(atom.a.isAttachmentPoint && aid == struct.attachmentPoint) {
+			if(rnd.attachmentPoint != null) {
+				rnd.attachmentPoint.remove();
+			}
+			var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
+			circle.attr("fill", "#99ccff");
+			circle.attr("fill-opacity", 0.5);
+			circle.attr("stroke", "none");
+			rnd.attachmentPoint = circle;
+			_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
 		}
 	});
 };

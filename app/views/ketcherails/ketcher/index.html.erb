@@ -618,6 +618,16 @@
                         </select>
                       </td>
                     </tr>
+                    <% if @show_attachment_point %>
+                      <tr>
+                        <td>
+                          <label>Is attachment point:</label>
+                        </td>
+                        <td>
+                          <input type="checkbox" id="aid" value="aid">
+                        </td>
+                      </tr>
+                    <% end %>
                     <tr>
                       <td colspan="5" style="background-color: #D7D7D7">
                         Reaction flags

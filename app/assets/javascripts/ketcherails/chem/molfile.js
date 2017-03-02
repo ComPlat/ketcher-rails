@@ -964,9 +964,7 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 					atom.isPolymerSurface = id.includes('s');
 				}
 			});
-		}
-
-		if(line.search('BoldBondsList') > 0) {
+		} else if(line.search('BoldBondsList') > 0) {
 			ctabLines[index + 1].strip().split(' ').each(function (id){
 				var bond = struct.bonds.get(id)
 				if(bond){
@@ -977,6 +975,12 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 					}
 				}
 			});
+		}	else if(line.search('AttachmentPoint') > 0) {
+			var aid = parseInt(ctabLines[index + 1]);
+			var atom = struct.atoms.get(aid);
+			if(atom){
+				atom.isAttachmentPoint = true;
+			}
 		}
 	});
 };
@@ -1218,6 +1222,10 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 			} else {
 				this.molecule.polymers.add({id: id});
 			}
+		}
+
+		if(atom.isAttachmentPoint) {
+			this.molecule.attachmentPoint = id;
 		}
 
 		this.writePaddedFloat(atom.pp.x, 10, 4);
@@ -1494,6 +1502,13 @@ chem.MolfileSaver.prototype.writeAdditionalData = function (){
 			}
 			additional_data += ' ';
 		});
+		additional_data += '\n';
+	}
+
+	var ap = this.molecule.attachmentPoint;
+	if(ap === parseInt(ap)) { // check if ID is Integer
+		additional_data += '> <AttachmentPoint>\n';
+		additional_data += ap;
 		additional_data += '\n';
 	}
 

@@ -1889,6 +1889,10 @@ ui.applyAtomProperties = function ()
     ui.hideDialog('atom_properties');
 
     var id = $('atom_properties').atom_id;
+    var isAttachmentPoint = $('aid').checked;
+    if (isAttachmentPoint) {
+      ui.ctab.attachmentPoint = id;
+    }
 
     ui.addUndoAction(ui.Action.fromAtomsAttrs(id,
     {
@@ -1904,7 +1908,8 @@ ui.applyAtomProperties = function ()
         ringBondCount: parseInt($('atom_ringcount').value),
         substitutionCount: parseInt($('atom_substitution').value),
         unsaturatedAtom: parseInt($('atom_unsaturation').value),
-        hCount: parseInt($('atom_hcount').value)
+        hCount: parseInt($('atom_hcount').value),
+        isAttachmentPoint: isAttachmentPoint
     }), true);
 
     ui.render.update();

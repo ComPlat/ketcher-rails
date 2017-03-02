@@ -1,0 +1,40 @@
+%h1 Listing atom abbreviations
+
+= link_to 'New atom abbreviation', new_atom_abbreviation_path,
+      class: 'btn btn-primary pull-right new-ctemplate-btn'
+= paginate @atom_abbreviations, theme: 'twitter-bootstrap-3'
+
+%table{class: 'table'}
+  %thead
+    %tr
+      %th Image
+      %th Name
+      %th Status
+      %th Approved at
+      %th Rejected at
+      %th Category
+      %th Notes
+      %th
+      %th
+      %th
+
+  %tbody
+    - @atom_abbreviations.each do |atom_abbreviation|
+      %tr
+        %td{class: 'template-icon'}
+          = image_tag atom_abbreviation.icon.url(:small)
+        %td= atom_abbreviation.name
+        %td= atom_abbreviation.status
+        %td= atom_abbreviation.approved_at
+        %td= atom_abbreviation.rejected_at
+        %td= atom_abbreviation.category_name
+        %td= atom_abbreviation.notes
+        %td{class: 'col-md-1'}
+          = link_to 'Show', atom_abbreviation_path(atom_abbreviation), class: 'btn btn-default'
+        %td{class: 'col-md-1'}
+          = link_to 'Edit', edit_atom_abbreviation_path(atom_abbreviation), class: 'btn btn-warning template-form-link'
+        %td{class: 'col-md-1'}
+          = link_to 'Destroy', atom_abbreviation, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+
+%br
+= paginate @atom_abbreviations, theme: 'twitter-bootstrap-3'

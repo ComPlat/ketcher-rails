@@ -21,6 +21,7 @@ rnd.NUM_PRECISION = 5; //show 5 numbers after comma
 rnd.mw_total = 0;
 rnd.mw_selected = 0;
 rnd.moleculeInfoVisible = false;
+rnd.attachmentPoint = null; // Raphael rendered element
 
 rnd.logcnt = 0;
 rnd.logmouse = false;

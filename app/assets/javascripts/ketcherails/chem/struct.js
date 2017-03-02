@@ -23,6 +23,7 @@ chem.Struct = function ()
 	this.loops = new util.Pool();
 	this.isChiral = false;
 	this.isReaction = false;
+	this.attachmentPoint = false;
 	this.rxnArrows = new util.Pool();
 	this.rxnPluses = new util.Pool();
     this.frags = new util.Pool();
@@ -337,6 +338,7 @@ chem.Struct.Atom = function (params) {
     util.ifDef(this, params, 'explicitValence', def('explicitValence'));
 		util.ifDef(this, params, 'isPolymer', def('isPolymer'));
 		util.ifDef(this, params, 'isPolymerSurface', def('isPolymerSurface'));
+		util.ifDef(this, params, 'isAttachmentPoint', def('isAttachmentPoint'));
 
     this.valence = 0;
     this.implicitH = 0; // implicitH is not an attribute
@@ -400,7 +402,8 @@ chem.Struct.Atom.attrlist = {
     'attpnt': null,
     'aam': 0,
 		'isPolymer': false,
-		'isPolymerSurface': false
+		'isPolymerSurface': false,
+		'isAttachmentPoint': false
 };
 
 chem.Struct.Atom.prototype.clone = function(fidMap)

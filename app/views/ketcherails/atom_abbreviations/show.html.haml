@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Structure
+  = image_tag @atom_abbreviation.icon.url(:small)
+%p
+  %b Name:
+  = @atom_abbreviation.name
+%p
+  %b Notes:
+  = @atom_abbreviation.notes
+%p
+  %b Approved at:
+  = @atom_abbreviation.approved_at
+%p
+  %b Rejected at:
+  = @atom_abbreviation.rejected_at
+
+= link_to 'Edit', edit_atom_abbreviation_path(@atom_abbreviation), class: 'template-form-link'
+\|
+= link_to 'Back', atom_abbreviation_path
