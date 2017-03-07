@@ -980,6 +980,7 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 			var atom = struct.atoms.get(aid);
 			if(atom){
 				atom.isAttachmentPoint = true;
+				struct.attachmentPoint = aid;
 			}
 		}
 	});

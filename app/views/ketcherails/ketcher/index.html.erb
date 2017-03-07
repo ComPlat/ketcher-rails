@@ -534,7 +534,12 @@
                         <label>Label:</label>
                       </td>
                       <td>
-                        <input id="atom_label" type="text" maxlength="2" size="3"/>
+                        <input id="atom_label" type="text" maxlength="20" size="20" list="atom_abbrevs"/>
+                        <datalist id="atom_abbrevs">
+                          <% @atom_abbreviation_list.each do |title| %>
+                            <option value="<%= title %>"/>
+                          <% end %>
+                        </datalist>
                       </td>
                       <td rowspan="5" style="width:5px"></td>
                       <td>
