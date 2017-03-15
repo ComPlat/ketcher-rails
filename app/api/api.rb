@@ -3,4 +3,5 @@ API.class_eval do
   mount Ketcherails::CustomTemplatesAPI
   mount Ketcherails::TemplateCategoriesAPI
   mount Ketcherails::CommonTemplatesAPI
+  mount Ketcherails::AtomAbbreviationsAPI
 end

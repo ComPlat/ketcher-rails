@@ -2,6 +2,8 @@ module Ketcherails
   class AtomAbbreviation < Ketcherails::CommonTemplate
     self.table_name = :ketcherails_atom_abbreviations
 
+    validates :name, uniqueness: true
+
     before_save :set_aid
 
     private
