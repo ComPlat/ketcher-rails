@@ -339,6 +339,7 @@ chem.Struct.Atom = function (params) {
 		util.ifDef(this, params, 'isPolymer', def('isPolymer'));
 		util.ifDef(this, params, 'isPolymerSurface', def('isPolymerSurface'));
 		util.ifDef(this, params, 'isAttachmentPoint', def('isAttachmentPoint'));
+		util.ifDef(this, params, 'abbrevName', def('abbrevName'));
 
     this.valence = 0;
     this.implicitH = 0; // implicitH is not an attribute
@@ -403,7 +404,8 @@ chem.Struct.Atom.attrlist = {
     'aam': 0,
 		'isPolymer': false,
 		'isPolymerSurface': false,
-		'isAttachmentPoint': false
+		'isAttachmentPoint': false,
+		'abbrevName': undefined
 };
 
 chem.Struct.Atom.prototype.clone = function(fidMap)
@@ -484,6 +486,7 @@ chem.Struct.Bond = function (params)
 	util.ifDef(this, params, 'stereo', chem.Struct.BOND.STEREO.NONE);
 	util.ifDef(this, params, 'topology', chem.Struct.BOND.TOPOLOGY.EITHER);
 	util.ifDef(this, params, 'reactingCenterStatus', 0);
+	util.ifDef(this, params, 'invisible', false);
 	this.hb1 = null; // half-bonds
 	this.hb2 = null;
 	this.len = 0;
@@ -497,7 +500,8 @@ chem.Struct.Bond.attrlist = {
     'type' : chem.Struct.BOND.TYPE.SINGLE,
     'stereo' : chem.Struct.BOND.STEREO.NONE,
     'topology' : chem.Struct.BOND.TOPOLOGY.EITHER,
-    'reactingCenterStatus' : 0
+    'reactingCenterStatus' : 0,
+		'invisible' : false
 };
 
 chem.Struct.Bond.getAttrHash = function(bond) {

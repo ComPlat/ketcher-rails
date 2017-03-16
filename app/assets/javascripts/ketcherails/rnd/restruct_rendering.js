@@ -757,16 +757,19 @@ rnd.ReStruct.prototype.showLabels = function ()
 
                 var color = '#000000';
 
-		if(atom.a.isPolymer){
+		if(atom.a.isPolymer || (atom.a.abbrevName && !atom.a.isSuperAtom)){
 			atom.showLabel = false;
+		} else if(atom.a.isSuperAtom) {
+			atom.showLabel = true;
 		}
-
-		if (atom.showLabel)
+ 		if (atom.showLabel)
 		{
 			var rightMargin = 0, leftMargin = 0;
 			// label
 			var label = {};
-			if (atom.a.atomList != null) {
+			if (atom.a.abbrevName) {
+				label.text = atom.a.abbrevName;
+			} else if (atom.a.atomList != null) {
 				label.text = atom.a.atomList.label();
             } else if (atom.a.label == 'R#' && atom.a.rglabel != null) {
                 label.text = '';
@@ -1206,6 +1209,9 @@ rnd.ReStruct.prototype.showBonds = function ()
 	var opt = render.opt;
 	for (var bid in this.bondsChanged) {
 		var bond = this.bonds.get(bid);
+		if(bond.b.invisible) {
+			continue;
+		}
 		var hb1 = this.molecule.halfBonds.get(bond.b.hb1),
 		hb2 = this.molecule.halfBonds.get(bond.b.hb2);
 		this.bondRecalc(settings, bond);

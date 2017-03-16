@@ -634,6 +634,26 @@ chem.Molfile.parseCTabV2000 = function (ctabLines, countsSplit)
         }
 	}
 	for (sid in sGroups) {
+		if(sGroups[sid].type == 'SUP' && ui.atom_abbreviation_list.indexOf(sGroups[sid].data.subscript) > -1){
+			var label = sGroups[sid].data.subscript;
+			sGroups[sid].data.isAtomAbbrev = true;
+			var isAP = true;
+			var attPID;
+			sGroups[sid].atoms.each(function(aid) {
+				ctab.atoms.get(aid).abbrevName = label;
+				if(isAP) {
+					ctab.atoms.get(aid).isSuperAtom = true;// show first atom
+					attPID = aid;
+					isAP = false;
+				}
+			})
+			ctab.bonds.each(function(bid, bond) {
+				if(sGroups[sid].atoms.indexOf(bond.end) > -1 &&
+					 sGroups[sid].atoms.indexOf(bond.begin) > -1) {
+						 bond.invisible = true;
+					 }
+			})
+		}
 		chem.SGroup.addGroup(ctab, sGroups[sid], atomMap);
 	}
 	var emptyGroups = [];

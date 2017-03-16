@@ -647,6 +647,8 @@ rnd.ReStruct.prototype.drawSGroups = function ()
 {
 	util.each(this.molecule.sGroupForest.getSGroupsBFS().reverse(), function(id) {
 		var sgroup = this.sgroups.get(id);
+		if(sgroup.item.type == 'SUP' && sgroup.item.data.isAtomAbbrev)
+			return true;
 		var path = sgroup.draw(this.render);
 		this.addReObjectPath('data', sgroup.visel, path, null, true);
 		sgroup.setHighlight(sgroup.highlight, this.render); // TODO: fix this
