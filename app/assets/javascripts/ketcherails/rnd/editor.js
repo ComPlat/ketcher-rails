@@ -858,9 +858,10 @@ rnd.Editor.ChainTool.prototype.OnCancel = function() {
 };
 
 
-rnd.Editor.TemplateTool = function(editor, template) {
+rnd.Editor.TemplateTool = function(editor, template, abbrevName = undefined) {
     this.editor = editor;
     this.template = template;
+		this.template.abbrevName = abbrevName;
 
     // load template molfile in advance
     if (!this.template.molecule) {
@@ -870,9 +871,16 @@ rnd.Editor.TemplateTool = function(editor, template) {
 
         var xy0 = new util.Vec2();
 
-        frag.atoms.each(function (aid, atom) {
+				frag.atoms.each(function (aid, atom) {
+						atom.abbrevName = abbrevName;
             xy0.add_(atom.pp);
         });
+
+				if(abbrevName) {
+					frag.bonds.each(function (bid, bond) {
+						bond.invisible = true;
+					});
+				}
 
         this.template.molecule = frag; // preloaded struct
         this.template.xy0 = xy0.scaled(1 / frag.atoms.count()); // template center

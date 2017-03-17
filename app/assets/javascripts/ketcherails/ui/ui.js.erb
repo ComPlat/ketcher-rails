@@ -1917,9 +1917,63 @@ ui.applyAtomProperties = function ()
 
 ui.onChange_AtomLabel = function ()
 {
-    this.value = this.value.strip().capitalize();
+    var label = this.value;
+    if(ui.atom_abbreviation_list.indexOf(label) > -1) {
 
-    var element = chem.Element.getElementByLabel(this.value);
+      new Ajax.Request(ui.api_path + 'atom_abbreviation',
+      {
+          method: 'get',
+          asynchronous : true,
+          parameters: { name: label},
+          onComplete: function (res)
+          {
+            if(res.status == 200){
+              var data = res.responseJSON;
+              var tool = new rnd.Editor.TemplateTool(ui.editor, data, label);
+              var _E_ = ui.editor, _R_ = _E_.render;
+              var aid = $('atom_properties').atom_id;
+              var atom = _R_.ctab.molecule.atoms.get(aid);
+              tool.dragCtx = {
+                  xy0 : atom.pp,
+                  item : {
+                    dist: 0.0,
+                    id: aid,
+                    map: 'atoms',
+                    type: 'Atom'
+                  }
+              };
+              tool.OnMouseUp({});
+              var sGroupIds = [];
+              _R_.ctab.molecule.atoms.each(function (id, atom) {
+                if(atom.abbrevName){
+                  sGroupIds.push(id);
+                  if(id == aid) {
+                    atom.isSuperAtom = true;
+                  }
+                }
+              });
+
+              var id = id = ui.render.ctab.molecule.sgroups.newId();
+              var type = 'SUP';
+              var attrs = {
+                connectivity: '',
+                fieldName: '',
+                fieldValue: '',
+                mul: null,
+                name: label,
+                subscript: '',
+                isAtomAbbrev: true
+              }
+              ui.editor.ui.addUndoAction(ui.editor.ui.Action.fromSgroupAddition(type, sGroupIds, attrs, id), true);
+            }	else {
+              console.log(res);
+            }
+          }
+      });
+    } else {
+      label = label.strip().capitalize();
+      var element = chem.Element.getElementByLabel(label);
+    }
 
     if (element == null && this.value != 'A' && this.value != '*' && this.value != 'Q' && this.value != 'X' && this.value != 'R') {
         this.value = ui.render.atomGetAttr($('atom_properties').atom_id, 'label');

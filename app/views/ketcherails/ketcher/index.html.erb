@@ -1092,5 +1092,6 @@
         </html>
 <script>
   ui.commontemplate_cat_ids = [<%= @template_categories.pluck(:id).join(', ') %>];
+  ui.atom_abbreviation_list = <%= raw @atom_abbreviation_list %>
 </script>
 <% end %>
