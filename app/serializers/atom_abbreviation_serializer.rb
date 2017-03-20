@@ -1,7 +1,7 @@
 class AtomAbbreviationSerializer < ActiveModel::Serializer
   root false
 
-  attributes :molfile, :name, :aid, :bid
+  attributes :molfile, :name, :rtl_name, :aid, :bid
 
   def bid
     1

@@ -12,7 +12,6 @@
       %th Status
       %th Approved at
       %th Rejected at
-      %th Category
       %th Notes
       %th
       %th
@@ -27,7 +26,6 @@
         %td= atom_abbreviation.status
         %td= atom_abbreviation.approved_at
         %td= atom_abbreviation.rejected_at
-        %td= atom_abbreviation.category_name
         %td= atom_abbreviation.notes
         %td{class: 'col-md-1'}
           = link_to 'Show', atom_abbreviation_path(atom_abbreviation), class: 'btn btn-default'

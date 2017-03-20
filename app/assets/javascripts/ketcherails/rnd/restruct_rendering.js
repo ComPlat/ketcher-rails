@@ -26,6 +26,30 @@ rnd.relBox = function (box) {
     };
 }
 
+rnd.atom_labels_hash = {};
+
+rnd.getAtomLabelRTL = function(atom_label) {
+	var value = rnd.atom_labels_hash[atom_label];
+	if(value == undefined) {
+		new Ajax.Request(ui.api_path + 'rtl_superatom',
+		{
+				method: 'get',
+				asynchronous : false,
+				parameters: { name: atom_label},
+				onComplete: function (res)
+				{
+					if(res.status == 200){
+						value = res.responseJSON['name'];
+						rnd.atom_labels_hash[atom_label] = value;
+					}	else {
+						console.log(res);
+					}
+				}
+		});
+	}
+	return value;
+}
+
 rnd.ReStruct.prototype.drawArrow = function (a, b)
 {
 	var width = 5, length = 7;
@@ -768,7 +792,23 @@ rnd.ReStruct.prototype.showLabels = function ()
 			// label
 			var label = {};
 			if (atom.a.abbrevName) {
-				label.text = atom.a.abbrevName;
+				this.bonds.each(function(bid, bond) {
+					if (bond.b.begin == aid && !bond.b.invisible) {
+						var angle_abs = Math.abs(bond.b.angle)
+						atom.a.abbrevRTL = angle_abs < 90;
+					} else if (bond.b.end == aid && !bond.b.invisible) {
+						var angle_abs = Math.abs(bond.b.angle)
+						atom.a.abbrevRTL = angle_abs < 180 && angle_abs > 90;
+					}
+				});
+				if (atom.a.abbrevRTL) {
+					if (!atom.a.abbrevNameRTL) {
+						atom.a.abbrevNameRTL = rnd.getAtomLabelRTL(atom.a.abbrevName);
+					}
+					label.text = atom.a.abbrevNameRTL;
+				} else {
+					label.text = atom.a.abbrevName;
+				}
 			} else if (atom.a.atomList != null) {
 				label.text = atom.a.atomList.label();
             } else if (atom.a.label == 'R#' && atom.a.rglabel != null) {
