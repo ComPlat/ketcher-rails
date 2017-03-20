@@ -99,8 +99,8 @@ private
 
     # Only allow a trusted parameter "white list" through.
     def atom_abbreviation_params
-      params.require(:atom_abbreviation).permit(:name, :notes, :molfile,
-        :status)
+      params.require(:atom_abbreviation).permit(:name, :rtl_name, :notes,
+        :molfile, :status)
     end
   end
 end
