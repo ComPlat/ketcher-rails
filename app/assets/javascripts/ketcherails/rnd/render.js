@@ -1018,7 +1018,7 @@ rnd.Render.prototype.findClosestAtom = function (pos, minDist, skip) { // TODO s
 	this.ctab.atoms.each(function(aid, atom){
         if (aid != skip) {
             var dist = util.Vec2.dist(pos, atom.a.pp);
-            if (dist < minDist) {
+            if (dist < minDist && (!atom.a.abbrevName || atom.a.isSuperAtom)) {
                 closestAtom = aid;
                 minDist = dist;
             }

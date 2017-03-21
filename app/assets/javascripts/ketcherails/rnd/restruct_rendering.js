@@ -842,7 +842,7 @@ rnd.ReStruct.prototype.showLabels = function ()
 			var isHydrogen = label.text == 'H';
 			var hydrogen = {}, hydroIndex = null;
 			var hydrogenLeft = atom.hydrogenOnTheLeft;
-			if (isHydrogen && implh > 0) {
+			if (isHydrogen && implh > 0 && !atom.a.isSuperAtom) {
 				hydroIndex = {};
 				hydroIndex.text = (implh+1).toString();
 				hydroIndex.path =
@@ -915,7 +915,7 @@ rnd.ReStruct.prototype.showLabels = function ()
 				leftMargin -= isotope.rbb.width + delta;
 				this.addReObjectPath('data', atom.visel, isotope.path, ps, true);
 			}
-			if (!isHydrogen && implh > 0 && !render.opt.hideImplicitHydrogen)
+			if (!isHydrogen && implh > 0 && !render.opt.hideImplicitHydrogen && !atom.a.isSuperAtom)
 			{
 				hydrogen.text = 'H';
 				hydrogen.path = paper.text(ps.x, ps.y, hydrogen.text)
@@ -955,15 +955,15 @@ rnd.ReStruct.prototype.showLabels = function ()
 						this.pathAndRBoxTranslate(hydroIndex.path, hydroIndex.rbb,
 							leftMargin - 0.5 * hydroIndex.rbb.width - delta,
 							0.2 * label.rbb.height);
-						leftMargin -= hydroIndex.rbb.width + delta;
-					}
-					this.pathAndRBoxTranslate(hydrogen.path, hydrogen.rbb,
-						leftMargin - 0.5 * hydrogen.rbb.width - delta, 0);
-					leftMargin -= hydrogen.rbb.width + delta;
-				}
-				this.addReObjectPath('data', atom.visel, hydrogen.path, ps, true);
-				if (hydroIndex != null)
-					this.addReObjectPath('data', atom.visel, hydroIndex.path, ps, true);
+							leftMargin -= hydroIndex.rbb.width + delta;
+						}
+						this.pathAndRBoxTranslate(hydrogen.path, hydrogen.rbb,
+							leftMargin - 0.5 * hydrogen.rbb.width - delta, 0);
+							leftMargin -= hydrogen.rbb.width + delta;
+						}
+						this.addReObjectPath('data', atom.visel, hydrogen.path, ps, true);
+						if (hydroIndex != null)
+							this.addReObjectPath('data', atom.visel, hydroIndex.path, ps, true);
 			}
 
 			var charge = {};
@@ -1011,7 +1011,7 @@ rnd.ReStruct.prototype.showLabels = function ()
 				13: 'XIII',
 				14: 'XIV'
 			};
-			if (atom.a.explicitValence >= 0)
+			if (atom.a.explicitValence >= 0 && !atom.a.isSuperAtom)
 			{
 				valence.text = mapValence[atom.a.explicitValence];
 				if (!valence.text)
@@ -1143,10 +1143,9 @@ rnd.ReStruct.prototype.showLabels = function ()
                 else
                     throw new Error("Unsaturated atom invalid value");
             }
-            if (atom.a.hCount > 0) {
+            if (atom.a.hCount > 0 && !atom.a.isSuperAtom) {
                 if (queryAttrsText.length > 0)
                     queryAttrsText += ",";
-
                 queryAttrsText += "H" + (atom.a.hCount - 1).toString();
             }
 
