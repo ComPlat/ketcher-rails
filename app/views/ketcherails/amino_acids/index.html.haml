@@ -1,0 +1,38 @@
+%h1 Listing amino acids
+
+= link_to 'New amino acid', new_amino_acid_path,
+      class: 'btn btn-primary pull-right new-ctemplate-btn'
+= paginate @amino_acids, theme: 'twitter-bootstrap-3'
+
+%table{class: 'table'}
+  %thead
+    %tr
+      %th Image
+      %th Name
+      %th Status
+      %th Approved at
+      %th Rejected at
+      %th Notes
+      %th
+      %th
+      %th
+
+  %tbody
+    - @amino_acids.each do |amino_acid|
+      %tr
+        %td{class: 'template-icon'}
+          = image_tag amino_acid.icon.url(:small)
+        %td= amino_acid.name
+        %td= amino_acid.status
+        %td= amino_acid.approved_at
+        %td= amino_acid.rejected_at
+        %td= amino_acid.notes
+        %td{class: 'col-md-1'}
+          = link_to 'Show', amino_acid_path(amino_acid), class: 'btn btn-default'
+        %td{class: 'col-md-1'}
+          = link_to 'Edit', edit_amino_acid_path(amino_acid), class: 'btn btn-warning template-form-link'
+        %td{class: 'col-md-1'}
+          = link_to 'Destroy', amino_acid, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+
+%br
+= paginate @amino_acids, theme: 'twitter-bootstrap-3'

@@ -482,6 +482,7 @@ ui.init = function (parameters, opts)
     $('dearomatize').observe('click', ui.onClick_Dearomatize);*/
     $('save_template').observe('click', ui.onClick_SaveTemplate);
     $('show_mol_info').observe('click', ui.onClick_ShowMolInfo);
+    $('amino_acids').observe('click', ui.onClick_AminoAcids);
     $('atom_table').observe('click', ui.onClick_ElemTableButton);
     $('elem_table_list').observe('click', ui.onSelect_ElemTableNotList);
     $('elem_table_notlist').observe('click', ui.onSelect_ElemTableNotList);
@@ -1647,6 +1648,68 @@ ui.onClick_ShowMolInfo = function ()
     $('molecule_properties_btn_ok').observe('click', onClickOk);
 };
 
+ui.onClick_AminoAcids = function() {
+  if (this.hasClassName('buttonDisabled'))
+      return;
+
+  ui.showDialog('aminoacids_properties');
+
+  var onClickCancel = function () {
+      ui.hideDialog('aminoacids_properties');
+      resetListeners();
+  };
+
+  var onClickOk = function () {
+    try {
+      var sequence_name = $('sequence_name').value;
+      var reversed = $('sequence_type').value == 'reversed'
+      ui.buildAminoAcidsSequence(sequence_name, reversed);
+      ui.hideDialog('aminoacids_properties');
+      resetListeners();
+    } catch (er) {
+        if (ui.forwardExceptions)
+            throw er;
+        alert("Molfile: " + er.message);
+    }
+  }
+
+  var resetListeners = function () {
+    $('aminoacids_prop_cancel').stopObserving('click', onClickCancel);
+    $('aminoacids_prop_ok').stopObserving('click', onClickOk);
+  };
+
+  $('aminoacids_prop_cancel').observe('click', onClickCancel);
+  $('aminoacids_prop_ok').observe('click', onClickOk);
+};
+
+ui.buildAminoAcidsSequence = function(sequence_name, reversed = false) {
+  if (!ui.standalone) {
+    new Ajax.Request(ui.api_path + 'amino_acid',
+    {
+        method: 'post',
+        asynchronous : false,
+        parameters: {sequence_name: sequence_name, reversed: reversed},
+        onComplete: function (res)
+        {
+          if(res.status == 201) {
+            var data = res.responseJSON;
+            var tool = new rnd.Editor.TemplateTool(ui.editor, data);
+            ui.render.current_tool = tool;
+          } else if(res.status == 404) {
+            alert("Error: can not find one of items in sequnce. Some items are not known.");
+          }
+          else if (res.responseText.startsWith('Error.')) {
+            alert(res.responseText.split('\n')[1]);
+          } else {
+            throw new Error('Something went wrong' + res.responseText);
+          }
+        }
+    });
+  } else {
+    throw new Error('Custom templates are not supported in the standalone mode.');
+  }
+};
+
 ui.page2canvas2 = function (pos)
 {
     var offset = ui.client_area.cumulativeOffset();
@@ -1898,6 +1961,10 @@ ui.applyAtomProperties = function ()
     if (isAttachmentPoint) {
       ui.ctab.attachmentPoint = id;
     }
+    var isAttachmentPoint2 = $('aid2') && $('aid2').checked;
+    if (isAttachmentPoint2) {
+      ui.ctab.attachmentPoint2 = id;
+    }
 
     ui.addUndoAction(ui.Action.fromAtomsAttrs(id,
     {
@@ -1914,7 +1981,8 @@ ui.applyAtomProperties = function ()
         substitutionCount: parseInt($('atom_substitution').value),
         unsaturatedAtom: parseInt($('atom_unsaturation').value),
         hCount: parseInt($('atom_hcount').value),
-        isAttachmentPoint: isAttachmentPoint
+        isAttachmentPoint: isAttachmentPoint,
+        isAttachmentPoint2: isAttachmentPoint2
     }), true);
 
     ui.render.update();

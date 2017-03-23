@@ -8,7 +8,11 @@ module Ketcherails
     def index
       @template_categories = TemplateCategory.with_approved_templates
       @show_attachment_point = current_user.is_templates_moderator &&
-                            request.referer.to_s.include?('atom_abbreviations')
+                            (request.referer.to_s.include?('atom_abbreviations') ||
+                               request.referer.to_s.include?('amino_acids'))
+
+      @show_attachment_point2 = current_user.is_templates_moderator &&
+                                   request.referer.to_s.include?('amino_acids')
 
       @atom_abbreviation_list = AtomAbbreviation.approved.pluck(:name)
     end

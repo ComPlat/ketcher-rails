@@ -129,6 +129,8 @@ rnd.Editor.prototype.toolFor = function(tool) {
 			return new rnd.Editor.PolymerBeadTool(this);
 		} else if (tool == 'polymer_surface') {
 			return new rnd.Editor.PolymerSurfaceTool(this);
+		} else if (tool == 'amino_acids') {
+			return new rnd.Editor.AminoAcidTool(this);
 		}
     return null;
 };
@@ -1210,10 +1212,26 @@ rnd.Editor.PolymerBeadTool.prototype.OnMouseUp = function(event) {
     }
 };
 
+rnd.Editor.AminoAcidTool = function(editor) {
+	this.editor = editor;
+
+  this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
+}
+
+rnd.Editor.AminoAcidTool.prototype = new rnd.Editor.EditorTool();
+
 rnd.Editor.PolymerSurfaceTool = function(editor) {
     this.editor = editor;
 
     this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
+};
+
+rnd.Editor.PolymerSurfaceTool.prototype.OnMouseMove = function(event) {
+  this._hoverHelper.hover(this.editor.render.findItem(event, ['atoms']));
+};
+
+rnd.Editor.PolymerSurfaceTool.prototype.OnMouseUp = function(event) {
+
 };
 
 rnd.Editor.PolymerSurfaceTool.prototype = new rnd.Editor.EditorTool();

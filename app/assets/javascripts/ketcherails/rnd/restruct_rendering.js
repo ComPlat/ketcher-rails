@@ -747,6 +747,16 @@ rnd.ReStruct.prototype.drawPolymers = function()
 			circle.attr("stroke", "none");
 			rnd.attachmentPoint = circle;
 			_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
+		}	else if(atom.a.isAttachmentPoint2 && aid == struct.attachmentPoint2) {
+			if(rnd.attachmentPoint2 != null) {
+				rnd.attachmentPoint2.remove();
+			}
+			var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
+			circle.attr("fill", "#ff00ff");
+			circle.attr("fill-opacity", 0.5);
+			circle.attr("stroke", "none");
+			rnd.attachmentPoint2 = circle;
+			_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
 		}
 	});
 };

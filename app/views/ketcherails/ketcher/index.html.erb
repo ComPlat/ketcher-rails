@@ -90,6 +90,12 @@
             <div class="toolButtonCell toolButton serverRequired" id="show_mol_info">
               <%= sprite_tag 'main_info', title: 'Show Molecule Info', alt: '' %>
             </div>
+
+            <div class="toolDelimiter"></div>
+
+            <div class="toolButtonCell toolButton modeButton serverRequired" id="amino_acids">
+              <%= sprite_tag 'main_amino_acids', title: 'Amino acids', alt: '' %>
+            </div>
           </li>
           <li id="toolbox">
             <div class="menuButtonCell">
@@ -633,6 +639,16 @@
                         </td>
                       </tr>
                     <% end %>
+                    <% if @show_attachment_point2 %>
+                      <tr>
+                        <td>
+                          <label>Is attachment point #2:</label>
+                        </td>
+                        <td>
+                          <input type="checkbox" id="aid2" value="aid2">
+                        </td>
+                      </tr>
+                    <% end %>
                     <tr>
                       <td colspan="5" style="background-color: #D7D7D7">
                         Reaction flags
@@ -884,6 +900,40 @@
                   <div style="margin-top:0.5em">
                     <input id="usertemplate_prop_cancel" type="button" value="Cancel"/>
                     <input id="usertemplate_prop_ok" type="button" value="OK"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dialogWindow aminoAcidsDialog" id="aminoacids_properties" style="display:none;">
+                <div style="width:100%">
+                  <div>
+                    Create amino acids chain
+                  </div>
+                  <div style="height:0.5em"></div>
+                  <table style="text-align:left">
+                    <tr class="dataAminoAcuds">
+                      <td>
+                        <label>Sequense (e.g. A-A-G):</label>
+                      </td>
+                      <td>
+                        <input id="sequence_name" type="string" maxlength="15" size="15"/>
+                      </td>
+                    </tr>
+                    <tr class="dataAminoAcuds">
+                      <td>
+                        <label>Sequence type:</label>
+                      </td>
+                      <td>
+                        <select id="sequence_type">
+                          <option value="normal">Normal</option>
+                          <option value="reversed">Reversed</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
+                  <div style="margin-top:0.5em">
+                    <input id="aminoacids_prop_cancel" type="button" value="Cancel"/>
+                    <input id="aminoacids_prop_ok" type="button" value="OK"/>
                   </div>
                 </div>
               </div>
