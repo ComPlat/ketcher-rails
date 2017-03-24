@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Structure
+  = image_tag @amino_acid.icon.url(:small)
+%p
+  %b Name:
+  = @amino_acid.name
+%p
+  %b Right-to-left name:
+  = @amino_acid.rtl_name
+%p
+  %b Notes:
+  = @amino_acid.notes
+%p
+  %b Approved at:
+  = @amino_acid.approved_at
+%p
+  %b Rejected at:
+  = @amino_acid.rejected_at
+
+= link_to 'Edit', edit_amino_acid_path(@amino_acid), class: 'template-form-link'
+\|
+= link_to 'Back', amino_acids_path

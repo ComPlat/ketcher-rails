@@ -31,6 +31,8 @@
               = link_to 'Template categories', template_categories_path
             %li
               = link_to 'Atom abbreviations', atom_abbreviations_path
+            %li
+              = link_to 'Amino acids', amino_acids_path
     .container
       - flash.each do |name, msg|
         = content_tag :div, class: "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable", role: "alert" do

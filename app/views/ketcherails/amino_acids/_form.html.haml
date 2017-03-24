@@ -1,0 +1,56 @@
+/ Modal
+#ketcherModal.modal.fade{"aria-labelledby" => "ketcherModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.structure-editor-modal{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#ketcherModalLabel.modal-title Structure editor
+      .modal-body
+        %iframe{ id: 'ifKetcher', src: "/ketcher"}
+      .modal-footer
+        %button.btn.btn-default{'data-dismiss': 'modal', type: 'button'}
+          Close
+        %button.btn.btn-primary{type: 'button', onclick: 'saveStructure(\'amino_acid\');'}
+          Save changes
+
+= form_for @amino_acid do |f|
+  - if @amino_acid.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@amino_acid.errors.count, "error")} prohibited this amino acid from being saved:"
+      %ul
+        - @amino_acid.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    %button.btn.btn-primary{onclick: 'showKetcherModal(\'amino_acid\')',
+                            type: 'button',
+                            class: 'pull-right'}
+      - if @amino_acid.persisted?
+        Edit structure
+      - else
+        Draw a structure
+    = f.label :molfile
+    = f.file_field :file_molfile, onchange: 'updateMolfileFromFileInput(this, \'amino_acid\')'
+    %br
+    = f.text_area :molfile, cols: '80', rows: '20'
+    = hidden_field_tag :svg
+  .field
+    = f.label :status
+    = status_select(f)
+  .field
+    = f.label :notes
+    %br
+    = f.text_area :notes, cols: '30', rows: '5'
+  - if @amino_acid.persisted?
+    .field
+      = f.label :approved_at
+      = @amino_acid.approved_at
+    .field
+      = f.label :rejected_at
+      = @amino_acid.rejected_at
+  .actions
+    = f.submit 'Save', class: 'btn btn-primary'

@@ -996,11 +996,20 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 				}
 			});
 		}	else if(line.search('AttachmentPoint') > 0) {
-			var aid = parseInt(ctabLines[index + 1]);
-			var atom = struct.atoms.get(aid);
-			if(atom){
-				atom.isAttachmentPoint = true;
-				struct.attachmentPoint = aid;
+			if(line.search('AttachmentPoint2') > 0) {
+				var aid = parseInt(ctabLines[index + 1]);
+				var atom = struct.atoms.get(aid);
+				if(atom){
+					atom.isAttachmentPoint2 = true;
+					struct.attachmentPoint2 = aid;
+				}
+			} else {
+				var aid = parseInt(ctabLines[index + 1]);
+				var atom = struct.atoms.get(aid);
+				if(atom){
+					atom.isAttachmentPoint = true;
+					struct.attachmentPoint = aid;
+				}
 			}
 		}
 	});
@@ -1247,6 +1256,10 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 
 		if(atom.isAttachmentPoint) {
 			this.molecule.attachmentPoint = id;
+		}
+
+		if(atom.isAttachmentPoint2) {
+			this.molecule.attachmentPoint2 = id;
 		}
 
 		this.writePaddedFloat(atom.pp.x, 10, 4);
@@ -1529,6 +1542,13 @@ chem.MolfileSaver.prototype.writeAdditionalData = function (){
 	var ap = this.molecule.attachmentPoint;
 	if(ap === parseInt(ap)) { // check if ID is Integer
 		additional_data += '> <AttachmentPoint>\n';
+		additional_data += ap;
+		additional_data += '\n';
+	}
+
+	ap = this.molecule.attachmentPoint2;
+	if(ap === parseInt(ap)) { // check if ID is Integer
+		additional_data += '> <AttachmentPoint2>\n';
 		additional_data += ap;
 		additional_data += '\n';
 	}

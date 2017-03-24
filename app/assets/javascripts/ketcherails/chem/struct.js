@@ -24,6 +24,7 @@ chem.Struct = function ()
 	this.isChiral = false;
 	this.isReaction = false;
 	this.attachmentPoint = false;
+	this.attachmentPoint2 = false;
 	this.rxnArrows = new util.Pool();
 	this.rxnPluses = new util.Pool();
     this.frags = new util.Pool();
@@ -339,6 +340,7 @@ chem.Struct.Atom = function (params) {
 		util.ifDef(this, params, 'isPolymer', def('isPolymer'));
 		util.ifDef(this, params, 'isPolymerSurface', def('isPolymerSurface'));
 		util.ifDef(this, params, 'isAttachmentPoint', def('isAttachmentPoint'));
+		util.ifDef(this, params, 'isAttachmentPoint2', def('isAttachmentPoint2'));
 		util.ifDef(this, params, 'abbrevName', def('abbrevName'));
 
     this.valence = 0;
@@ -405,6 +407,7 @@ chem.Struct.Atom.attrlist = {
 		'isPolymer': false,
 		'isPolymerSurface': false,
 		'isAttachmentPoint': false,
+		'isAttachmentPoint2': false,
 		'abbrevName': undefined
 };
 
