@@ -9,6 +9,9 @@ module Ketcherails
         end
       end
 
+      result += @show_attachment_point.to_s
+      result += @show_attachment_point2.to_s
+
       result
     end
 
