@@ -1862,6 +1862,11 @@ ui.showAtomAttachmentPoints = function(params)
 //
 ui.showAtomProperties = function (id)
 {
+  var _E_ = ui.editor, _R_ = _E_.render;
+  var atom = _R_.ctab.molecule.atoms.get(id);
+  if (atom.isSuperAtom) {
+    return true;
+  }
     $('atom_properties').atom_id = id;
     $('atom_label').value = ui.render.atomGetAttr(id, 'label');
     ui.onChange_AtomLabel.call($('atom_label'));
