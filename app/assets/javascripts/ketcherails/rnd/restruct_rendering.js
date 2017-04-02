@@ -801,13 +801,17 @@ rnd.ReStruct.prototype.showLabels = function ()
 			var rightMargin = 0, leftMargin = 0;
 			// label
 			var label = {};
+			var angle_abs;
+			var angle;
 			if (atom.a.abbrevName) {
 				this.bonds.each(function(bid, bond) {
 					if (bond.b.begin == aid && !bond.b.invisible) {
-						var angle_abs = Math.abs(bond.b.angle)
+						angle = bond.b.angle;
+						angle_abs = Math.abs(bond.b.angle)
 						atom.a.abbrevRTL = angle_abs < 90;
 					} else if (bond.b.end == aid && !bond.b.invisible) {
-						var angle_abs = Math.abs(bond.b.angle)
+						angle = bond.b.angle;
+						angle_abs = Math.abs(bond.b.angle)
 						atom.a.abbrevRTL = angle_abs < 180 && angle_abs > 90;
 					}
 				});
@@ -835,7 +839,14 @@ rnd.ReStruct.prototype.showLabels = function ()
 						color = chem.Element.elements.get(elem).color;
 				}
 			}
-			label.path = paper.text(ps.x, ps.y, label.text)
+			var x_shift = 0;
+			if(atom.a.abbrevName) {
+				x_shift = angle_abs / 90 * label.text.length * 5;
+				if (atom.a.abbrevRTL) {
+					x_shift = - 1.0 * x_shift;// make negative
+				}
+			}
+			label.path = paper.text(ps.x + x_shift, ps.y, label.text)
 			.attr({
 				'font' : settings.font,
 				'font-size' : settings.fontsz,
