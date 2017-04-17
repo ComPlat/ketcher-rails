@@ -400,7 +400,12 @@ div#loading
 {
 }
 
-.userTemplateDialog, .confirmDialog, .aminoAcidsDialog
+.aminoAcidsDialog {
+  left:  10%;
+  top:   45%;
+}
+
+.userTemplateDialog, .confirmDialog
 {
   position: absolute;
   text-align: center;
