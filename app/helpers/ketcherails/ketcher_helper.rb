@@ -1,7 +1,7 @@
 module Ketcherails
   module KetcherHelper
     def ketcher_layout_cache_key
-      result = 'ketcher' + current_user.id.to_s
+      result = current_user ? 'ketcher' + current_user.id.to_s : ""
       [TemplateCategory, CommonTemplate, AtomAbbreviation].each do |model|
         record = model.order('updated_at DESC').first
         if record
