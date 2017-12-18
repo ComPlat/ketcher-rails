@@ -14,7 +14,7 @@ module Ketcherails
         src = File.join(ket_ico, folder, filename)
         dest = File.join(app_ico, folder, filename)
         FileUtils.rm(dest, force: true)
-        FileUtils.cp_r(src, dest)
+        FileUtils.cp_r(src, dest) if File.exist?(src)
       end
     end
 
