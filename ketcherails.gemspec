@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.0"
+  s.add_dependency "rails", "~> 4.2.7"
   s.add_dependency "nokogiri", "1.6.7.2"
   s.add_dependency "haml-rails", "0.9.0"
   s.add_dependency "jquery-ui-rails", "5.0.5"
