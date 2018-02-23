@@ -679,7 +679,9 @@ rnd.Editor.BondTool = function(editor, bondProps) {
     this.plainBondTypes = [
         chem.Struct.BOND.TYPE.SINGLE,
         chem.Struct.BOND.TYPE.DOUBLE,
-        chem.Struct.BOND.TYPE.TRIPLE];
+        chem.Struct.BOND.TYPE.TRIPLE,
+        // chem.Struct.BOND.TYPE.COORDINATION
+      ];
 
     this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
 };
@@ -784,12 +786,13 @@ rnd.Editor.BondTool.prototype.OnMouseUp = function(event) {
         } else if (_DC_.item.map == 'bonds') {
             var bondProps = Object.clone(this.bondProps);
             var bond = _UI_.ctab.bonds.get(_DC_.item.id);
-
-            if (bondProps.stereo != chem.Struct.BOND.STEREO.NONE
+            if (( bondProps.type == chem.Struct.BOND.TYPE.COORDINATION
+							    && bond.type == chem.Struct.BOND.TYPE.COORDINATION
+									&& bondProps.display === bond.display
+							  ) || bondProps.stereo != chem.Struct.BOND.STEREO.NONE
                 && bond.type == chem.Struct.BOND.TYPE.SINGLE
                 && bondProps.type == chem.Struct.BOND.TYPE.SINGLE
-                && bond.stereo == bondProps.stereo)
-            {
+                && bond.stereo == bondProps.stereo) {
                 _UI_.addUndoAction(_UI_.Action.fromBondFlipping(_DC_.item.id));
             } else {
                 if (bondProps.type === chem.Struct.BOND.TYPE.SINGLE

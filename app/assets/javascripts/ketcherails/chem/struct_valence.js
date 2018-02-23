@@ -35,6 +35,9 @@ chem.Struct.prototype.calcConn = function (aid)
 				conn += 1;
 				hasAromatic = true;
 				break;
+			case chem.Struct.BOND.TYPE.COORDINATION:
+				// conn += 0;
+				break;
 			default:
 				return -1;
 		}
