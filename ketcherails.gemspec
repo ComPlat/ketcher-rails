@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.2.10"
+  s.add_dependency "jquery-rails"
   s.add_dependency "nokogiri", "~> 1.8.2"
   s.add_dependency "haml-rails", "0.9.0"
   s.add_dependency "jquery-ui-rails", "~> 5.0.5"
@@ -25,9 +26,25 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap-kaminari-views', '0.0.5'
   s.add_dependency 'paperclip', '~> 5.2.0'
   s.add_dependency 'sprite-factory', '1.7.1'
+  s.add_dependency 'httparty'
+  s.add_dependency 'bootstrap-sass', '~> 3.3.5'
+  s.add_dependency 'delayed_job_active_record'
+  s.add_dependency 'daemons'
+  s.add_dependency "grape", '<1.0.0'
+  s.add_dependency 'grape-active_model_serializers', '~> 1.3.2'
+  s.add_dependency  'active_model_serializers', '< 0.10.0'
+  s.add_dependency 'openbabel'
+
+
+
+  # s.add_dependency 'openbabel', '~> 2.4.90.1'#, git: 'https://github.com/ComPlat/openbabel-gem'
+  # s.add_dependency  'grape', '< 1.0.0'
+
 
   s.add_development_dependency "pg"
+  s.add_development_dependency "sqlite3"
   s.add_development_dependency "grape"
+  s.add_development_dependency "grape-swagger"
   s.add_development_dependency "byebug"
   s.add_development_dependency "rspec"
   s.add_development_dependency 'bootstrap-generators', '~> 3.3.4'

@@ -107,5 +107,10 @@ private
       params.require(:common_template).permit(:name, :notes, :molfile,
         :template_category_id, :status)
     end
+
+    def method_missing(method_name, *args, &block)
+      return nil if method_name == :current_user
+      super
+    end
   end
 end

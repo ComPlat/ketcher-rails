@@ -10,7 +10,8 @@ module Ketcherails
       def generate_sprites
         if self.icon_updated_at_changed?
           self.sprite_class = nil
-          Delayed::Job.enqueue(MakeKetcherailsSprites.new)
+          # Delayed::Job.enqueue(MakeKetcherailsSprites.new)
+          MakeKetcherailsSprites.perform_later
         end
       end
     end

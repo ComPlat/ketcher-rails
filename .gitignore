@@ -1,8 +1,8 @@
 .bundle/
 log/*.log
 pkg/
-test/dummy/db/*.*
-test/dummy/db/*.*
-test/dummy/log/*.log
-test/dummy/tmp/
-test/dummy/.sass-cache
+spec/test_app/db/*.*
+spec/test_app/db/*.*
+spec/test_app/log/*.log
+spec/test_app/tmp/
+spec/test_app/.sass-cache

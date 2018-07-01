@@ -1,10 +1,8 @@
 require 'net/http'
+require 'httparty'
 
 module Ketcherails::PubChem
-  include HTTParty
-
-
-  debug_output $stderr
+  # debug_output $stderr
 
   def self.http_s
     Rails.env.test? && "http://" || "https://"

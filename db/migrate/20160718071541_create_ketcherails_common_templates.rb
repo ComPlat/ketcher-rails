@@ -15,6 +15,6 @@ class CreateKetcherailsCommonTemplates < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_column :users, :is_templates_moderator, :boolean, null: false, default: false
+#    add_column :users, :is_templates_moderator, :boolean, null: false, default: false if table_exists? :users
   end
 end
