@@ -283,7 +283,13 @@ chem.Struct.BOND =
 		SINGLE_OR_DOUBLE: 5,
 		SINGLE_OR_AROMATIC: 6,
 		DOUBLE_OR_AROMATIC: 7,
-		ANY : 8
+		ANY : 8,
+		COORDINATION : 9
+	},
+
+	DISPLAY: {
+		COORD: 'COORD',
+		DATIVE: 'DATIVE'
 	},
 
 	STEREO:
@@ -490,6 +496,7 @@ chem.Struct.Bond = function (params)
 	util.ifDef(this, params, 'topology', chem.Struct.BOND.TOPOLOGY.EITHER);
 	util.ifDef(this, params, 'reactingCenterStatus', 0);
 	util.ifDef(this, params, 'invisible', false);
+	util.ifDef(this, params, 'display', null);
 	this.hb1 = null; // half-bonds
 	this.hb2 = null;
 	this.len = 0;
@@ -504,7 +511,8 @@ chem.Struct.Bond.attrlist = {
     'stereo' : chem.Struct.BOND.STEREO.NONE,
     'topology' : chem.Struct.BOND.TOPOLOGY.EITHER,
     'reactingCenterStatus' : 0,
-		'invisible' : false
+		'invisible' : false,
+		'display' : null
 };
 
 chem.Struct.Bond.getAttrHash = function(bond) {

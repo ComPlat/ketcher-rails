@@ -144,7 +144,6 @@ ui.Action.fromAtomsAttrs = function(ids, attrs, reset)
 ui.Action.fromBondAttrs = function (id, attrs, flip, reset)
 {
     var action = new ui.Action();
-
     for (var key in chem.Struct.Bond.attrlist) {
 	var value;
 	if (key in attrs)

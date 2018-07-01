@@ -874,10 +874,12 @@ ui.bondTypeMap = {
     'crossed'   : {type: 2, stereo: chem.Struct.BOND.STEREO.CIS_TRANS},
     'triple'    : {type: 3, stereo: chem.Struct.BOND.STEREO.NONE},
     'aromatic'  : {type: 4, stereo: chem.Struct.BOND.STEREO.NONE},
-    'singledouble'   : {type: 5, stereo: chem.Struct.BOND.STEREO.NONE},
-    'singlearomatic' : {type: 6, stereo: chem.Struct.BOND.STEREO.NONE},
-    'doublearomatic' : {type: 7, stereo: chem.Struct.BOND.STEREO.NONE},
-    'any'       :  {type: 8, stereo: chem.Struct.BOND.STEREO.NONE}
+    // 'singledouble'   : {type: 5, stereo: chem.Struct.BOND.STEREO.NONE},
+    // 'singlearomatic' : {type: 6, stereo: chem.Struct.BOND.STEREO.NONE},
+    // 'doublearomatic' : {type: 7, stereo: chem.Struct.BOND.STEREO.NONE},
+    // 'any'       :  {type: 8, stereo: chem.Struct.BOND.STEREO.NONE},
+    'coordination'       :  {type: 9, stereo: chem.Struct.BOND.STEREO.NONE, display: null},
+    'coordinationarrow'  :  {type: 9, stereo: chem.Struct.BOND.STEREO.NONE, display: chem.Struct.BOND.DISPLAY.COORD}
 };
 
 ui.bondType = function (mode)
@@ -1032,6 +1034,8 @@ ui.keyboardActions = {
     undo: function() { ui.onClick_Undo.call($('undo')); },
     redo: function() { ui.onClick_Redo.call($('redo')); },
     remove_selected: function() { if (ui.editor.hasSelection()) ui.removeSelected(); },
+    bond_tool_coordination: function() { ui.onMouseDown_DropdownListItem.call($('bond_coordination')); },
+    bond_tool_coordinationarrow: function() { ui.onMouseDown_DropdownListItem.call($('bond_coordinationarrow')); },
     bond_tool_any: function() { ui.onMouseDown_DropdownListItem.call($('bond_any')); },
     bond_tool_single: function() { ui.onMouseDown_DropdownListItem.call($(util.listNextRotate(ui.bond_tool_single_bonds, ui.mode_id))); },
     bond_tool_double: function() { ui.onMouseDown_DropdownListItem.call($(util.listNextRotate(ui.bond_tool_double_bonds, ui.mode_id))); },
@@ -2121,7 +2125,6 @@ ui.applyBondProperties = function ()
 
     var id = $('bond_properties').bond_id;
     var bond = Object.clone(ui.bondTypeMap[$('bond_type').value]);
-
     bond.topology = parseInt($('bond_topology').value);
     bond.reactingCenterStatus = parseInt($('bond_center').value);
 

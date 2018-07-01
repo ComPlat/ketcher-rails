@@ -464,6 +464,20 @@ rnd.ReStruct.prototype.drawBondAny = function (hb1, hb2)
 	});
 };
 
+rnd.ReStruct.prototype.drawBondArrow = function (hb1, hb2)
+{
+	var a = hb1.p, b = hb2.p;
+	var length = 7;
+	var dir = new util.Vec2(b.x -a.x, b.y -a.y).normalized().scaled(length);
+	var arrHead1 = dir.rotate(0.5);
+	var arrHead2 = dir.rotate(-0.5);
+	var paper = this.render.paper;
+	var styles = this.render.styles;
+	return paper.path("M{0},{1}L{2},{3}L{4},{5}M{2},{3}L{6},{7}", tfx(a.x), tfx(a.y), tfx(b.x), tfx(b.y),
+	 tfx(b.x - arrHead1.x), tfx(b.y - arrHead1.y), tfx(b.x - arrHead2.x), tfx(b.y - arrHead2.y))
+	.attr(styles.lineattr);
+};
+
 rnd.ReStruct.prototype.drawReactingCenter = function (bond, hb1, hb2)
 {
 	var a = hb1.p, b = hb2.p;
@@ -640,6 +654,13 @@ rnd.ReStruct.prototype.drawBond = function (bond, hb1, hb2)
 			break;
 		case chem.Struct.BOND.TYPE.ANY:
 			path = this.drawBondAny(hb1, hb2, bond);
+			break;
+		case chem.Struct.BOND.TYPE.COORDINATION:
+		  if (bond.b.display === chem.Struct.BOND.DISPLAY.COORD) {
+				path = this.drawBondArrow(hb1, hb2, bond);
+			} else {
+			  path = this.drawBondAny(hb1, hb2, bond);
+		  }
 			break;
 		default:
 			throw new Error("Bond type " + bond.b.type + " not supported");
