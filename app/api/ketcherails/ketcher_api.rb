@@ -9,7 +9,7 @@ module Ketcherails
     namespace :ketcher do
       desc 'Respond to live-check'
       get 'knocknock' do
-          body 'You are welcome!'
+        body 'You are welcome!'
       end
 
       desc 'Align molecule using OpenBabel'
@@ -87,13 +87,13 @@ module Ketcherails
         body 'ok'
       end
 
-      desc 'Get molecule name fro PubChem'
+      desc 'Get molecule name from PubChem'
       params do
         requires :moldata, type: String, desc: 'Molecule molfile'
       end
       post :info do
         mol = params[:moldata]
-        mol_info = Chemotion::PubchemService.molecule_info_from_molfile mol
+        mol_info = Ketcherails::PubchemService.molecule_info_from_molfile mol
         {
           iupac_name: mol_info[:iupac_name],
           name: mol_info[:names]

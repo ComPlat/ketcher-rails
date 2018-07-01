@@ -1,10 +1,14 @@
 module Ketcherails
   class Engine < ::Rails::Engine
     require 'jquery-ui-rails'
+    require 'bootstrap-sass'
     require 'kaminari'
     require 'bootstrap-kaminari-views'
     require 'paperclip'
     require 'sprite_factory'
+    require 'haml-rails'
+    require 'delayed_job'
+    require 'delayed_job_active_record'
 
     isolate_namespace Ketcherails
 

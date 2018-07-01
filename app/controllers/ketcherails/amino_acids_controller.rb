@@ -102,5 +102,10 @@ private
       params.require(:amino_acid).permit(:name, :rtl_name, :notes,
         :molfile, :status)
     end
+
+    def method_missing(method_name, *args, &block)
+      return nil if method_name == :current_user
+      super
+    end
   end
 end

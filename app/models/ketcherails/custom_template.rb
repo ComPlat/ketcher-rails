@@ -7,7 +7,7 @@ module Ketcherails
     IMG_PATH = 'public/images/templates/'
     IMG_SIZE = 64 # 64x64 pixels icon
     unless Dir.exists?(Rails.root + IMG_PATH)
-      Dir.mkdir(Rails.root + IMG_PATH)
+      FileUtils.mkdir_p(Rails.root + IMG_PATH)
     end
 
     # we add 1-by-1 on front-end part. so newest item is on the top

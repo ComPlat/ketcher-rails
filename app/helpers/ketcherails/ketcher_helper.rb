@@ -51,5 +51,10 @@ module Ketcherails
       options[:class] = "#{name} #{options[:class]}" # add sprite class
       image_tag('transparent.png', options) # image URL comes in CSS
     end
+
+    def method_missing(method_name, *args, &block)
+      return @current_user if method_name == :current_user
+      super
+    end
   end
 end

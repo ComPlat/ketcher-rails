@@ -65,5 +65,10 @@ module Ketcherails
       def template_category_params
         params.require(:template_category).permit(:name, :icon)
       end
+
+      def method_missing(method_name, *args, &block)
+        return nil if method_name == :current_user
+        super
+      end
   end
 end

@@ -18,5 +18,12 @@ module Ketcherails
 
       @atom_abbreviation_list = AtomAbbreviation.approved.pluck(:name)
     end
+
+    def demo; end
+
+    def method_missing(method_name, *args, &block)
+      return nil if method_name == :current_user
+      super
+    end
   end
 end
