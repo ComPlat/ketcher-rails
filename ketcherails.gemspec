@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'daemons'
   s.add_dependency "grape", '~>1.0.3'
   s.add_dependency 'grape-active_model_serializers', '~> 1.3.2'
-  s.add_dependency  'active_model_serializers', '< 0.10.0'
+  s.add_dependency 'active_model_serializers', '< 0.10.0'
   s.add_dependency 'openbabel'
 
 
