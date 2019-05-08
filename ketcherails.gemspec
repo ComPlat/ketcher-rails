@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.10"
+  s.add_dependency "rails", "~> 4.2.11"
   s.add_dependency "jquery-rails"
   s.add_dependency "nokogiri", "~> 1.8.2"
   s.add_dependency "haml-rails", "0.9.0"
@@ -27,10 +27,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'paperclip', '~> 5.2.0'
   s.add_dependency 'sprite-factory', '1.7.1'
   s.add_dependency 'httparty'
-  s.add_dependency 'bootstrap-sass', '~> 3.3.5'
+  s.add_dependency 'bootstrap-sass'
   s.add_dependency 'delayed_job_active_record'
   s.add_dependency 'daemons'
-  s.add_dependency "grape", '~>1.0.3'
+  s.add_dependency 'grape', '< 2.0'
   s.add_dependency 'grape-active_model_serializers', '~> 1.3.2'
   s.add_dependency 'active_model_serializers', '< 0.10.0'
   s.add_dependency 'openbabel'
