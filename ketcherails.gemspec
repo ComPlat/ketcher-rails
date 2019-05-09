@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri", "~> 1.8.2"
   s.add_dependency "haml-rails", "0.9.0"
   s.add_dependency "jquery-ui-rails", "~> 5.0.5"
-  s.add_dependency 'kaminari', '0.16.3'
+  s.add_dependency 'kaminari'
   s.add_dependency 'bootstrap-kaminari-views', '0.0.5'
   s.add_dependency 'paperclip', '~> 5.2.0'
   s.add_dependency 'sprite-factory', '1.7.1'
