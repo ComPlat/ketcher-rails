@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.11"
   s.add_dependency "jquery-rails"
-  s.add_dependency "nokogiri", "~> 1.8.2"
+  s.add_dependency "nokogiri", ">=1.8.2", "< 2.0"
   s.add_dependency "haml-rails", "0.9.0"
   s.add_dependency "jquery-ui-rails", "~> 5.0.5"
   s.add_dependency 'kaminari'
