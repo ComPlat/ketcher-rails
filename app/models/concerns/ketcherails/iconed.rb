@@ -10,6 +10,10 @@ module Ketcherails
       def generate_sprites
         if self.icon_updated_at_changed?
           self.sprite_class = nil
+          path = Rails.public_path.join(
+            'images', 'ketcherails', 'icons', 'original'
+          )
+          FileUtils.rm_rf(path)
           # Delayed::Job.enqueue(MakeKetcherailsSprites.new)
           MakeKetcherailsSprites.perform_later
         end
