@@ -9,7 +9,8 @@ class MakeMenuSprites < ActiveJob::Base
       output_image: asset_path + 'images/ketcherails/sprite.png',
       margin: 1,
       layout: :packed,
-      nocomments: true
+      nocomments: true,
+      library: :image_magick
     )
   end
 end
