@@ -48,5 +48,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "byebug"
   s.add_development_dependency "rspec"
   s.add_development_dependency 'bootstrap-generators', '~> 3.3.4'
-  s.add_development_dependency 'bootstrap-sass', '~> 3.3.5'
+  s.add_development_dependency 'bootstrap-sass', '>= 0'
 end
