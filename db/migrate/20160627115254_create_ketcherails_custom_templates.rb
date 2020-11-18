@@ -1,4 +1,4 @@
-class CreateKetcherailsCustomTemplates < ActiveRecord::Migration
+class CreateKetcherailsCustomTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :ketcherails_custom_templates do |t|
       t.integer :user_id, null: false, index: true

@@ -1,4 +1,4 @@
-class CreateKetcherailsCommonTemplates < ActiveRecord::Migration
+class CreateKetcherailsCommonTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :ketcherails_common_templates do |t|
        t.integer :moderated_by, index: true

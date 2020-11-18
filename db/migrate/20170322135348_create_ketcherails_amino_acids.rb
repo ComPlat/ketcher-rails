@@ -1,4 +1,4 @@
-class CreateKetcherailsAminoAcids < ActiveRecord::Migration
+class CreateKetcherailsAminoAcids < ActiveRecord::Migration[4.2]
   def change
     create_table :ketcherails_amino_acids do |t|
       t.integer :moderated_by, index: true

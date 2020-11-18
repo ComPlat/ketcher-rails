@@ -12,5 +12,5 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem 'openbabel', '~>2.4.90.1', git: 'https://github.com/ComPlat/openbabel-gem'
+gem 'openbabel', '2.4.90.3', git: 'https://github.com/ComPlat/openbabel-gem.git', branch: 'hot-fix-svg'
 

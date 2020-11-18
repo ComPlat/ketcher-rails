@@ -1,4 +1,4 @@
-class MakeKetcherailsSprites < ActiveJob::Base
+class MakeKetcherailsSprites < ApplicationJob
   queue_as :default
 
   SPRITES_PATH = "#{Rails.root}/public/images/sprites/"
