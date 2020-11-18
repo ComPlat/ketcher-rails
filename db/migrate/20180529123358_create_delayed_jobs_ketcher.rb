@@ -1,4 +1,4 @@
-class CreateDelayedJobsKetcher < ActiveRecord::Migration
+class CreateDelayedJobsKetcher < ActiveRecord::Migration[4.2]
   def self.up
     unless table_exists?(:delayed_jobs)
       create_table :delayed_jobs, force: true do |table|

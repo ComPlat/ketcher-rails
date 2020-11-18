@@ -1,4 +1,4 @@
-class MakeMenuSprites < ActiveJob::Base
+class MakeMenuSprites < ApplicationJob
   queue_as :default
 
   def perform

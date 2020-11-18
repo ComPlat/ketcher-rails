@@ -1,4 +1,4 @@
-class CreateKetcherailsTemplateCategories < ActiveRecord::Migration
+class CreateKetcherailsTemplateCategories < ActiveRecord::Migration[4.2]
   def change
     create_table :ketcherails_template_categories do |t|
       t.string :name, null: false
