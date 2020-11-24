@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-ENGINE_ROOT = File.expand_path('../..', __FILE__)
-ENGINE_PATH = File.expand_path('../../lib/ketcherails/engine', __FILE__)
-
-APP_PATH = File.expand_path('../config/application', __dir__)
-require_relative '../config/boot'
-require 'rails/commands'
