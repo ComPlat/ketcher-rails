@@ -21,8 +21,14 @@ module Ketcherails
     end
 
     initializer "ketcherails.assets.precompile" do |app|
-      # app.config.assets.precompile += %w(ketcherails/application.css ketcherails/application.js ketcherails/ketcher.js ketcherails/ketcher-with-sprites.css ketcherails/sprite.png)
-      Rails.application.config.assets.precompile += %w(ketcherails/application.css ketcherails/application.js ketcherails/ketcher.js ketcherails/ketcher-with-sprites.css ketcherails/sprite.png)
+      app.config.assets.precompile += %w(
+        transparent.png
+        ketcherails/application.css
+        ketcherails/application.js
+        ketcherails/ketcher.js
+        ketcherails/ketcher-with-sprites.css
+        ketcherails/sprite.png
+      )
     end
 
     initializer "static assets" do |app|
