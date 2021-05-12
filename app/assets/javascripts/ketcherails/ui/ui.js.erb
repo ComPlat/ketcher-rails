@@ -1700,7 +1700,7 @@ ui.buildAminoAcidsSequence = function(sequence_name, reversed = false) {
             var tool = new rnd.Editor.TemplateTool(ui.editor, data);
             ui.render.current_tool = tool;
           } else if(res.status == 404) {
-            alert("Error: can not find one of items in sequnce. Some items are not known.");
+            alert("Error: can not find one of items in sequence. Some items are not known.");
           }
           else if (res.responseText.startsWith('Error.')) {
             alert(res.responseText.split('\n')[1]);

@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'grape-active_model_serializers', '~> 1.3.2'
   s.add_dependency 'active_model_serializers', '< 0.10.0'
   s.add_dependency 'openbabel'
-
+  s.add_dependency 'inchi-gem'
 
 
   # s.add_dependency 'openbabel', '~> 2.4.90.1'#, git: 'https://github.com/ComPlat/openbabel-gem'
