@@ -47,7 +47,7 @@ module Ketcherails
       klass.skip_callback(:save, :before, :generate_sprites)
       seeds.each do |seed|
         next if seed['icon_file_name'].empty?
-        copy_icons_files(seed['icon_file_name'])
+
         klass.create(seed)
       end
       klass.set_callback(:save, :before, :generate_sprites)
@@ -66,6 +66,7 @@ destroy current categories, templates, and sprite classes)"
       end
       Ketcherails::Task.prepare_icon_folders
       Ketcherails::Task.copy_sprites_files
+      Ketcherails::Task.copy_icons_files
       %w[template_categories common_templates].each do |table_name|
         Ketcherails::Task.seed_data_for table_name
       end
