@@ -546,8 +546,9 @@ ui.init = function (parameters, opts)
     {
         ui.loadMoleculeFromInput();
     });
-    $('upload_mol').observe('submit', function ()
+    $('load_file').observe('click', function ()
     {
+        ui.loadMoleculeFromFile();
         ui.hideDialog('open_file');
     });
     $('upload_cancel').observe('click', function ()
@@ -594,8 +595,8 @@ ui.init = function (parameters, opts)
         });
         document.title += ' (standalone)';
     } else {
-            $('upload_mol').action = ui.api_path + 'open';
-            $('download_mol').action = ui.api_path + 'save';
+            <%# $('upload_mol').action = ui.api_path + 'open';
+            $('download_mol').action = ui.api_path + 'save'; %>
     }
 
     // Init renderer
@@ -1311,9 +1312,19 @@ ui.saveTemplate = function(molfile, svg_file, name) {
 // Called from iframe's 'onload'
 ui.loadMoleculeFromFile = function ()
 {
-    var file = ui.getFile();
-    if (file.startsWith('Ok.'))
-        ui.loadMolecule(file.substr(file.indexOf('\n') + 1), false, false, $('checkbox_open_copy').checked);
+    var files = document.getElementById('molfile_path').files;
+    if (files.length === 0) {
+        console.log('No file is selected');
+        return;
+    }
+
+    var file = files[0];
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        ui.loadMolecule(event.target.result, false, false, $('checkbox_open_copy').checked);
+    };
+
+    reader.readAsText(files[0]);
 };
 
 ui.loadMoleculeFromInput = function ()
