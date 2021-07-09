@@ -99,6 +99,18 @@ module Ketcherails
           name: mol_info[:names]
         }
       end
+      
+      desc 'Return Inchi from mol data'
+      params do
+        requires :moldata, type: String, desc: 'Mol data'
+      end
+      post :getinchi do
+        return_values = Inchi::ExtraInchiReturnValues.new
+        inchikey = Inchi.molfileToInchi(params[:moldata], return_values, '-Polymers -FoldCRU -NPZz -SAtZZ -LargeMolecules')
+
+        env['api.format'] = :binary
+        "Ok.\n" + inchikey
+      end
     end
   end
 end
