@@ -13,7 +13,7 @@ module Ketcherails
     isolate_namespace Ketcherails
 
     config.to_prepare do
-      require_dependency(File.join(Engine.root , "app/api/api.rb"))
+      require_dependency(File.join(Engine.root, 'app', 'api', 'ketchapi.rb'))
 
       Dir.glob(Engine.root + "app/decorators/**/*_decorator*.rb").each do |c|
         require_dependency(c)
