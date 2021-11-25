@@ -6,11 +6,11 @@ module Ketcherails
     IMG_SIZE = 64 # 64x64 pixels icon
     STATUSES = %w(pending approved rejected)
 
-    has_icon small: '64x64', icon:'32x32'
+    has_icon small: '64x64', icon: '32x32'
 
-    belongs_to :suggestor, foreign_key: :suggested_by, class_name: 'User'
-    belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User'
-    belongs_to :template_category, touch: true
+    belongs_to :suggestor, foreign_key: :suggested_by, class_name: 'User', optional: true
+    belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User', optional: true
+    belongs_to :template_category, touch: true, optional: true
 
     scope :approved, -> { where(status: 'approved') }
     scope :pending, -> { where(status: 'pending') }
