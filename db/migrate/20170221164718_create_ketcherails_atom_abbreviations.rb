@@ -1,4 +1,4 @@
-class CreateKetcherailsAtomAbbreviations < ActiveRecord::Migration
+class CreateKetcherailsAtomAbbreviations < ActiveRecord::Migration[4.2]
   def change
     create_table :ketcherails_atom_abbreviations do |t|
       t.integer :moderated_by, index: true

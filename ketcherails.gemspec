@@ -17,10 +17,10 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.11"
+  s.add_dependency "rails", "~> 5.2.0"
   s.add_dependency "jquery-rails"
-  s.add_dependency "nokogiri", ">=1.8.2", "< 2.0"
-  s.add_dependency "haml-rails", "~>1.0.0"
+  s.add_dependency "nokogiri", "~> 1.10.0"
+  s.add_dependency "haml-rails"
   s.add_dependency "jquery-ui-rails", "~> 5.0.5"
   s.add_dependency 'kaminari'
   s.add_dependency 'bootstrap-kaminari-views', '0.0.5'

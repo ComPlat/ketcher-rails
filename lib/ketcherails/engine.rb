@@ -13,7 +13,7 @@ module Ketcherails
     isolate_namespace Ketcherails
 
     config.to_prepare do
-      require_dependency(File.join(Engine.root , "app/api/api.rb"))
+      require_dependency(File.join(Engine.root, 'app', 'api', 'ketchapi.rb'))
 
       Dir.glob(Engine.root + "app/decorators/**/*_decorator*.rb").each do |c|
         require_dependency(c)
@@ -21,8 +21,14 @@ module Ketcherails
     end
 
     initializer "ketcherails.assets.precompile" do |app|
-      # app.config.assets.precompile += %w(ketcherails/application.css ketcherails/application.js ketcherails/ketcher.js ketcherails/ketcher-with-sprites.css ketcherails/sprite.png)
-      Rails.application.config.assets.precompile += %w(ketcherails/application.css ketcherails/application.js ketcherails/ketcher.js ketcherails/ketcher-with-sprites.css ketcherails/sprite.png)
+      app.config.assets.precompile += %w(
+        transparent.png
+        ketcherails/application.css
+        ketcherails/application.js
+        ketcherails/ketcher.js
+        ketcherails/ketcher-with-sprites.css
+        ketcherails/sprite.png
+      )
     end
 
     initializer "static assets" do |app|

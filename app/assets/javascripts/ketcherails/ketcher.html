@@ -66,7 +66,7 @@
                     <td style="width:36px"><div style="position:relative"><img class="sideButton modeButton stateButton" id="selector" selid="selector_lasso" src="icons/png/selection/lasso-sidebar.png" alt="" title="Lasso Selection Tool (Esc)" /><img class="dropdownButton" id="selector_dropdown" src="icons/png/main/dropdown.png" alt="" /></div></td>
                     <td class="toolDelimiter"></td>
                     <!--td style="width:36px"><object type="image/svg+xml" width="28" height="28" data="svg/document-new28x28.svg"></object></td-->
-                    <td class="toolButtonCell toolButton" id="new"><img src="icons/png/main/document-new.png" alt="" title="Clear Canvas (Ctrl+N)" /></td>
+                    <td class="toolButtonCell toolButton" id="new"><img src="icons/png/main/document-new.png" alt="" title="Clear Canvas (Ctrl+Q)" /></td>
                     <td class="toolButtonCell toolButton" id="open"><img src="icons/png/main/document-open.png" alt="" title="Open... (Ctrl+O)" /></td>
                     <td class="toolButtonCell toolButton" id="save"><img src="icons/png/main/document-save-as.png" alt="" title="Save As... (Ctrl+S)" /></td>
                     <td class="toolDelimiter"></td>
@@ -339,13 +339,13 @@
                         <input type="checkbox" id="checkbox_open_copy" name="open_mode">Load as a fragment and copy to the Clipboard</input>
                     </div>
                     <div class="serverRequired" id="open_from_file">
-                        <form id="upload_mol" style="margin-top:4px" action="open" enctype="multipart/form-data" target="buffer_frame" method="post">
+                        <div id="upload_mol" style="margin-top:4px">
                             <input type="file" name="filedata" id="molfile_path" />
                             <div style="margin-top:0.5em;text-align:center">
                                 <input id="upload_cancel" type="button" value="Cancel" />
-                                <input type="submit" value="OK" />
+                                <input id="load_file" type="submit" value="OK" />
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div style="margin:4px;" id="open_from_input">
                         <textarea class="chemicalText" id="input_mol" wrap="off"></textarea>
