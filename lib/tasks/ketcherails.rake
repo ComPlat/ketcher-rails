@@ -3,7 +3,7 @@
 module Ketcherails
   # Helper methods for task
   module Task
-    def self.copy_icons_files(filename)
+    def self.copy_icons_files
       ket_ico = File.join(
         Ketcherails::Engine.root, 'public/images/ketcherails/seeds/icons'
       )
@@ -11,8 +11,8 @@ module Ketcherails
         Rails.root, 'public', 'images', 'ketcherails', 'icons'
       )
       %w[icon small original].each do |folder|
-        src = File.join(ket_ico, folder, filename)
-        dest = File.join(app_ico, folder, filename)
+        src = File.join(ket_ico, folder, '/.')
+        dest = File.join(app_ico, folder)
         FileUtils.rm(dest, force: true)
         FileUtils.cp_r(src, dest) if File.exist?(src)
       end
@@ -47,7 +47,7 @@ module Ketcherails
       klass.skip_callback(:save, :before, :generate_sprites)
       seeds.each do |seed|
         next if seed['icon_file_name'].empty?
-        copy_icons_files(seed['icon_file_name'])
+
         klass.create(seed)
       end
       klass.set_callback(:save, :before, :generate_sprites)
@@ -66,6 +66,7 @@ destroy current categories, templates, and sprite classes)"
       end
       Ketcherails::Task.prepare_icon_folders
       Ketcherails::Task.copy_sprites_files
+      Ketcherails::Task.copy_icons_files
       %w[template_categories common_templates].each do |table_name|
         Ketcherails::Task.seed_data_for table_name
       end
@@ -75,11 +76,11 @@ destroy current categories, templates, and sprite classes)"
 overwrite entries with similar names - letter codes)"
     task monomers: :environment do
       Ketcherails::Task.prepare_icon_folders
+      Ketcherails::Task.copy_icons_files
       file = File.join(Ketcherails::Engine.root, 'db', 'amino_acids' + '.json')
       seeds = File.exist?(file) && JSON.parse(File.read(file)) || []
       seeds.each do |seed|
         next if seed['name'].empty? || seed['icon_file_name'].empty?
-        Ketcherails::Task.copy_icons_files(seed['icon_file_name'])
         aa = Ketcherails::AminoAcid.find_by(name: seed['name'])
         b = aa&.update!(seed) || Ketcherails::AminoAcid.create!(seed)
         puts "creation of #{seed['name']} #{b && 'successful' || 'failed'}"
