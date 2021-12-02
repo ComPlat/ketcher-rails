@@ -21,7 +21,7 @@
     - @amino_acids.each do |amino_acid|
       %tr
         %td{class: 'template-icon'}
-          = image_tag amino_acid.icon.url(:small)
+          = image_tag '/images/' + amino_acid.icon.url(:small)
         %td= amino_acid.name
         %td= amino_acid.status
         %td= amino_acid.approved_at

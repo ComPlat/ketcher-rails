@@ -21,7 +21,7 @@
     - @atom_abbreviations.each do |atom_abbreviation|
       %tr
         %td{class: 'template-icon'}
-          = image_tag atom_abbreviation.icon.url(:small)
+          = image_tag '/images/' + atom_abbreviation.icon.url(:small)
         %td= atom_abbreviation.name
         %td= atom_abbreviation.status
         %td= atom_abbreviation.approved_at

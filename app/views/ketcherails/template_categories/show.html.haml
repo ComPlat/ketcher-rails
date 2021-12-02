@@ -6,7 +6,7 @@
 
 %p
   %b Icon:
-  = image_tag @template_category.icon.url(:small)
+  = image_tag '/images/' + @template_category.icon.url(:small)
 
 = link_to 'Edit', edit_template_category_path(@template_category)
 \|

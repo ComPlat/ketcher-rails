@@ -11,7 +11,7 @@
     = f.text_field :name
   .field
     = f.label :icon
-    = image_tag @template_category.icon.url(:small)
+    = image_tag '/images/' + @template_category.icon.url(:small)
     = f.file_field :icon
   .actions
     = f.submit 'Save', class: 'btn btn-primary'
