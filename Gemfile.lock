@@ -28,7 +28,7 @@ PATH
       jquery-rails
       jquery-ui-rails (~> 5.0.5)
       kaminari
-      nokogiri (~> 1.10.0)
+      nokogiri (>= 1.10, < 1.13)
       openbabel
       paperclip (~> 5.2.0)
       rails (~> 5.2.0)
@@ -194,7 +194,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.1115)
     mini_mime (1.1.2)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     multi_xml (0.6.0)
     mustermann (1.1.1)
@@ -202,8 +202,9 @@ GEM
     mustermann-grape (1.0.1)
       mustermann (>= 1.0.0)
     nio4r (2.5.8)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
+      racc (~> 1.4)
     paperclip (5.2.1)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -211,6 +212,7 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
     pg (1.2.3)
+    racc (1.6.0)
     rack (2.2.3)
     rack-accept (0.4.5)
       rack (>= 0.4)
