@@ -2,7 +2,7 @@ module Ketcherails
 
   class CustomTemplate < ActiveRecord::Base
     belongs_to :user
-    before_save :set_name, on: :create
+    before_create :set_name
 
     IMG_PATH = 'public/images/templates/'
     IMG_SIZE = 64 # 64x64 pixels icon
