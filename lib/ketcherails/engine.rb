@@ -4,7 +4,6 @@ module Ketcherails
     require 'bootstrap-sass'
     require 'kaminari'
     require 'bootstrap-kaminari-views'
-    require 'paperclip'
     require 'sprite_factory'
     require 'haml-rails'
     require 'delayed_job'

@@ -190,13 +190,15 @@ ui.addCommonTemplate = function(tmpl, idx) {
   var tool_mode = 'commontemplate' + cat_id  + '_' + idx;
   ui.commontemplate_tool_modes.push(tool_mode);
   var img_tag;
-  if(tmpl.sprite_class) {
-    img_tag = '<img style="align:right" class="dropdownIconTemplate ' +
-              tmpl.sprite_class + '" src="/images/transparent.png"/>';
-  } else {
-    img_tag = '<img style="align:right" class="dropdownIconTemplate"' +
-              ' src="/images/' + tmpl.icon + '"/>';
-  }
+
+    if(tmpl.icon_path) {
+      img_tag = '<img style="height:auto; width:10%;" class="dropdownIconTemplate"' +
+        ' src="/images/templates/' + tmpl.icon_file_name + '"/>';
+    } else {
+      img_tag = '<img style="height:auto; width:10%;" class="dropdownIconTemplate"' +
+        ' src="/images/ketcherails/icons/small/' + tmpl.icon_file_name + '"/>';
+    }
+
   tbody.insert('<tr class="dropdownListItem" id="' + tool_mode +
           '" title="' + tmpl.name + ' (Shift+T)"><td><div id="' + tool_mode +
           '_preview">' + img_tag + '</div></td><td>' + tmpl.name + '</td></tr>');
