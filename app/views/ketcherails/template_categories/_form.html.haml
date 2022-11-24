@@ -11,7 +11,8 @@
     = f.text_field :name
   .field
     = f.label :icon
-    = image_tag '/images/' + @template_category.icon.url(:small)
-    = f.file_field :icon
+    - if @template_category&.icon_file_name.present?
+      = image_tag '/images/ketcherails/icons/small/' + @template_category&.icon_file_name
+    = f.file_field :svg
   .actions
     = f.submit 'Save', class: 'btn btn-primary'

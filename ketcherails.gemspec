@@ -32,11 +32,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'delayed_job_active_record'
   s.add_dependency 'daemons'
   s.add_dependency 'grape', '< 2.0'
-  s.add_dependency 'grape-active_model_serializers', '~> 1.3.2'
   s.add_dependency 'grape-entity', '~> 0.10.2'
-  s.add_dependency 'active_model_serializers', '< 0.10.0'
   s.add_dependency 'openbabel'
-  s.add_dependency 'mimemagic', '>= 0.3.10'
   s.add_dependency 'inchi-gem'
 
 

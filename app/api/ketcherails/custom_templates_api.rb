@@ -22,7 +22,8 @@ module Ketcherails
       desc 'Get templates list'
       get :templates_list do
         data = Ketcherails::CustomTemplate.where(user: current_user)
-        {templates: data.map {|d| CustomTemplateSerializer.new(d)}}
+
+        present data, with: Entities::CustomTemplateEntity, templates: :data
       end
 
       desc 'Search templates by keyword'

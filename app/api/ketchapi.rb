@@ -1,5 +1,4 @@
 require 'grape'
-require 'grape-active_model_serializers'
 
 # if defined? API
 #   API.class_eval do
@@ -17,7 +16,6 @@ class Ketchapi < ::Grape::API
   prefix 'api'
   version 'v1'
   format :json
-  formatter :json, Grape::Formatter::ActiveModelSerializers
   helpers do
     def current_user
       @current_user || env['warden']&.user

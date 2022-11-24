@@ -6,7 +6,7 @@ module Ketcherails
       get :template_categories_list do
         data = Ketcherails::TemplateCategory.with_approved_templates
 
-        { categories: data.map {|d| TemplateCategorySerializer.new(d)} }
+        present data, with: Entities::TemplateCategoryEntity, categories: :data
       end
     end
   end

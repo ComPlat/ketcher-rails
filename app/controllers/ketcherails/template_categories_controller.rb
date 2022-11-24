@@ -25,6 +25,7 @@ module Ketcherails
     # POST /template_categories
     def create
       @template_category = TemplateCategory.new(template_category_params)
+      @template_category.make_icon params[:svg] if params[:svg].present?
 
       if @template_category.save
         redirect_to @template_category, notice: 'Template category was successfully created.'
@@ -63,7 +64,7 @@ module Ketcherails
 
       # Only allow a trusted parameter "white list" through.
       def template_category_params
-        params.require(:template_category).permit(:name, :icon)
+        params.require(:template_category).permit(:name)
       end
 
       def method_missing(method_name, *args, &block)

@@ -29,7 +29,7 @@ module Ketcherails
         old_png = "public/images/templates/#{self.icon_path}"
         File.rm old_png if File.exists? old_png
       end
-      self.icon_path = filename
+      self.icon_file_name = filename
     end
 
   private
