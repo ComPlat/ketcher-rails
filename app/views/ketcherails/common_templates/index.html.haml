@@ -22,7 +22,10 @@
     - @common_templates.each do |common_template|
       %tr
         %td{class: 'template-icon'}
-          = image_tag '/images/' + common_template.icon.url(:small)
+          - if common_template&.icon_path.present?
+            = image_tag '/images/templates/' + common_template.icon_file_name, style: 'height:auto; width:20%;'
+          - else
+            = image_tag '/images/ketcherails/icons/small/' + common_template&.icon_file_name
         %td= common_template.name
         %td= common_template.status
         %td= common_template.approved_at

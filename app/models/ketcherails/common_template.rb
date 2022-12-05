@@ -1,12 +1,8 @@
 module Ketcherails
   class CommonTemplate < ActiveRecord::Base
 
-    include Ketcherails::Iconed
-
     IMG_SIZE = 64 # 64x64 pixels icon
     STATUSES = %w(pending approved rejected)
-
-    has_icon small: '64x64', icon: '32x32'
 
     belongs_to :suggestor, foreign_key: :suggested_by, class_name: 'User', optional: true
     belongs_to :approver,  foreign_key: :moderated_by, class_name: 'User', optional: true
@@ -17,7 +13,7 @@ module Ketcherails
     scope :rejected, -> { where(status: 'rejected') }
 
     before_save :set_name, :get_icon
-    after_save :convert_grayscale
+    # after_save :convert_grayscale
 
     def category_name
       self.template_category.try :name
@@ -50,7 +46,8 @@ module Ketcherails
       filename = digest + '.png'
       result_file_path = img_path + filename
       system "inkscape --export-text-to-path --without-gui --file=#{svg_file.path} --export-png=#{result_file_path} --export-width=1200 --export-height=1200"
-      self.icon = File.open(result_file_path)
+      self.icon_path = result_file_path
+      self.icon_file_name = filename
     end
 
     private

@@ -2,7 +2,11 @@
 
 %p
   %b Structure
-  = image_tag '/images/' + @common_template.icon.url(:small)
+  - if @common_template&.icon_path.present?
+    = image_tag '/images/templates/' + @common_template.icon_file_name, style: 'height:auto; width:10%;'
+  - else @common_template&.icon_file_name.present?
+    = image_tag '/images/ketcherails/icons/small/' + @common_template&.icon_file_name
+
 %p
   %b Name:
   = @common_template.name

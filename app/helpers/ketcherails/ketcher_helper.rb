@@ -40,11 +40,7 @@ module Ketcherails
         id: 'commontemplate' + cat.id.to_s
       }
 
-      if cat.sprite_class.present?
-        sprite_tag(cat.sprite_class, opts)
-      else
-        image_tag(cat.icon.url(:small), opts)
-      end
+      image_tag('/images/ketcherails/icons/small/' + cat&.icon_file_name, opts)
     end
 
     def sprite_tag(name, options = {})

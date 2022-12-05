@@ -15,7 +15,7 @@
     - @template_categories.each do |template_category|
       %tr
         %td
-          = image_tag '/images/' + template_category.icon.url(:small)
+          = image_tag ('/images/ketcherails/icons/small/' + template_category&.icon_file_name || '/images/templates/' + template_category.icon_file_name)
         %td{class: 'col-md-10'}
           = template_category.name
         %td
