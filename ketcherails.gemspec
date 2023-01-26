@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-rails"
   s.add_dependency "nokogiri", ">= 1.10", "< 1.13"
   s.add_dependency "haml-rails"
-  s.add_dependency "jquery-ui-rails", "~> 5.0.5"
+  s.add_dependency "jquery-ui-rails", ">= 5.0.5", "< 6.1.0"
   s.add_dependency 'kaminari'
   s.add_dependency 'bootstrap-kaminari-views', '0.0.5'
   s.add_dependency 'paperclip', '~> 5.2.0'
