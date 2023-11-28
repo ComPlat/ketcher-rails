@@ -141,6 +141,10 @@
               <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton stateButton main_polymer', title: 'Polymer', selid: 'polymer_bead', alt: '' %>
               <%= sprite_tag '', id: 'polymer_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
+            <div class="menuButtonCell serverRequired">
+              <%= sprite_tag '', id: 'substrates', class: 'sideButton modeButton stateButton surface_surface_black-sidebar', title: 'Substrates', selid: 'surface_black', alt: '' %>
+              <%= sprite_tag '', id: 'surface_dropdown', class: 'dropdownButton main_dropdown', alt: ''%>
+            </div>
           </li>
           <li id="templates">
             <div class="toolButtonCell cellFlex">
@@ -396,6 +400,23 @@
                       <td>
                         <div id="polymer_<%= index %>_preview">
                           <%= sprite_tag '', class: 'dropdownIcon polymer_polymer_' + tool.downcase + '-dropdown', alt: '' %>
+                        </div>
+                        <%= tool %>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="dropdownList renderFirst" id="surface_dropdown_list" style="display:none">
+                <table>
+                  <tbody>
+                    <% %W(Black Green Blue Yellow Red Grey).each_with_index do |tool, index| %>
+                    <tr class="dropdownListItem" id="substrate_<%= tool.downcase %>" title="<%= tool %>">
+                      <td>
+                        <div id="substrate_<%= index %>_preview">
+                          <%= sprite_tag '', class: 'dropdownIcon surface_surface_' + tool.downcase + '-dropdown', alt: '' %>
                         </div>
                         <%= tool %>
                       </td>

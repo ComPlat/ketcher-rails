@@ -81,6 +81,7 @@ rnd.Editor.prototype.getSelection = function(explicit) {
     return selection;
 };
 rnd.Editor.prototype.toolFor = function(tool) {
+    const substrates = ['substrate_black', 'substrate_green', 'substrate_blue', 'substrate_yellow', 'substrate_red', 'substrate_grey'];
     if (tool == 'selector_lasso') {
         return new rnd.Editor.LassoTool(this, 0);
     } else if (tool == 'selector_square') {
@@ -126,12 +127,14 @@ rnd.Editor.prototype.toolFor = function(tool) {
     } else if (tool.startsWith('transform_rotate')) {
         return new rnd.Editor.RotateTool(this);
     } else if (tool == 'polymer_bead') {
-			return new rnd.Editor.PolymerBeadTool(this);
-		} else if (tool == 'polymer_surface') {
-			return new rnd.Editor.PolymerSurfaceTool(this);
-		} else if (tool == 'amino_acids') {
-			return new rnd.Editor.AminoAcidTool(this);
-		}
+        return new rnd.Editor.PolymerBeadTool(this);
+    } else if (tool == 'polymer_surface') {
+        return new rnd.Editor.PolymerSurfaceTool(this);
+    } else if (tool == 'amino_acids') {
+        return new rnd.Editor.AminoAcidTool(this);
+    } else if (substrates.includes(tool)) {
+        return new rnd.Editor.SubstrateTool(this, tool);
+    }
     return null;
 };
 
@@ -1214,6 +1217,37 @@ rnd.Editor.PolymerBeadTool.prototype.OnMouseUp = function(event) {
         return true;
     }
 };
+
+rnd.Editor.SubstrateTool = function(editor, tool) {
+    this.editor = editor;
+    this.tool = tool || null;
+
+    this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
+};
+rnd.Editor.SubstrateTool.prototype.OnMouseMove = function(event) {
+    this._hoverHelper.hover(this.editor.render.findItem(event, ['atoms']));
+};
+rnd.Editor.SubstrateTool.prototype = new rnd.Editor.EditorTool();
+
+rnd.Editor.SubstrateTool.prototype.OnMouseUp = function(event) {
+
+	var ci = this.editor.render.findItem(event, ['atoms']);
+	if (!ci || ci.type == 'Canvas') {
+			this._hoverHelper.hover(null);
+			this.editor.ui.addUndoAction(
+					this.editor.ui.Action.fromAtomAddition(
+							this.editor.ui.page2obj(this.OnMouseMove0.lastEvent),
+							{ label : 'R#', rglabel : 1, isPolymer : true, whichSubstrate: this.tool}
+					),
+					true
+			);
+			this.editor.ui.render.update();
+			return true;
+	}
+};
+
+rnd.Editor.SubstrateTool.prototype.OnMouseDown = function() {};
+
 
 rnd.Editor.AminoAcidTool = function(editor) {
 	this.editor = editor;

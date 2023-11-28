@@ -743,13 +743,21 @@ rnd.ReStruct.prototype.drawPolymers = function()
 
 	this.atoms.each(function (aid, atom) {
 		var atom = _obj.atoms.get(aid);
-    var ps = render.ps(atom.a.pp);
+	var ps = render.ps(atom.a.pp);
 		if(atom.a.isPolymer){
 			if (atom.a.isPolymerSurface) {
 				var rect_w = 50;
 				["M", 100, 0, "L", 30, 100 ]
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
 				line.attr({stroke:'#000',"stroke-width":8});
+				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
+			} else if (atom.a.whichSubstrate) {
+				const substrateColor = (atom.a.whichSubstrate).slice(10);
+				const colorStrokes = { "red" : "#ff0000", "green" : "#008000", "blue" : "#0000ff", "yellow" : "#ffff00", "black" : "#000", "grey" : "#808080" };
+				var rect_w = 100;
+				["M", 175, 0, "L", 30, 175 ]
+				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
+				line.attr({stroke:colorStrokes[substrateColor],"stroke-width":4});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
 			} else {
 				var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
