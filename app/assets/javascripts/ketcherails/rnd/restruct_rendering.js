@@ -751,7 +751,15 @@ rnd.ReStruct.prototype.drawPolymers = function()
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
 				line.attr({stroke:'#000',"stroke-width":8});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
-			} else if (atom.a.whichSubstrate) {
+			} else {
+				var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
+				circle.attr("fill", "r(0.2,0.3)#fff-000");// fill it with gradient
+				circle.attr("stroke", "#fff");
+				circle.attr("class", "polymer_bead")
+				_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
+			}
+		} else if (atom.a.isSubstrate) {
+			if (atom.a.whichSubstrate !== null) {
 				const substrateColor = (atom.a.whichSubstrate).slice(10);
 				const colorStrokes = { "red" : "#ff0000", "green" : "#008000", "blue" : "#0000ff", "yellow" : "#ffff00", "black" : "#000", "grey" : "#808080" };
 				var rect_w = 100;
@@ -759,12 +767,6 @@ rnd.ReStruct.prototype.drawPolymers = function()
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
 				line.attr({stroke:colorStrokes[substrateColor],"stroke-width":4});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
-			} else {
-				var circle = paper.circle(ps.x, ps.y, 20);// 20 is a radius. offset to 2*R
-				circle.attr("fill", "r(0.2,0.3)#fff-000");// fill it with gradient
-				circle.attr("stroke", "#fff");
-				circle.attr("class", "polymer_bead")
-				_obj.addReObjectPath('data', atom.visel, circle, { x : ps.x, y : ps.y });
 			}
 		} else if(atom.a.isAttachmentPoint && aid == struct.attachmentPoint) {
 			if(rnd.attachmentPoint != null) {
@@ -820,7 +822,7 @@ rnd.ReStruct.prototype.showLabels = function ()
 
                 var color = '#000000';
 
-		if(atom.a.isPolymer || (atom.a.abbrevName && !atom.a.isSuperAtom)){
+		if(atom.a.isPolymer || atom.a.isSubstrate || (atom.a.abbrevName && !atom.a.isSuperAtom)){
 			atom.showLabel = false;
 		} else if(atom.a.isSuperAtom) {
 			atom.showLabel = true;

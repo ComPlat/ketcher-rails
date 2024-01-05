@@ -29,7 +29,8 @@ chem.Struct = function ()
 	this.rxnPluses = new util.Pool();
     this.frags = new util.Pool();
     this.rgroups = new util.Map();
-		this.polymers = new util.Pool(); // init polymers list as well
+	this.polymers = new util.Pool(); // init polymers list as well
+	this.substrates = new util.Pool(); // init substrates list as well
     this.name = '';
     this.sGroupForest = new chem.SGroupForest(this);
 };
@@ -345,6 +346,7 @@ chem.Struct.Atom = function (params) {
     util.ifDef(this, params, 'explicitValence', def('explicitValence'));
 	util.ifDef(this, params, 'isPolymer', def('isPolymer'));
 	util.ifDef(this, params, 'isPolymerSurface', def('isPolymerSurface'));
+	util.ifDef(this, params, 'isSubstrate', def('isSubstrate'));
 	util.ifDef(this, params, 'whichSubstrate', def('whichSubstrate'));
 	util.ifDef(this, params, 'isAttachmentPoint', def('isAttachmentPoint'));
 	util.ifDef(this, params, 'isAttachmentPoint2', def('isAttachmentPoint2'));
@@ -413,6 +415,7 @@ chem.Struct.Atom.attrlist = {
     'aam': 0,
 	'isPolymer': false,
 	'isPolymerSurface': false,
+	'isSubstrate': false,
 	'whichSubstrate': null,
 	'isAttachmentPoint': false,
 	'isAttachmentPoint2': false,

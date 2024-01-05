@@ -1237,7 +1237,7 @@ rnd.Editor.SubstrateTool.prototype.OnMouseUp = function(event) {
 			this.editor.ui.addUndoAction(
 					this.editor.ui.Action.fromAtomAddition(
 							this.editor.ui.page2obj(this.OnMouseMove0.lastEvent),
-							{ label : 'R#', rglabel : 1, isPolymer : true, whichSubstrate: this.tool}
+							{ label : 'R#', rglabel : 1, isSubstrate : true, whichSubstrate: this.tool}
 					),
 					true
 			);

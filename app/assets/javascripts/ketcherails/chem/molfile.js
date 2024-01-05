@@ -981,8 +981,34 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 				var aid = parseInt(id);
 				var atom = struct.atoms.get(aid);
 				if(atom){
-					atom.isPolymer = true;
-					atom.isPolymerSurface = id.includes('s');
+					if (id.includes('p')) {
+						atom.isPolymer = true;
+					} else if (id.includes('s')) {
+						var substrateColor = id.replace(/\d*([s])/, '$1');
+						if(atom) {
+							atom.isSubstrate = true;
+							switch(substrateColor) {
+								case 's1b':
+									atom.whichSubstrate = "substrate_black";
+									break;
+								case 's1g':
+									atom.whichSubstrate = "substrate_green";
+									break;
+								case 's1bl':
+									atom.whichSubstrate = "substrate_blue";
+									break;
+								case 's1y':
+									atom.whichSubstrate = "substrate_yellow";
+									break;
+								case 's1r':
+									atom.whichSubstrate = "substrate_red";
+									break;
+								case 's1gr':
+									atom.whichSubstrate = "substrate_grey";
+									break;
+							}
+						}
+					}
 				}
 			});
 		} else if(line.search('BoldBondsList') > 0) {
@@ -996,7 +1022,7 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 					}
 				}
 			});
-		}	else if(line.search('AttachmentPoint') > 0) {
+		} else if(line.search('AttachmentPoint') > 0) {
 			if(line.search('AttachmentPoint2') > 0) {
 				var aid = parseInt(ctabLines[index + 1]);
 				var atom = struct.atoms.get(aid);
@@ -1252,6 +1278,12 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 				this.molecule.polymers.add({id: id, isPolymerSurface: true});
 			} else {
 				this.molecule.polymers.add({id: id});
+			}
+		}
+
+		if(atom.isSubstrate) {
+			if (atom.whichSubstrate !== null) {
+				this.molecule.substrates.add({id: id, whichSubstrate: atom.whichSubstrate});
 			}
 		}
 
@@ -1528,12 +1560,37 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 chem.MolfileSaver.prototype.writeAdditionalData = function (){
 	var additional_data = '';
 	// return if we have no polymer-items
-	if(this.molecule.polymers.count() > 0) {
+	if(this.molecule.polymers.count() > 0 || this.molecule.substrates.count() > 0) {
 		additional_data += '> <PolymersList>\n';
 		this.molecule.polymers.each(function (index, obj) {
 			additional_data += obj.id.toString();
-			if (obj.isPolymerSurface) {
-				additional_data += 's';
+			additional_data += 'p'
+			additional_data += ' ';
+		});
+		this.molecule.substrates.each(function (index, obj) {
+			additional_data += obj.id.toString();
+			if (obj.whichSubstrate !== null) {
+				additional_data += 's1';
+				switch (obj.whichSubstrate) {
+					case "substrate_black":
+						additional_data += 'b';
+						break;
+					case "substrate_green":
+						additional_data += 'g';
+						break;
+					case "substrate_blue":
+						additional_data += 'bl';
+						break;
+					case "substrate_yellow":
+						additional_data += 'y';
+						break;
+					case "substrate_red":
+						additional_data += 'r';
+						break;
+					case "substrate_grey":
+						additional_data += 'gr';
+						break;
+				}
 			}
 			additional_data += ' ';
 		});
