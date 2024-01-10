@@ -975,6 +975,11 @@ chem.Molfile.parseCTab = function (/* string */ ctabLines) /* chem.Struct */
 
 chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ struct) /* chem.Struct */
 {
+	const colorMap = {
+		's': { 'whichSubstrate': { 's1b': 'substrate_black', 's1g': 'substrate_green', 's1bl': 'substrate_blue', 's1y': 'substrate_yellow', 's1r': 'substrate_red', 's1gr': 'substrate_grey' } },
+		'c': { 'whichCoatingSurface': { 'c1b': 'coating_black', 'c1g': 'coating_green', 'c1y': 'coating_yellow', 'c1lr': 'coating_lightred', 'c1gr': 'coating_grey' } },
+		'm': { 'whichMaterial': { 'm1b': 'material_black', 'm1lr': 'material_lightred' } }
+	};
 	ctabLines.each(function(line, index){
 		if(line.search('PolymersList') > 0){
 			ctabLines[index + 1].strip().split(' ').each(function (id){
@@ -987,26 +992,19 @@ chem.Molfile.parseAdditionalData = function (/* Array */ ctabLines, /*struct */ 
 						var substrateColor = id.replace(/\d*([s])/, '$1');
 						if(atom) {
 							atom.isSubstrate = true;
-							switch(substrateColor) {
-								case 's1b':
-									atom.whichSubstrate = "substrate_black";
-									break;
-								case 's1g':
-									atom.whichSubstrate = "substrate_green";
-									break;
-								case 's1bl':
-									atom.whichSubstrate = "substrate_blue";
-									break;
-								case 's1y':
-									atom.whichSubstrate = "substrate_yellow";
-									break;
-								case 's1r':
-									atom.whichSubstrate = "substrate_red";
-									break;
-								case 's1gr':
-									atom.whichSubstrate = "substrate_grey";
-									break;
-							}
+							atom.whichSubstrate = colorMap['s']['whichSubstrate'][substrateColor];
+						}
+					} else if (id.includes('c')) {
+						var coatingColor = id.replace(/\d*([c])/, '$1');
+						if(atom) {
+							atom.isCoatingSurface = true;
+							atom.whichCoatingSurface = colorMap['c']['whichCoatingSurface'][coatingColor];
+						}
+					} else if (id.includes('m')) {
+						var materialColor = id.replace(/\d*([m])/, '$1');
+						if(atom) {
+							atom.isMaterial = true;
+							atom.whichMaterial = colorMap['m']['whichMaterial'][materialColor];
 						}
 					}
 				}
@@ -1287,6 +1285,18 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 			}
 		}
 
+		if(atom.isCoatingSurface) {
+			if (atom.whichCoatingSurface !== null) {
+				this.molecule.coatingSurfaces.add({id: id, whichCoatingSurface: atom.whichCoatingSurface});
+			}
+		}
+
+		if(atom.isMaterial) {
+			if (atom.whichMaterial !== null) {
+				this.molecule.materials.add({id: id, whichMaterial: atom.whichMaterial});
+			}
+		}
+
 		if(atom.isAttachmentPoint) {
 			this.molecule.attachmentPoint = id;
 		}
@@ -1560,40 +1570,26 @@ chem.MolfileSaver.prototype.writeCTab2000 = function (rgroups)
 chem.MolfileSaver.prototype.writeAdditionalData = function (){
 	var additional_data = '';
 	// return if we have no polymer-items
-	if(this.molecule.polymers.count() > 0 || this.molecule.substrates.count() > 0) {
+	if(this.molecule.polymers.count() > 0 || this.molecule.substrates.count() > 0 ||
+	   this.molecule.coatingSurfaces.count() > 0 || this.molecule.materials.count() > 0) {
 		additional_data += '> <PolymersList>\n';
 		this.molecule.polymers.each(function (index, obj) {
 			additional_data += obj.id.toString();
 			additional_data += 'p'
 			additional_data += ' ';
 		});
-		this.molecule.substrates.each(function (index, obj) {
-			additional_data += obj.id.toString();
-			if (obj.whichSubstrate !== null) {
-				additional_data += 's1';
-				switch (obj.whichSubstrate) {
-					case "substrate_black":
-						additional_data += 'b';
-						break;
-					case "substrate_green":
-						additional_data += 'g';
-						break;
-					case "substrate_blue":
-						additional_data += 'bl';
-						break;
-					case "substrate_yellow":
-						additional_data += 'y';
-						break;
-					case "substrate_red":
-						additional_data += 'r';
-						break;
-					case "substrate_grey":
-						additional_data += 'gr';
-						break;
-				}
-			}
-			additional_data += ' ';
-		});
+
+		if (this.molecule.substrates.count() > 0 ) {
+			additional_data = this.writeAdditionalSurfaceData(this.molecule.substrates, additional_data, 'Substrate', 's1');
+		}
+
+		if (this.molecule.coatingSurfaces.count() > 0) {
+			additional_data = this.writeAdditionalSurfaceData(this.molecule.coatingSurfaces, additional_data, 'CoatingSurface', 'c1');
+		}
+
+		if (this.molecule.materials.count() > 0) {
+			additional_data = this.writeAdditionalSurfaceData(this.molecule.materials, additional_data, 'Material', 'm1');
+		}
 		additional_data += '\n';
 	}
 
@@ -1619,6 +1615,42 @@ chem.MolfileSaver.prototype.writeAdditionalData = function (){
 
 	additional_data += '$$$$\n';
 	this.writeCR(additional_data);
+};
+
+chem.MolfileSaver.prototype.writeAdditionalSurfaceData = function (moleculeObject, additional_data, type, prefix)
+{
+	moleculeObject.each(function (index, obj) {
+		additional_data += obj.id.toString();
+		const objectType = type  === 'CoatingSurface' ? 'coating' : type.toLowerCase();
+        if (obj[`which${type}`] !== null) {
+			additional_data += prefix;
+			switch (obj[`which${type}`]) {
+                case `${objectType}_black`:
+                    additional_data += 'b';
+                    break;
+                case `${objectType}_green`:
+                    additional_data += 'g';
+                    break;
+                case `${objectType}_blue`:
+                    additional_data += 'bl';
+                    break;
+                case `${objectType}_yellow`:
+                    additional_data += 'y';
+                    break;
+                case `${objectType}_red`:
+                    additional_data += 'r';
+                    break;
+				case `${objectType}_lightred`:
+					additional_data += 'lr';
+					break;
+                case `${objectType}_green`:
+                    additional_data += 'gr';
+                    break;
+            }
+		}
+		additional_data += ' ';
+	});
+	return additional_data;
 };
 
 chem.Molfile.parseRxn = function (/* string[] */ ctabLines) /* chem.Struct */

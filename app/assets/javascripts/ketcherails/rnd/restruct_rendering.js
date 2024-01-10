@@ -744,6 +744,7 @@ rnd.ReStruct.prototype.drawPolymers = function()
 	this.atoms.each(function (aid, atom) {
 		var atom = _obj.atoms.get(aid);
 	var ps = render.ps(atom.a.pp);
+	const colorStrokes = { "red" : "#ff0000", "green" : "#008000", "blue" : "#0000ff", "yellow" : "#ffff00", "black" : "#000", "grey" : "#808080", "lightred" : "#f1807e" };
 		if(atom.a.isPolymer){
 			if (atom.a.isPolymerSurface) {
 				var rect_w = 50;
@@ -761,11 +762,25 @@ rnd.ReStruct.prototype.drawPolymers = function()
 		} else if (atom.a.isSubstrate) {
 			if (atom.a.whichSubstrate !== null) {
 				const substrateColor = (atom.a.whichSubstrate).slice(10);
-				const colorStrokes = { "red" : "#ff0000", "green" : "#008000", "blue" : "#0000ff", "yellow" : "#ffff00", "black" : "#000", "grey" : "#808080" };
-				var rect_w = 100;
-				["M", 175, 0, "L", 30, 175 ]
+				var rect_w = 50;
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
-				line.attr({stroke:colorStrokes[substrateColor],"stroke-width":4});
+				line.attr({stroke:colorStrokes[substrateColor],"stroke-width":6});
+				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
+			}
+		} else if (atom.a.isCoatingSurface) {
+			if (atom.a.whichCoatingSurface !== null) {
+				const coatingSurfaceColor = (atom.a.whichCoatingSurface).slice(8);
+				var rect_w = 50;
+				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
+				line.attr({stroke:colorStrokes[coatingSurfaceColor],"stroke-width":4});
+				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
+			}
+		} else if (atom.a.isMaterial) {
+			if (atom.a.whichMaterial !== null) {
+				const materialColor = (atom.a.whichMaterial).slice(9);
+				var rect_w = 50;
+				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
+				line.attr({stroke:colorStrokes[materialColor],"stroke-width":10});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
 			}
 		} else if(atom.a.isAttachmentPoint && aid == struct.attachmentPoint) {
@@ -822,7 +837,7 @@ rnd.ReStruct.prototype.showLabels = function ()
 
                 var color = '#000000';
 
-		if(atom.a.isPolymer || atom.a.isSubstrate || (atom.a.abbrevName && !atom.a.isSuperAtom)){
+		if(atom.a.isPolymer || atom.a.isSubstrate || atom.a.isCoatingSurface || atom.a.isMaterial || (atom.a.abbrevName && !atom.a.isSuperAtom)){
 			atom.showLabel = false;
 		} else if(atom.a.isSuperAtom) {
 			atom.showLabel = true;

@@ -139,7 +139,6 @@
             </div>
             <div class="menuButtonCell serverRequired">
               <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton stateButton main_polymer', title: 'Polymer', selid: 'polymer_bead', alt: '' %>
-              <%= sprite_tag '', id: 'polymer_dropdown', class: 'dropdownButton main_dropdown', alt: '' %>
             </div>
             <div class="menuButtonCell serverRequired">
               <%= sprite_tag '', id: 'substrate', class: 'sideButton modeButton stateButton line_substrate', title: 'Substrates', selid: 'substrate_black', alt: '' %>
@@ -437,7 +436,7 @@
               <div class="dropdownList renderFirst" id="coating_dropdown_list" style="display:none">
                 <table>
                   <tbody>
-                    <% %W(Black Green Blue Yellow Red Grey).each_with_index do |tool, index| %>
+                    <% %W(Black Green Yellow Lightred Grey).each_with_index do |tool, index| %>
                     <tr class="dropdownListItem" id="coating_<%= tool.downcase %>" title="<%= tool %>">
                       <td>
                         <div id="coating_<%= index %>_preview">
@@ -454,7 +453,7 @@
               <div class="dropdownList renderFirst" id="material_dropdown_list" style="display:none">
                 <table>
                   <tbody>
-                    <% %W(Black Green Blue Yellow Red Grey).each_with_index do |tool, index| %>
+                    <% %W(Lightred).each_with_index do |tool, index| %>
                     <tr class="dropdownListItem" id="material_<%= tool.downcase %>" title="<%= tool %>">
                       <td>
                         <div id="material_<%= index %>_preview">

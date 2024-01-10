@@ -31,6 +31,8 @@ chem.Struct = function ()
     this.rgroups = new util.Map();
 	this.polymers = new util.Pool(); // init polymers list as well
 	this.substrates = new util.Pool(); // init substrates list as well
+	this.coatingSurfaces = new util.Pool();
+	this.materials = new util.Pool();
     this.name = '';
     this.sGroupForest = new chem.SGroupForest(this);
 };
@@ -348,6 +350,10 @@ chem.Struct.Atom = function (params) {
 	util.ifDef(this, params, 'isPolymerSurface', def('isPolymerSurface'));
 	util.ifDef(this, params, 'isSubstrate', def('isSubstrate'));
 	util.ifDef(this, params, 'whichSubstrate', def('whichSubstrate'));
+	util.ifDef(this, params, 'isMaterial', def('isMaterial'));
+	util.ifDef(this, params, 'whichMaterial', def('whichMaterial'));
+	util.ifDef(this, params, 'isCoatingSurface', def('isCoatingSurface'));
+	util.ifDef(this, params, 'whichCoatingSurface', def('whichCoatingSurface'));
 	util.ifDef(this, params, 'isAttachmentPoint', def('isAttachmentPoint'));
 	util.ifDef(this, params, 'isAttachmentPoint2', def('isAttachmentPoint2'));
 	util.ifDef(this, params, 'abbrevName', def('abbrevName'));
@@ -417,6 +423,10 @@ chem.Struct.Atom.attrlist = {
 	'isPolymerSurface': false,
 	'isSubstrate': false,
 	'whichSubstrate': null,
+	'isCoatingSurface': false,
+	'whichCoatingSurface': null,
+	'isMaterial': false,
+	'whichMaterial': null,
 	'isAttachmentPoint': false,
 	'isAttachmentPoint2': false,
 	'abbrevName': undefined

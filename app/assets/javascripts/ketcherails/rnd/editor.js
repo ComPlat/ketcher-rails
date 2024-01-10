@@ -82,6 +82,8 @@ rnd.Editor.prototype.getSelection = function(explicit) {
 };
 rnd.Editor.prototype.toolFor = function(tool) {
     const substrates = ['substrate_black', 'substrate_green', 'substrate_blue', 'substrate_yellow', 'substrate_red', 'substrate_grey'];
+    const coatingSurfaces = ['coating_black', 'coating_green', 'coating_yellow', 'coating_lightred', 'coating_grey'];
+    const materials = ['material_lightred'];
     if (tool == 'selector_lasso') {
         return new rnd.Editor.LassoTool(this, 0);
     } else if (tool == 'selector_square') {
@@ -134,6 +136,10 @@ rnd.Editor.prototype.toolFor = function(tool) {
         return new rnd.Editor.AminoAcidTool(this);
     } else if (substrates.includes(tool)) {
         return new rnd.Editor.SubstrateTool(this, tool);
+    } else if (coatingSurfaces.includes(tool)) {
+        return new rnd.Editor.CoatingSurfaceTool(this, tool);
+    } else if (materials.includes(tool)) {
+        return new rnd.Editor.MaterialTool(this, tool);
     }
     return null;
 };
@@ -1247,6 +1253,66 @@ rnd.Editor.SubstrateTool.prototype.OnMouseUp = function(event) {
 };
 
 rnd.Editor.SubstrateTool.prototype.OnMouseDown = function() {};
+
+rnd.Editor.CoatingSurfaceTool= function(editor, tool) {
+    this.editor = editor;
+    this.tool = tool || null;
+
+    this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
+};
+rnd.Editor.CoatingSurfaceTool.prototype.OnMouseMove = function(event) {
+    this._hoverHelper.hover(this.editor.render.findItem(event, ['atoms']));
+};
+rnd.Editor.CoatingSurfaceTool.prototype = new rnd.Editor.EditorTool();
+
+rnd.Editor.CoatingSurfaceTool.prototype.OnMouseUp = function(event) {
+
+	var ci = this.editor.render.findItem(event, ['atoms']);
+	if (!ci || ci.type == 'Canvas') {
+			this._hoverHelper.hover(null);
+			this.editor.ui.addUndoAction(
+					this.editor.ui.Action.fromAtomAddition(
+							this.editor.ui.page2obj(this.OnMouseMove0.lastEvent),
+							{ label : 'R#', rglabel : 1, isCoatingSurface : true, whichCoatingSurface: this.tool}
+					),
+					true
+			);
+			this.editor.ui.render.update();
+			return true;
+	}
+};
+
+rnd.Editor.CoatingSurfaceTool.prototype.OnMouseDown = function() {};
+
+rnd.Editor.MaterialTool= function(editor, tool) {
+    this.editor = editor;
+    this.tool = tool || null;
+
+    this._hoverHelper = new rnd.Editor.EditorTool.HoverHelper(this);
+};
+rnd.Editor.MaterialTool.prototype.OnMouseMove = function(event) {
+    this._hoverHelper.hover(this.editor.render.findItem(event, ['atoms']));
+};
+rnd.Editor.MaterialTool.prototype = new rnd.Editor.EditorTool();
+
+rnd.Editor.MaterialTool.prototype.OnMouseUp = function(event) {
+
+	var ci = this.editor.render.findItem(event, ['atoms']);
+	if (!ci || ci.type == 'Canvas') {
+			this._hoverHelper.hover(null);
+			this.editor.ui.addUndoAction(
+					this.editor.ui.Action.fromAtomAddition(
+							this.editor.ui.page2obj(this.OnMouseMove0.lastEvent),
+							{ label : 'R#', rglabel : 1, isMaterial : true, whichMaterial: this.tool}
+					),
+					true
+			);
+			this.editor.ui.render.update();
+			return true;
+	}
+};
+
+rnd.Editor.MaterialTool.prototype.OnMouseDown = function() {};
 
 
 rnd.Editor.AminoAcidTool = function(editor) {
