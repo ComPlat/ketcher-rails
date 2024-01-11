@@ -141,12 +141,12 @@
               <%= sprite_tag '', id: 'polymer', class: 'sideButton modeButton stateButton main_polymer', title: 'Polymer', selid: 'polymer_bead', alt: '' %>
             </div>
             <div class="menuButtonCell serverRequired">
-              <%= sprite_tag '', id: 'substrate', class: 'sideButton modeButton stateButton line_substrate', title: 'Substrates', selid: 'substrate_black', alt: '' %>
-              <%= sprite_tag '', id: 'substrate_dropdown', class: 'dropdownButton main_dropdown', alt: ''%>
-            </div>
-            <div class="menuButtonCell serverRequired">
               <%= sprite_tag '', id: 'coating', class: 'sideButton modeButton stateButton line_coating', title: 'Coatings', selid: 'coating_black', alt: '' %>
               <%= sprite_tag '', id: 'coating_dropdown', class: 'dropdownButton main_dropdown', alt: ''%>
+            </div>
+            <div class="menuButtonCell serverRequired">
+              <%= sprite_tag '', id: 'substrate', class: 'sideButton modeButton stateButton line_substrate', title: 'Substrates', selid: 'substrate_black', alt: '' %>
+              <%= sprite_tag '', id: 'substrate_dropdown', class: 'dropdownButton main_dropdown', alt: ''%>
             </div>
             <div class="menuButtonCell serverRequired">
               <%= sprite_tag '', id: 'material', class: 'sideButton modeButton stateButton line_material', title: 'Materials', selid: 'material_lightred', alt: '' %>
@@ -416,13 +416,13 @@
                 </table>
               </div>
 
-              <div class="dropdownList renderFirst" id="substrate_dropdown_list" style="display:none">
+              <div class="dropdownList renderFirst" id="coating_dropdown_list" style="display:none">
                 <table>
                   <tbody>
-                    <% %W(Black Green Blue Yellow Red Grey).each_with_index do |tool, index| %>
-                    <tr class="dropdownListItem" id="substrate_<%= tool.downcase %>" title="<%= tool %>">
+                    <% %W(Black Green Yellow Lightred Grey).each_with_index do |tool, index| %>
+                    <tr class="dropdownListItem" id="coating_<%= tool.downcase %>" title="<%= tool %>">
                       <td>
-                        <div id="substrate_<%= index %>_preview">
+                        <div id="coating_<%= index %>_preview">
                           <%= sprite_tag '', class: 'dropdownIcon line_' + tool.downcase + '_line-dropdown', alt: '' %>
                         </div>
                         <%= tool %>
@@ -433,13 +433,13 @@
                 </table>
               </div>
 
-              <div class="dropdownList renderFirst" id="coating_dropdown_list" style="display:none">
+              <div class="dropdownList renderFirst" id="substrate_dropdown_list" style="display:none">
                 <table>
                   <tbody>
-                    <% %W(Black Green Yellow Lightred Grey).each_with_index do |tool, index| %>
-                    <tr class="dropdownListItem" id="coating_<%= tool.downcase %>" title="<%= tool %>">
+                    <% %W(Black Green Blue Yellow Red Grey).each_with_index do |tool, index| %>
+                    <tr class="dropdownListItem" id="substrate_<%= tool.downcase %>" title="<%= tool %>">
                       <td>
-                        <div id="coating_<%= index %>_preview">
+                        <div id="substrate_<%= index %>_preview">
                           <%= sprite_tag '', class: 'dropdownIcon line_' + tool.downcase + '_line-dropdown', alt: '' %>
                         </div>
                         <%= tool %>
