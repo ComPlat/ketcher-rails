@@ -762,25 +762,25 @@ rnd.ReStruct.prototype.drawPolymers = function()
 		} else if (atom.a.isSubstrate) {
 			if (atom.a.whichSubstrate !== null) {
 				const substrateColor = (atom.a.whichSubstrate).slice(10);
-				var rect_w = 50;
+				var rect_w = 130;
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
-				line.attr({stroke:colorStrokes[substrateColor],"stroke-width":6});
+				line.attr({stroke:colorStrokes[substrateColor],"stroke-width":10});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
 			}
 		} else if (atom.a.isCoatingSurface) {
 			if (atom.a.whichCoatingSurface !== null) {
 				const coatingSurfaceColor = (atom.a.whichCoatingSurface).slice(8);
-				var rect_w = 50;
+				var rect_w = 130;
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
-				line.attr({stroke:colorStrokes[coatingSurfaceColor],"stroke-width":4});
+				line.attr({stroke:colorStrokes[coatingSurfaceColor],"stroke-width":13});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
 			}
 		} else if (atom.a.isMaterial) {
 			if (atom.a.whichMaterial !== null) {
 				const materialColor = (atom.a.whichMaterial).slice(9);
-				var rect_w = 50;
+				var rect_w = 130;
 				var line = paper.path(['M', ps.x - rect_w/2, ps.y, 'L' , ps.x + rect_w/2, ps.y])
-				line.attr({stroke:colorStrokes[materialColor],"stroke-width":10});
+				line.attr({stroke:colorStrokes[materialColor],"stroke-width":16});
 				_obj.addReObjectPath('data', atom.visel, line, { x : ps.x, y : ps.y });
 			}
 		} else if(atom.a.isAttachmentPoint && aid == struct.attachmentPoint) {
